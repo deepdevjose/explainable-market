@@ -90,6 +90,12 @@ def refresh(ticker):
         try:
             rows,currency,source,url=get_prices(ticker)
             with db.connect() as c:
+                c.execute('''INSERT OR IGNORE INTO stock_observations
+                    SELECT p.ticker,coalesce(s.source,'legacy:unknown'),p.date,CAST(p.close AS TEXT),
+                    CAST(p.volume AS TEXT),coalesce(s.fetched_at,?)
+                    FROM prices p JOIN symbols s ON s.ticker=p.ticker WHERE p.ticker=?''',(now(),ticker))
+                c.executemany('INSERT OR IGNORE INTO stock_observations VALUES (?,?,?,?,?,?)',
+                    [(t,source,d,str(close),str(volume),now()) for t,d,close,volume in rows])
                 previous=c.execute('SELECT source FROM symbols WHERE ticker=?',(ticker,)).fetchone()
                 if previous and previous['source'] and previous['source']!=source:
                     c.execute('DELETE FROM prices WHERE ticker=?',(ticker,))

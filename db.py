@@ -58,6 +58,9 @@ def init():
         c.execute('PRAGMA journal_mode=WAL')
         c.executescript(SCHEMA)
         c.executemany('INSERT OR IGNORE INTO symbols(ticker,name,sector) VALUES (?,?,?)', CATALOG)
+        c.commit()
+        from market_explained.storage.database import migrate
+        migrate(c, DB_PATH)
 
 def q(sql, params=()):
     with connect() as c:
