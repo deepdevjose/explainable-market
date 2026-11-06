@@ -2,12 +2,11 @@
 import csv
 import hashlib
 import io
-import json
 import os
 import re
 import secrets
 import sqlite3
-from datetime import date, datetime, timezone, timedelta
+from datetime import datetime, timedelta
 from functools import wraps
 from urllib.parse import urlsplit
 
@@ -26,6 +25,9 @@ app.config.update(SECRET_KEY=config.SECRET_KEY, MAX_CONTENT_LENGTH=16*1024,
     SESSION_COOKIE_SECURE=config.PRODUCTION or os.environ.get('COOKIE_SECURE','0')=='1',
     PERMANENT_SESSION_LIFETIME=timedelta(days=7))
 db.init()
+from market_explained.api.routes import api as market_api, pages as market_pages
+app.register_blueprint(market_api)
+app.register_blueprint(market_pages)
 LABELS={1:'Positivo',0:'Neutral',-1:'Negativo',None:'Sin analizar'}
 PAGES={'landing':'Inicio de Explainable Market: plataforma para relacionar precios con noticias y aprender.',
        'dashboard':'Panorama del mercado. Cierres diarios, variación respecto al cierre anterior y noticias relacionadas.',
@@ -33,6 +35,9 @@ PAGES={'landing':'Inicio de Explainable Market: plataforma para relacionar preci
        'news_page':'Noticias de fuentes externas. El sentimiento es una clasificación de un titular, no una señal de inversión.',
        'learn':'Biblioteca educativa y metodología: correlación no significa causalidad.',
        'symbol_detail':'Detalle de activo. Serie de cierres y coincidencias temporales de noticias; ventanas completas de 1, 3 y 7 sesiones.',
+       'markets.explorer':'Explorador de acciones históricas y criptomonedas de Binance Spot con estados de frescura y proveedor.',
+       'markets.detail':'Detalle de criptomoneda en Binance Spot; USDT no es USD. Las velas diarias son históricas y las observaciones recientes pueden quedar desactualizadas.',
+       'markets.sources':'Disponibilidad de proveedores, atribución, límites y condiciones de uso de datos. Integración planificada no implica datos disponibles.',
        'login':'Iniciar sesión para guardar una lista personal.', 'register':'Crear una cuenta propia.'}
 
 
@@ -305,9 +310,19 @@ def chat_api():
     ticker=ticker.upper() if isinstance(ticker,str) else ''
     sym=asset(ticker) if ticker else None
     if sym: sym={k:sym[k] for k in ('ticker','name','close','change','asof','source','fetched_at','price_error')}
+    elif ticker:
+        instrument=db.q1('SELECT * FROM instruments WHERE symbol=?',(ticker,))
+        if instrument:
+            from market_explained.storage.repository import snapshot
+            view=snapshot(instrument['instrument_id'])
+            observation=view['observation'] or {}
+            sym={'ticker':ticker,'name':instrument['name'],'currency':instrument['quote_currency'],
+                 'price':observation.get('price'),'source':observation.get('provider'),
+                 'asof':observation.get('event_time'),'received_at':observation.get('received_at'),
+                 'status':view['status'],'quality_flags':observation.get('quality_flags',[])}
     context={'screen':PAGES.get(page,PAGES['dashboard']),'asset':sym,
         'news':[{k:n[k] for k in ('id','ticker','headline','published','source','url','sentiment')} for n in news_for(ticker if sym else None,limit=5)],
-        'data_policy':'Precios de cierre diarios; pueden estar retrasados. No son tiempo real. Sin dato significa desconocido.'}
+        'data_policy':'Acciones: cierres diarios históricos. Cripto: observaciones de Binance Spot en USDT; solo LIVE indica recepción reciente conectada. STALE es desactualizado, HISTORICAL no es en vivo y UNAVAILABLE es desconocido. Correlación no implica causalidad.'}
     history=db.q('SELECT role,content FROM (SELECT id,role,content FROM messages WHERE owner=? ORDER BY id DESC LIMIT 8) ORDER BY id',(who,))
     try:
         answer=ai.answer(question.strip(),history,context)
@@ -348,6 +363,8 @@ def health():
 def error_page(error):
     messages={400:'La solicitud no es válida.',404:'Esta página no existe.',429:'Demasiadas solicitudes. Espera unos minutos.',413:'La solicitud es demasiado grande.'}
     text=messages.get(error.code,'No se pudo completar la solicitud.')
+    if request.path.startswith('/api/v1/'):
+        return jsonify(error={'code':'http_'+str(error.code),'message':text}),error.code
     if request.path.startswith('/api/'): return jsonify(error=text),error.code
     return render_template('error.html',code=error.code,message=text),error.code
 

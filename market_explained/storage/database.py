@@ -49,11 +49,12 @@ def migrate(connection: sqlite3.Connection, path: str) -> None:
                 for provider in ('yahoo', 'nasdaq'):
                     connection.execute('''INSERT INTO provider_symbols
                         SELECT ?,ticker,'us:'||ticker FROM symbols''', (provider,))
-                for symbol, name, base in [('BTCUSDT', 'Bitcoin / Tether', 'BTC'), ('ETHUSDT', 'Ether / Tether', 'ETH')]:
-                    connection.execute('INSERT INTO instruments VALUES (?,?,?,?,?,?,?)',
-                        ('binance:spot:' + symbol, symbol, name, 'crypto', base, 'USDT', 'Binance Spot'))
+                from market_explained.markets.instruments import CRYPTO
+                for instrument in CRYPTO:
+                    from dataclasses import astuple
+                    connection.execute('INSERT INTO instruments VALUES (?,?,?,?,?,?,?)', astuple(instrument))
                     connection.execute('INSERT INTO provider_symbols VALUES (?,?,?)',
-                        ('binance', symbol, 'binance:spot:' + symbol))
+                        ('binance', instrument.symbol, instrument.instrument_id))
             connection.execute('INSERT INTO schema_migrations VALUES (?,?)', (file.name, stamp))
         connection.commit()
     except BaseException:

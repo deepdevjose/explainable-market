@@ -50,3 +50,23 @@ $('#chat-form').addEventListener('submit',e=>{e.preventDefault();sendQuestion(in
 input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();sendQuestion(input.value.trim())}});
 document.querySelectorAll('[data-question]').forEach(b=>b.addEventListener('click',()=>sendQuestion(b.dataset.question)));
 $('#chat-reset').addEventListener('click',async()=>{if(chatBusy)return;try{await api('/api/chat','DELETE');messages.replaceChildren();appendMessage('assistant','Conversación borrada. ¿Qué te gustaría entender?')}catch(e){toast(e.message)}});
+// Read persisted observations only. Never synthesize a price or promote history to live.
+const marketNodes=[...document.querySelectorAll('[data-market-symbol]')].filter(n=>n.dataset.marketSymbol);
+const marketStatuses={LIVE:'En vivo',DELAYED:'Con retraso',HISTORICAL:'Histórico',STALE:'Desactualizado',DEMO:'Demostración',UNAVAILABLE:'No disponible'};
+async function pollMarkets(){
+ if(document.hidden)return;
+ await Promise.all(marketNodes.map(async node=>{
+  try{
+   const response=await fetch('/api/v1/market/'+encodeURIComponent(node.dataset.marketSymbol),{credentials:'same-origin',signal:AbortSignal.timeout(5000)});
+   if(!response.ok)throw Error('No se pudo consultar el estado.');
+   const {data}=await response.json(),o=data.observation;
+   const values={price:o?.price||'—',provider:o?.provider||'Sin observaciones',event_time:o?.event_time||'Sin fecha disponible',received_at:o?.received_at||'Sin fecha disponible',quality_flags:o?.quality_flags?.join(', ')||'Sin incidencias registradas',status:marketStatuses[data.status]||'No disponible'};
+   for(const [field,value] of Object.entries(values)){const el=node.querySelector('[data-field="'+field+'"]');if(el){el.textContent=value;if(field==='status')el.className='badge '+(data.status==='LIVE'?'positive':'neutral')}}
+   const error=node.querySelector('[data-poll-error]');if(error)error.textContent='';
+  }catch{
+   const status=node.querySelector('[data-field="status"]');if(status){status.textContent='Estado sin verificar';status.className='badge neutral'}
+   const error=node.querySelector('[data-poll-error]');if(error)error.textContent='Sin conexión al servidor. Se conserva la última observación visible con su fecha.';
+  }
+ }));
+}
+if(marketNodes.length){const tick=async()=>{await pollMarkets();setTimeout(tick,5000)};tick()}

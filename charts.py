@@ -21,7 +21,7 @@ def sparkline(closes, width=130, height=38):
             f'stroke-width="1.6" stroke-linejoin="round"/></svg>')
 
 
-def price_chart(dates, closes, markers=None, width=920, height=360):
+def price_chart(dates, closes, markers=None, width=920, height=360, label='Cierres diarios y noticias relacionadas'):
     """Line chart with news markers.
 
     markers: list of (index, sentiment, headline, is_market) tuples.
@@ -46,7 +46,7 @@ def price_chart(dates, closes, markers=None, width=920, height=360):
             + " L ".join(f"{X(i):.1f},{Y(c):.1f}" for i, c in enumerate(closes))
             + f" L {X(n - 1):.1f},{pad_t + plot_h} Z")
 
-    parts = [f'<svg viewBox="0 0 {width} {height}" class="price-chart" role="img" aria-label="Serie de cierres diarios con marcadores de noticias"><title>Cierres diarios y noticias relacionadas</title>']
+    parts = [f'<svg viewBox="0 0 {width} {height}" class="price-chart" role="img" aria-label="{escape(label, quote=True)}"><title>{escape(label)}</title>']
     parts.append('<defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">'
                  '<stop offset="0%" stop-color="#0f62fe" stop-opacity="0.12"/>'
                  '<stop offset="100%" stop-color="#0f62fe" stop-opacity="0.01"/>'

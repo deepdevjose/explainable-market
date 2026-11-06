@@ -1,5 +1,6 @@
 """Persistent, real-source data. The old prototype database is never imported."""
 import sqlite3
+import os
 from contextlib import contextmanager
 import config
 
@@ -41,6 +42,11 @@ CREATE TABLE IF NOT EXISTS rate_limits (
 
 @contextmanager
 def connect():
+    # Restrict new database files before SQLite creates WAL/SHM beside them.
+    if DB_PATH != ':memory:':
+        fd = os.open(DB_PATH, os.O_WRONLY | os.O_CREAT, 0o600)
+        os.close(fd)
+        os.chmod(DB_PATH, 0o600)
     conn = sqlite3.connect(DB_PATH, timeout=20)
     conn.row_factory = sqlite3.Row
     conn.execute('PRAGMA foreign_keys=ON')

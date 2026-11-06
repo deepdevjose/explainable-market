@@ -1,0 +1,8 @@
+{
+  "provenance": "Binance official WebSocket documentation payload shapes. Fixed historical contract fixtures, never production data or proof of live connectivity.",
+  "source": "https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams",
+  "received_at": "2023-01-01T00:00:00+00:00",
+  "trade": {"e":"trade","E":1672531199000,"s":"BTCUSDT","t":12345,"p":"16542.12000000","q":"0.00200000","T":1672531199000,"m":true,"M":true},
+  "ticker": {"e":"24hrTicker","E":1672531199000,"s":"BTCUSDT","c":"16542.12000000","v":"2000.25000000","b":"16542.11000000","a":"16542.13000000"},
+  "candle": {"e":"kline","E":1672531199000,"s":"BTCUSDT","k":{"s":"BTCUSDT","t":1672531140000,"i":"1m","o":"16540.00000000","h":"16543.00000000","l":"16539.00000000","c":"16542.12000000","v":"12.50000000","x":true}}
+}
