@@ -43,3 +43,9 @@ Do not expose the SQLite directory, container socket or database backups publicl
 
 Deployment, capacity, billing eligibility, runtime performance and physical ARM64
 execution have not been verified here. CI builds are preparation, not deployment.
+
+## Publicación completa paso a paso
+
+Para el flujo gratuito conservando Flask/SQLite y un proxy HTTPS, ver
+[PUBLICAR_GRATIS.md](PUBLICAR_GRATIS.md). La configuración está en
+`compose.production.yaml`; no es un sitio ya desplegado y requiere una VM externa.

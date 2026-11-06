@@ -1,0 +1,82 @@
+name: market-explained-production
+
+x-application: &application
+  image: market-explained:production
+  build:
+    context: ../..
+    dockerfile: infrastructure/docker/Dockerfile
+  restart: unless-stopped
+  init: true
+  environment: &environment
+    APP_ENV: production
+    SECRET_KEY: ${SECRET_KEY:?Generate a private server configuration first}
+    COOKIE_SECURE: "1"
+    HOST: 0.0.0.0
+    PORT: "5050"
+    DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+  volumes:
+    - market-data:/app/data
+  networks:
+    - backend
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
+services:
+  web:
+    <<: *application
+    environment:
+      <<: *environment
+      TRUSTED_PROXY: 172.30.0.10
+    # Only the HTTPS proxy publishes ports. SQLite is never served as an asset.
+    expose:
+      - "5050"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5050/health',timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  worker:
+    <<: *application
+    command: ["python", "-m", "market_explained.ingestion.workers"]
+    stop_grace_period: 45s
+  daily:
+    <<: *application
+    command: ["python", "collector.py", "--loop", "--interval", "900"]
+    stop_grace_period: 45s
+  proxy:
+    image: caddy:2
+    restart: unless-stopped
+    environment:
+      PUBLIC_HOST: ${PUBLIC_HOST:?Configure the public server hostname first}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      backend:
+        ipv4_address: 172.30.0.10
+    depends_on:
+      web:
+        condition: service_healthy
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+networks:
+  backend:
+    ipam:
+      config:
+        - subnet: 172.30.0.0/24
+
+volumes:
+  market-data:
+  caddy-data:
+  caddy-config:

@@ -32,6 +32,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Validate production Compose configuration
+        run: docker compose -f infrastructure/deployment/compose.production.yaml config --quiet
+        env:
+          PUBLIC_HOST: market.example.test
+          SECRET_KEY: ci-only-placeholder-not-a-production-secret
       - uses: docker/setup-qemu-action@v3
       - uses: docker/setup-buildx-action@v3
       - uses: docker/build-push-action@v6
