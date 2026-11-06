@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+env*.txt
+data/
+*.db
+*.db-*
+*.sqlite*
+*.backup*
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+artifacts/
