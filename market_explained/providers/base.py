@@ -4,6 +4,15 @@ from typing import Protocol
 from market_explained.markets.events import MarketEvent
 
 
+DailyHistory = tuple[list[tuple[str, str, float, float]], str, str, str]
+
+
+class DailyProvider(Protocol):
+    name: str
+
+    def history(self, symbol: str) -> DailyHistory: ...
+
+
 class StreamingProvider(Protocol):
     name: str
 

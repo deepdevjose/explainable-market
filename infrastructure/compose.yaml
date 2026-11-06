@@ -1,0 +1,33 @@
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: infrastructure/docker/Dockerfile
+    ports:
+      - "127.0.0.1:5050:5050"
+    environment:
+      HOST: 0.0.0.0
+      APP_ENV: ${APP_ENV:-development}
+      SECRET_KEY: ${SECRET_KEY:?Export a strong SECRET_KEY before starting Compose}
+      COOKIE_SECURE: ${COOKIE_SECURE:-0}
+      TRUSTED_PROXY: ${TRUSTED_PROXY:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+    volumes:
+      - market-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:5050/health',timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  worker:
+    build:
+      context: ..
+      dockerfile: infrastructure/docker/Dockerfile
+    command: ["python", "-m", "market_explained.ingestion.workers"]
+    volumes:
+      - market-data:/app/data
+    restart: unless-stopped
+    stop_grace_period: 45s
+volumes:
+  market-data:

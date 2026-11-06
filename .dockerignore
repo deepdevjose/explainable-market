@@ -1,0 +1,14 @@
+.git
+.env
+.env.*
+env*.txt
+data
+venv
+.venv
+__pycache__
+**/__pycache__
+*.db
+*.backup
+artifacts
+.mypy_cache
+.ruff_cache

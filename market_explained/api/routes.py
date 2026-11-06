@@ -165,8 +165,10 @@ def detail(symbol):
     view = repository.snapshot(item['instrument_id'])
     rows = db.q('''SELECT payload FROM market_events WHERE instrument_id=? AND provider='binance'
         AND event_type='candle' AND json_extract(payload,'$.interval')='1d'
-        AND json_extract(payload,'$.candle_closed')=1 ORDER BY event_time''',(item['instrument_id'],))
-    candles = [json.loads(r['payload']) for r in rows]
+        AND json_extract(payload,'$.candle_closed')=1 ORDER BY event_time,received_at''',(item['instrument_id'],))
+    # Retain revisions in history, but display the latest observation for each day.
+    by_day = {json.loads(r['payload'])['event_time'][:10]:json.loads(r['payload']) for r in rows}
+    candles = list(by_day.values())[-365:]
     chart = charts.price_chart([r['event_time'][:10] for r in candles],
         [float(r['price']) for r in candles],label='Cierres diarios · Binance Spot · USDT · UTC') if candles else None
     return render_template('market.html',view=view,chart=chart,status_labels=STATUS_LABELS)
