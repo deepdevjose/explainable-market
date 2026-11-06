@@ -7,7 +7,8 @@ import threading
 import time
 import urllib.request
 import urllib.parse
-import xml.etree.ElementTree as ET
+from defusedxml import ElementTree as ET
+from defusedxml.common import DefusedXmlException
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
@@ -22,7 +23,11 @@ def now():
     return datetime.now(timezone.utc).isoformat(timespec='seconds')
 
 def fetch(url):
-    with urllib.request.urlopen(urllib.request.Request(url,headers=HEADERS),timeout=18) as r:
+    parsed=urllib.parse.urlsplit(url)
+    if parsed.scheme!='https' or parsed.hostname not in {'query1.finance.yahoo.com','api.nasdaq.com','feeds.finance.yahoo.com'}:
+        raise ValueError('Unsupported market source URL')
+    # HTTPS and fixed source hosts checked above.
+    with urllib.request.urlopen(urllib.request.Request(url,headers=HEADERS),timeout=18) as r:  # nosec B310
         return r.read(3_000_000)
 
 def yahoo_prices(ticker):
@@ -58,9 +63,10 @@ def nasdaq_prices(ticker):
     return sorted(rows,key=lambda r:r[1]),'USD','Nasdaq',f'https://www.nasdaq.com/market-activity/{asset}/{ticker.lower()}/historical'
 
 def get_prices(ticker):
-    for provider in (yahoo_prices,nasdaq_prices):
+    from market_explained.providers.legacy import YahooDailyProvider, NasdaqDailyProvider
+    for provider in (YahooDailyProvider(), NasdaqDailyProvider()):
         try:
-            result=provider(ticker)
+            result=provider.history(ticker)
             if len(result[0])>=2:
                 return result
         except (OSError,ValueError,KeyError,TypeError,IndexError):
@@ -102,14 +108,14 @@ def refresh(ticker):
                 c.executemany('INSERT INTO prices VALUES (?,?,?,?) ON CONFLICT(ticker,date) DO UPDATE SET close=excluded.close,volume=excluded.volume',rows)
                 c.execute('UPDATE symbols SET currency=?,source=?,source_url=?,fetched_at=?,price_error=NULL WHERE ticker=?',
                           (currency,source,url,now(),ticker))
-        except (OSError,ValueError,KeyError,TypeError) as exc:
+        except (OSError,ValueError,KeyError,TypeError):
             db.x('UPDATE symbols SET price_error=? WHERE ticker=?',('El proveedor de precios no está disponible. Conservamos el último dato verificado.',ticker))
         try:
             items=get_news(ticker)
             with db.connect() as c:
                 c.executemany('INSERT OR IGNORE INTO news(ticker,headline,source,url,published) VALUES (?,?,?,?,?)',items)
                 c.execute('UPDATE symbols SET news_error=NULL WHERE ticker=?',(ticker,))
-        except (OSError,ValueError,ET.ParseError):
+        except (OSError,ValueError,ET.ParseError,DefusedXmlException):
             db.x('UPDATE symbols SET news_error=? WHERE ticker=?',('No se pudo actualizar el feed de noticias.',ticker))
     finally:
         with LOCK:
