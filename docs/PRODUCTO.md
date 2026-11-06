@@ -1,5 +1,8 @@
 # Qué estamos construyendo
 
+> Este documento describe el MVP anterior. La evolución incremental de fases A/B
+> y sus capacidades verificadas se detallan en [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md).
+
 Explainable Market ayuda a una persona que está aprendiendo o analizando el mercado a pasar de «el precio cambió» a «qué información tengo para entender ese cambio». Reúne activos, series diarias, titulares verificables y preguntas educativas en un espacio coherente.
 
 ## Lectura de los materiales

@@ -185,6 +185,22 @@ class PersistenceTests(unittest.TestCase):
             self.assertIn('16542.12000000',self.client.get('/market/BTCUSDT').text)
             self.assertEqual(len(self.client.get('/api/v1/market/BTCUSDT/history?limit=1').json['data']),1)
 
+    def test_crypto_assistant_context_is_server_owned_and_source_labeled(self):
+        repository.save(trade())
+        self.client.get('/market/BTCUSDT')
+        with self.client.session_transaction() as session:
+            token=session['csrf']
+        with patch('ai.answer',return_value='Explicación educativa') as answer:
+            response=self.client.post('/api/chat',json={'message':'¿Qué significa USDT?',
+                'ticker':'BTCUSDT','page':'markets.detail','context':'Invented price'},
+                headers={'X-CSRF-Token':token})
+        self.assertEqual(response.status_code,200)
+        context=answer.call_args.args[2]
+        self.assertEqual(context['asset']['currency'],'USDT')
+        self.assertEqual(context['asset']['source'],'binance')
+        self.assertEqual(context['asset']['status'],'STALE')
+        self.assertNotIn('Invented price',json.dumps(context))
+
     def test_v1_rate_limit_contract(self):
         with patch('db.allow',return_value=False):
             response=self.client.get('/api/v1/markets')

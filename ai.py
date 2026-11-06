@@ -17,7 +17,8 @@ def complete(messages, max_tokens=900):
         data=json.dumps(payload).encode(),headers={
         'Authorization':'Bearer '+config.DEEPSEEK_KEY, 'Content-Type':'application/json'})
     try:
-        with urllib.request.urlopen(req,timeout=45) as r:
+        # fixed server-side HTTPS DeepSeek endpoint.
+        with urllib.request.urlopen(req,timeout=45) as r:  # nosec B310
             result=json.load(r)
         choice=result['choices'][0]
         if choice.get('finish_reason') == 'length':

@@ -1,0 +1,14 @@
+[tool.ruff]
+exclude = ["venv", ".venv"]
+[tool.ruff.lint]
+# Check correctness while preserving the compact pre-existing style.
+select = ["F", "E9"]
+
+[tool.mypy]
+files = ["market_explained/markets", "market_explained/providers", "market_explained/ingestion", "market_explained/storage", "market_explained/api"]
+follow_imports = "silent"
+check_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = ["defusedxml", "defusedxml.*"]
+ignore_missing_imports = true

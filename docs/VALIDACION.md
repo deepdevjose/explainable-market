@@ -1,4 +1,11 @@
-# Evidencia de validación
+# Evidencia de validación anterior
+
+> Evidencia histórica del MVP, no el estado completo actual. La auditoría posterior
+> confirmó que el archivo de credenciales, el secreto de sesión y las bases sí
+> entraron en Git en f51fc78; la afirmación anterior sobre .gitignore era incorrecta.
+> Fueron retirados del seguimiento sin reescribir historia. Deben rotarse las claves.
+> Configuración actual: solo entorno; no se cargan archivos locales. Consulta
+> [SECURITY.md](../SECURITY.md) y [el informe actual](IMPLEMENTATION_REPORT.md).
 
 Fecha: 6 de noviembre de 2026 (Asia/Shanghai).
 
