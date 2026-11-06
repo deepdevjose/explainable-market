@@ -1,0 +1,8 @@
+{$PUBLIC_HOST} {
+    encode zstd gzip
+    reverse_proxy web:5050 {
+        # Replace client-provided forwarding headers; Flask trusts only this proxy IP.
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+}

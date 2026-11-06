@@ -93,7 +93,7 @@ node --check static/app.js
 curl http://127.0.0.1:5050/health
 ```
 
-Las 46 pruebas usan bases temporales, fixtures con procedencia y un WebSocket local, sin gastar crédito de DeepSeek ni tocar datos del usuario. `/health` comprueba la base y si existe configuración de IA; `ai_configured: true` **no valida** credencial, saldo ni disponibilidad del proveedor.
+Las 48 pruebas usan bases temporales, fixtures con procedencia y un WebSocket local, sin gastar crédito de DeepSeek ni tocar datos del usuario. `/health` comprueba la base y si existe configuración de IA; `ai_configured: true` **no valida** credencial, saldo ni disponibilidad del proveedor.
 
 Consulta [la auditoría](docs/ARCHITECTURE_AUDIT.md), [el informe de esta entrega](docs/IMPLEMENTATION_REPORT.md) y [las operaciones de datos](docs/DATA_OPERATIONS.md). La inspección visual en navegador queda pendiente porque el host de automatización no está disponible. El documento VALIDACION.md conserva la evidencia anterior y sus correcciones.
 
@@ -189,3 +189,9 @@ entrega. Correlación no implica causalidad. Revisa fecha, fuente y límites de 
 Documentación primaria del adaptador: [Binance WebSocket](https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams),
 [REST de mercado](https://developers.binance.com/docs/binance-spot-api-docs/rest-api/market-data-endpoints)
 y [endpoints públicos de datos](https://developers.binance.com/docs/binance-spot-api-docs/faqs/market_data_only).
+
+Para publicar la aplicación completa sin depender de la laptop, sigue
+[Publicar gratis](infrastructure/deployment/PUBLICAR_GRATIS.md): máquina externa
+Always Free sujeta a disponibilidad, procesos independientes, volumen SQLite y
+proxy HTTPS. GitHub Pages por sí solo no ejecuta el backend. La guía y configuración
+no significan que exista ya una instancia pública.

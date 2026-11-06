@@ -12,3 +12,6 @@ __pycache__
 artifacts
 .mypy_cache
 .ruff_cache
+**/.env
+**/.env.*
+**/env*.txt
