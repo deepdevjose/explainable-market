@@ -121,7 +121,7 @@ node --check static/app.js
 curl http://127.0.0.1:5050/health
 ```
 
-Las 70 pruebas actuales usan bases temporales, fixtures y un WebSocket local,
+Las 75 pruebas actuales usan bases temporales, fixtures y un WebSocket local,
 sin llamadas externas ni gasto de crédito de los proveedores de IA. `/health` comprueba la base y si existe configuración de IA; `ai_configured: true` **no valida** credencial, saldo ni disponibilidad del proveedor.
 
 Consulta [la auditoría](docs/ARCHITECTURE_AUDIT.md), [el informe de esta entrega](docs/IMPLEMENTATION_REPORT.md) y [las operaciones de datos](docs/DATA_OPERATIONS.md). La actualización del 12 de noviembre incluye revisión de idiomas y disposición responsive en Chromium. El documento VALIDACION.md conserva la evidencia anterior y sus correcciones.
@@ -290,3 +290,18 @@ de confirmar derechos de visualización externa con Twelve Data. Los límites de
 plan y los rechazos por instrumento siguen aplicándose.
 
 Detalles, evidencia y límites: [inteligencia predictiva](docs/PREDICTIVE_INTELLIGENCE.md).
+
+## Colores de las gráficas
+
+Los segmentos observados usan verde para subidas, rojo para bajadas y gris para
+precios sin cambio, tanto en los históricos como en las miniaturas y la traza
+cripto recibida durante la visita. El color compara cada observación con la anterior.
+
+En `/intelligence?symbol=BTCUSDT` (o desde «Ver gráfica de predicción» en el detalle
+del activo), la gráfica une hasta 30 cierres reales con el siguiente cierre
+estimado mediante un tramo **amarillo discontinuo** y un intervalo sombreado.
+El amarillo indica una estimación, tanto si sube como si baja; no indica una
+cotización en vivo. La anchura del horizonte es ilustrativa, sin inventar una fecha
+de sesión futura. Corte, proveedor y fecha de generación permanecen visibles.
+No se dibuja la unión si la fuente, el corte o el precio de referencia no coinciden;
+los datos restringidos conservan su bloqueo de visualización externa.

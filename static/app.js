@@ -76,7 +76,16 @@ async function pollMarkets(){
     samples.push(Number(o.price));if(samples.length>60)samples.shift();
     if(samples.length>1){
      const low=Math.min(...samples),high=Math.max(...samples),range=high-low||1;
-     trace.querySelector('polyline').setAttribute('points',samples.map((v,i)=>`${5+i*590/(samples.length-1)},${95-(v-low)*90/range}`).join(' '));
+     const points=samples.map((v,i)=>[5+i*590/(samples.length-1),95-(v-low)*90/range]);
+     const segments=points.slice(1).map(([x,y],i)=>{
+      const line=document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',points[i][0]);line.setAttribute('y1',points[i][1]);
+      line.setAttribute('x2',x);line.setAttribute('y2',y);
+      const direction=samples[i+1]>samples[i]?'up':samples[i+1]<samples[i]?'down':'flat';
+      line.setAttribute('class','price-segment price-'+direction);line.dataset.direction=direction;
+      line.setAttribute('stroke-width','2');line.setAttribute('stroke-linecap','round');return line;
+     });
+     trace.querySelector('[data-live-segments]').replaceChildren(...segments);
      node.querySelector('[data-live-wait]').hidden=true;
     }
    }

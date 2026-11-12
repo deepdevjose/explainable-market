@@ -11,6 +11,7 @@ from market_explained.providers.base import CAPABILITIES
 from market_explained.storage import repository
 from market_explained.security.display import restricted
 from market_explained.intelligence.data import latest
+from market_explained.intelligence.visualization import prediction_chart
 
 api = Blueprint('market_api', __name__, url_prefix='/api/v1')
 pages = Blueprint('markets', __name__)
@@ -176,7 +177,8 @@ def intelligence():
     item = instrument(selected)
     result = None if restricted(item['instrument_id']) else latest(item['instrument_id'])
     return render_template('intelligence.html',instruments=catalog(),selected=item,
-        prediction=result,restricted=restricted(item['instrument_id']))
+        prediction=result,chart=prediction_chart(item,result) if result else None,
+        restricted=restricted(item['instrument_id']))
 
 
 @pages.errorhandler(APIError)

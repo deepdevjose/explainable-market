@@ -1934,5 +1934,41 @@
   "El proveedor de IA no pudo completar esta consulta.": {
     "en": "The AI provider could not complete this request.",
     "zh-Hans": "AI 提供方未能完成此请求。"
+  },
+  "Sube": {
+    "en": "Rising",
+    "zh-Hans": "上涨"
+  },
+  "Baja": {
+    "en": "Falling",
+    "zh-Hans": "下跌"
+  },
+  "Sin cambio": {
+    "en": "Unchanged",
+    "zh-Hans": "持平"
+  },
+  "Predicción (estimación)": {
+    "en": "Prediction (estimate)",
+    "zh-Hans": "预测（估计）"
+  },
+  "Siguiente cierre": {
+    "en": "Next close",
+    "zh-Hans": "下一收盘"
+  },
+  "Cierres observados y predicción": {
+    "en": "Observed closes and prediction",
+    "zh-Hans": "已观测收盘价与预测"
+  },
+  "Últimos 30 cierres disponibles hasta el corte del modelo. Amarillo discontinuo: siguiente cierre estimado. La zona sombreada muestra incertidumbre; no es una trayectoria de precios garantizada. El ancho del tramo futuro es ilustrativo, no una escala de tiempo.": {
+    "en": "Last 30 available closes up to the model cutoff. Dashed yellow: next estimated close. Shading shows uncertainty, not a guaranteed price path. The width of the future segment is illustrative, not a time scale.",
+    "zh-Hans": "截至模型数据截止时间的最近30个可用收盘价。黄色虚线表示下一个收盘价的估计值。阴影表示不确定性，并非保证的价格走势。未来区段的宽度仅为示意，不代表时间比例。"
+  },
+  "No hay una serie compatible con la fuente y el corte de este pronóstico. No se unen datos de otra fuente ni precios revisados.": {
+    "en": "No history matches this forecast’s source and cutoff. Data from another source or revised prices are not joined.",
+    "zh-Hans": "没有与此预测的数据源和截止时间匹配的历史序列。不会拼接其他来源的数据或修订后的价格。"
+  },
+  "Ver gráfica de predicción": {
+    "en": "View prediction chart",
+    "zh-Hans": "查看预测图表"
   }
 }
