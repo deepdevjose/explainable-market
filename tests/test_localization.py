@@ -57,6 +57,7 @@ class LocalizationTests(unittest.TestCase):
         response = self.client.get('/news?lang=en')
         self.assertIn('El mercado se mueve.', response.text)
         self.assertIn('Behind the headlines', response.text)
+        self.assertIn('data-question="What is volatility?"', response.text)
         self.assertEqual(self.client.get('/api/v1/translations').json['Mercados'], 'Markets')
 
     def test_missing_ai_key_is_explicit_deterministic_education(self):
