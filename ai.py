@@ -1,4 +1,4 @@
-"""Server-only DeepSeek integration with bounded context and JSON validation."""
+"""Server-only selectable AI integration with bounded context and JSON validation."""
 import json
 import urllib.request
 import urllib.error
@@ -7,29 +7,67 @@ import config
 class AIError(Exception):
     pass
 
+def _provider():
+    # Endpoints are fixed; neither requests nor model responses can select a URL.
+    if config.AI_PROVIDER == 'bigmodel':
+        return dict(name='bigmodel',label='Zhipu / BigModel',key=config.BIGMODEL_KEY,
+                    model=config.BIGMODEL_MODEL,endpoint='https://open.bigmodel.cn/api/paas/v4/chat/completions')
+    if config.AI_PROVIDER == 'deepseek':
+        return dict(name='deepseek',label='DeepSeek',key=config.DEEPSEEK_KEY,
+                    model=config.DEEPSEEK_MODEL,endpoint='https://api.deepseek.com/chat/completions')
+    raise AIError('Proveedor de IA no reconocido. Revisa AI_PROVIDER en el servidor.')
+
+
+def configured():
+    try:
+        return bool(_provider()['key'])
+    except AIError:
+        return False
+
+
+def provider_info():
+    try:
+        provider = _provider()
+        return dict(provider=provider['name'],label=provider['label'],model=provider['model'],
+                    configured=bool(provider['key']))
+    except AIError:
+        return dict(provider='unavailable',label='IA',model=None,configured=False)
+
+
 def complete(messages, max_tokens=900):
-    if not config.DEEPSEEK_KEY:
-        raise AIError('Configura DEEPSEEK_API_KEY en el servidor para activar el asistente.')
-    payload={'model':config.DEEPSEEK_MODEL,'messages':messages,
+    provider = _provider()
+    if not provider['key']:
+        raise AIError('Configura la clave del proveedor de IA en el servidor para activar el asistente.')
+    payload={'model':provider['model'],'messages':messages,
              'max_tokens':max_tokens,'temperature':0.2,
              'response_format':{'type':'json_object'}, 'thinking':{'type':'disabled'}}
-    req=urllib.request.Request('https://api.deepseek.com/chat/completions',
-        data=json.dumps(payload).encode(),headers={
-        'Authorization':'Bearer '+config.DEEPSEEK_KEY, 'Content-Type':'application/json'})
+    if provider['name']=='bigmodel':
+        # GLM-5.3-Flash requires thinking. Bound its budget, and never return reasoning_content.
+        payload.update(thinking={'type':'enabled'},reasoning_effort='low',
+                       temperature=1.0,max_tokens=max(4096,max_tokens))
+    req=urllib.request.Request(provider['endpoint'],data=json.dumps(payload).encode(),headers={
+        'Authorization':'Bearer '+provider['key'], 'Content-Type':'application/json'})
     try:
-        # fixed server-side HTTPS DeepSeek endpoint.
+        # Fixed allowlisted HTTPS endpoints; API keys travel only in Authorization.
         with urllib.request.urlopen(req,timeout=45) as r:  # nosec B310
-            result=json.load(r)
+            raw=r.read(2_000_001)
+        if len(raw)>2_000_000:
+            raise AIError('La respuesta del proveedor de IA es demasiado grande.')
+        result=json.loads(raw)
         choice=result['choices'][0]
         if choice.get('finish_reason') == 'length':
             raise AIError('La respuesta quedó incompleta. Prueba una pregunta más breve.')
+        if choice.get('finish_reason') not in ('stop',None):
+            raise AIError('El proveedor de IA no pudo completar esta consulta.')
         return json.loads(choice['message']['content'])
     except urllib.error.HTTPError as exc:
-        messages={401:'La clave de DeepSeek no fue aceptada.',402:'La cuenta de DeepSeek no tiene saldo disponible.',
-                  429:'DeepSeek está recibiendo demasiadas solicitudes. Inténtalo en unos minutos.'}
-        raise AIError(messages.get(exc.code,'DeepSeek no está disponible. Inténtalo más tarde.')) from None
-    except (OSError, ValueError, KeyError, IndexError, TypeError):
-        raise AIError('No se pudo obtener una respuesta válida de DeepSeek. Inténtalo de nuevo.') from None
+        label=provider['label']
+        errors={401:f'La clave de {label} no fue aceptada.',402:f'La cuenta de {label} no tiene saldo disponible.',
+                429:f'{label} está recibiendo demasiadas solicitudes. Inténtalo en unos minutos.'}
+        # Never expose the upstream body, which may contain account data or credentials.
+        raise AIError(errors.get(exc.code,f'{label} no está disponible. Inténtalo más tarde.')) from None
+    except (OSError, ValueError, KeyError, IndexError, TypeError, AttributeError):
+        raise AIError(f"No se pudo obtener una respuesta válida de {provider['label']}. Inténtalo de nuevo.") from None
 
 SYSTEM='''Eres el asistente educativo de Explainable Market. Responde en español, claro y breve (máximo 180 palabras).
 SOLO puedes explicar la interfaz de esta aplicación, noticias y conceptos económicos, bursátiles o financieros educativos.
@@ -52,14 +90,17 @@ def answer(question, history, context):
     try:
         result=complete(messages)
     except AIError:
-        if config.DEEPSEEK_KEY:
+        if configured() or config.AI_PROVIDER not in ('deepseek','bigmodel'):
             raise
         from market_explained.assistant.educational import explain
         return explain(question, context)
     if not isinstance(result,dict) or not isinstance(result.get('in_scope'),bool) or not isinstance(result.get('answer'),str):
         raise AIError('El asistente no devolvió una respuesta válida. Inténtalo de nuevo.')
     if not result['in_scope']:
-        return 'Puedo ayudarte con esta plataforma y con conceptos del mercado. ¿Quieres que te explique una gráfica, una noticia o un término financiero?'
+        return {
+            'en':'I can help with this platform and market concepts. Would you like an explanation of a chart, a headline or a financial term?',
+            'zh-Hans':'我可以帮助你理解本平台和市场概念。你想了解图表、新闻或金融术语吗？',
+        }.get(context.get('response_language'),'Puedo ayudarte con esta plataforma y con conceptos del mercado. ¿Quieres que te explique una gráfica, una noticia o un término financiero?')
     text=result['answer'].strip()
     if not text or len(text)>6000:
         raise AIError('La respuesta no pudo validarse. Inténtalo de nuevo.')

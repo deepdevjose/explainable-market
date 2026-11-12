@@ -21,6 +21,8 @@ jobs:
         env:
           DATABASE_PATH: /tmp/market-ci.db
           DEEPSEEK_API_KEY: ''
+          BIGMODEL_API_KEY: ''
+          AI_PROVIDER: deepseek
       - run: ruff check .
       - run: mypy
       - run: bandit -q -r market_explained ai.py charts.py collector.py config.py db.py -ll
@@ -41,6 +43,8 @@ jobs:
           DATABASE_PATH: /tmp/market-forecast-ci.db
           TWELVE_DATA_API_KEY: ''
           DEEPSEEK_API_KEY: ''
+          BIGMODEL_API_KEY: ''
+          AI_PROVIDER: deepseek
       - run: pip-audit -r requirements.txt -r requirements-ml.txt
   container:
     runs-on: ubuntu-latest

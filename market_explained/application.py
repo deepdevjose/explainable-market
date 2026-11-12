@@ -75,7 +75,8 @@ def headers(response):
 
 @app.context_processor
 def context():
-    return dict(csrf_token=csrf_token,sentiment_label=LABELS,chat_ready=bool(config.DEEPSEEK_KEY),
+    return dict(csrf_token=csrf_token,sentiment_label=LABELS,chat_ready=ai.configured(),
+                ai_provider=ai.provider_info()['label'],ai_model=ai.provider_info()['model'],
                 active_jobs=collector.status(),
                 page=request.endpoint or '',active_ticker=request.view_args.get('ticker','') if request.view_args else '',
                 user=db.q1('SELECT name,email FROM users WHERE id=?',(session['user_id'],)) if session.get('user_id') else None)
@@ -357,7 +358,8 @@ def export(ticker):
 @app.get('/health')
 def health():
     db.q1('SELECT 1 AS ok')
-    return jsonify(status='ok',database='connected',ai_configured=bool(config.DEEPSEEK_KEY))
+    return jsonify(status='ok',database='connected',ai_configured=ai.configured(),ai_provider=ai.provider_info()['provider'],
+                   ai_model=ai.provider_info()['model'])
 
 @app.errorhandler(404)
 @app.errorhandler(400)

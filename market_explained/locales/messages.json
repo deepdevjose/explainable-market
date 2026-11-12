@@ -1794,5 +1794,145 @@
   "· UTC · hasta 365 cierres según disponibilidad. Gráfica histórica; no representa operaciones en vivo.": {
     "en": "· UTC · up to 365 closes, subject to availability. Historical chart; not live trades.",
     "zh-Hans": "· UTC · 最多365个收盘价，取决于数据可用性。历史图表，不代表实时交易。"
+  },
+  "IA educativa con el proveedor de IA. Puede equivocarse.": {
+    "en": "Educational AI powered by the configured AI provider. It can make mistakes.",
+    "zh-Hans": "由 已配置的 AI 提供方 提供的教育型 AI，可能出现错误。"
+  },
+  "IA educativa con Zhipu / BigModel. Puede equivocarse.": {
+    "en": "Educational AI powered by Zhipu / BigModel. It can make mistakes.",
+    "zh-Hans": "由 Zhipu / BigModel 提供的教育型 AI，可能出现错误。"
+  },
+  "Tu consulta y el contexto se envían al proveedor de IA. Sin asesoría de inversión.": {
+    "en": "Your question and context are sent to the configured AI provider. No investment advice.",
+    "zh-Hans": "你的问题与背景将发送至 已配置的 AI 提供方。不提供投资建议。"
+  },
+  "Tu consulta y el contexto se envían a Zhipu / BigModel. Sin asesoría de inversión.": {
+    "en": "Your question and context are sent to Zhipu / BigModel. No investment advice.",
+    "zh-Hans": "你的问题与背景将发送至 Zhipu / BigModel。不提供投资建议。"
+  },
+  "El sentimiento clasifica el tono del titular mediante el proveedor de IA. No mide rentabilidad futura ni constituye una recomendación.": {
+    "en": "the configured AI provider classifies headline tone. Sentiment does not measure future returns or constitute a recommendation.",
+    "zh-Hans": "已配置的 AI 提供方 对标题语气进行分类，不能衡量未来收益，也不构成建议。"
+  },
+  "El sentimiento clasifica el tono del titular mediante Zhipu / BigModel. No mide rentabilidad futura ni constituye una recomendación.": {
+    "en": "Zhipu / BigModel classifies headline tone. Sentiment does not measure future returns or constitute a recommendation.",
+    "zh-Hans": "Zhipu / BigModel 对标题语气进行分类，不能衡量未来收益，也不构成建议。"
+  },
+  "«Sin analizar» significa que el proveedor de IA aún no ha clasificado esa noticia. Puedes solicitarlo desde el detalle del activo.": {
+    "en": "Not analyzed means the configured AI provider has not classified the headline yet. Request analysis from the instrument page.",
+    "zh-Hans": "“未分析”表示 已配置的 AI 提供方 尚未分类该新闻，可在资产详情页请求分析。"
+  },
+  "«Sin analizar» significa que Zhipu / BigModel aún no ha clasificado esa noticia. Puedes solicitarlo desde el detalle del activo.": {
+    "en": "Not analyzed means Zhipu / BigModel has not classified the headline yet. Request analysis from the instrument page.",
+    "zh-Hans": "“未分析”表示 Zhipu / BigModel 尚未分类该新闻，可在资产详情页请求分析。"
+  },
+  "Tus listas se guardan en este servicio. Las consultas al asistente se procesan con el proveedor de IA.": {
+    "en": "Your lists are stored on this service. Assistant requests are processed by the configured AI provider.",
+    "zh-Hans": "列表保存在此服务中，助手请求由 已配置的 AI 提供方 处理。"
+  },
+  "Tus listas se guardan en este servicio. Las consultas al asistente se procesan con Zhipu / BigModel.": {
+    "en": "Your lists are stored on this service. Assistant requests are processed by Zhipu / BigModel.",
+    "zh-Hans": "列表保存在此服务中，助手请求由 Zhipu / BigModel 处理。"
+  },
+  "¿Qué se guarda y qué se envía al proveedor de IA?": {
+    "en": "What is stored and sent to the configured AI provider?",
+    "zh-Hans": "哪些数据被保存并发送至 已配置的 AI 提供方？"
+  },
+  "¿Qué se guarda y qué se envía a Zhipu / BigModel?": {
+    "en": "What is stored and sent to Zhipu / BigModel?",
+    "zh-Hans": "哪些数据被保存并发送至 Zhipu / BigModel？"
+  },
+  "Analizando con el proveedor de IA…": {
+    "en": "Analyzing with the configured AI provider…",
+    "zh-Hans": "正在使用 已配置的 AI 提供方 分析…"
+  },
+  "Analizando con Zhipu / BigModel…": {
+    "en": "Analyzing with Zhipu / BigModel…",
+    "zh-Hans": "正在使用 Zhipu / BigModel 分析…"
+  },
+  "Los titulares proceden del RSS de Yahoo Finance y se agrupan por activo. Convertimos la fecha de publicación a Nueva York y la asociamos a la primera sesión disponible de esa fecha en adelante. Si se publicó desde las 16:00 de Nueva York, se asocia a la siguiente sesión disponible. Se usa el cierre habitual: las sesiones con cierre anticipado requieren un calendario bursátil específico. Esto permite explorar coincidencias, sin atribuir causalidad. El sentimiento es una lectura del proveedor de IA del titular, con sus limitaciones.": {
+    "en": "Yahoo Finance RSS headlines are grouped by instrument. Publication times are converted to New York time and assigned to the first available session on or after that date. News at or after 16:00 is assigned to the next session. Early closes require a dedicated exchange calendar. This explores coincidence, not causation. the configured AI provider sentiment reflects headline tone and has limitations.",
+    "zh-Hans": "Yahoo Finance RSS 标题按资产分组。发布时间转换为纽约时间，并归入当日或之后首个可用交易日。16:00及之后的新闻归入下一交易日。提前收盘需要专用交易日历。此方法探索时间关联而非因果。已配置的 AI 提供方 情绪分析反映标题语气，存在局限。"
+  },
+  "Los titulares proceden del RSS de Yahoo Finance y se agrupan por activo. Convertimos la fecha de publicación a Nueva York y la asociamos a la primera sesión disponible de esa fecha en adelante. Si se publicó desde las 16:00 de Nueva York, se asocia a la siguiente sesión disponible. Se usa el cierre habitual: las sesiones con cierre anticipado requieren un calendario bursátil específico. Esto permite explorar coincidencias, sin atribuir causalidad. El sentimiento es una lectura de Zhipu / BigModel del titular, con sus limitaciones.": {
+    "en": "Yahoo Finance RSS headlines are grouped by instrument. Publication times are converted to New York time and assigned to the first available session on or after that date. News at or after 16:00 is assigned to the next session. Early closes require a dedicated exchange calendar. This explores coincidence, not causation. Zhipu / BigModel sentiment reflects headline tone and has limitations.",
+    "zh-Hans": "Yahoo Finance RSS 标题按资产分组。发布时间转换为纽约时间，并归入当日或之后首个可用交易日。16:00及之后的新闻归入下一交易日。提前收盘需要专用交易日历。此方法探索时间关联而非因果。Zhipu / BigModel 情绪分析反映标题语气，存在局限。"
+  },
+  "Las cuentas, listas, datos de fuentes y las últimas 30 entradas de conversación se guardan en SQLite en este servidor. Cada consulta al asistente envía tu pregunta, hasta 8 mensajes previos y el contexto financiero visible al proveedor de IA; no se envían contraseña ni correo. Puedes borrar tu conversación con «Borrar» en el chat. El análisis de sentimiento envía hasta 8 titulares, solo cuando lo solicitas. Eliminar la conversación local no elimina datos que el proveedor haya procesado.": {
+    "en": "Accounts, watchlists, source data and the last 30 conversation entries are stored in SQLite on this server. Assistant requests send your question, up to 8 previous messages and financial context to the configured AI provider, without your password or email. Clear removes local chat history. Requested sentiment analysis sends up to 8 headlines. Local deletion does not delete data already processed by the provider.",
+    "zh-Hans": "账户、自选、来源数据及最近30条对话保存在本服务器 SQLite。助手请求会发送问题、最多8条历史消息及金融背景至 已配置的 AI 提供方，不发送密码或邮箱。清除功能删除本地对话。按需情绪分析最多发送8条标题。本地删除不代表删除提供方已处理的数据。"
+  },
+  "Las cuentas, listas, datos de fuentes y las últimas 30 entradas de conversación se guardan en SQLite en este servidor. Cada consulta al asistente envía tu pregunta, hasta 8 mensajes previos y el contexto financiero visible a Zhipu / BigModel; no se envían contraseña ni correo. Puedes borrar tu conversación con «Borrar» en el chat. El análisis de sentimiento envía hasta 8 titulares, solo cuando lo solicitas. Eliminar la conversación local no elimina datos que el proveedor haya procesado.": {
+    "en": "Accounts, watchlists, source data and the last 30 conversation entries are stored in SQLite on this server. Assistant requests send your question, up to 8 previous messages and financial context to Zhipu / BigModel, without your password or email. Clear removes local chat history. Requested sentiment analysis sends up to 8 headlines. Local deletion does not delete data already processed by the provider.",
+    "zh-Hans": "账户、自选、来源数据及最近30条对话保存在本服务器 SQLite。助手请求会发送问题、最多8条历史消息及金融背景至 Zhipu / BigModel，不发送密码或邮箱。清除功能删除本地对话。按需情绪分析最多发送8条标题。本地删除不代表删除提供方已处理的数据。"
+  },
+  "Guía educativa local · sin IA generativa. No hay un proveedor de IA configurado.": {
+    "en": "Local educational guide · no generative AI. No AI provider is configured.",
+    "zh-Hans": "本地教育指南 · 不使用生成式 AI。尚未配置 AI 提供方。"
+  },
+  "Guía educativa local · sin IA generativa. Zhipu / BigModel no está configurado.": {
+    "en": "Local educational guide · no generative AI. Zhipu / BigModel is not configured.",
+    "zh-Hans": "本地教育指南 · 不使用生成式 AI。尚未配置 Zhipu / BigModel。"
+  },
+  "La clave del proveedor de IA no fue aceptada.": {
+    "en": "the configured AI provider rejected the API key.",
+    "zh-Hans": "已配置的 AI 提供方 拒绝了此 API 密钥。"
+  },
+  "La clave de Zhipu / BigModel no fue aceptada.": {
+    "en": "Zhipu / BigModel rejected the API key.",
+    "zh-Hans": "Zhipu / BigModel 拒绝了此 API 密钥。"
+  },
+  "La cuenta del proveedor de IA no tiene saldo disponible.": {
+    "en": "The the configured AI provider account has no available credit.",
+    "zh-Hans": "已配置的 AI 提供方 账户无可用余额。"
+  },
+  "La cuenta de Zhipu / BigModel no tiene saldo disponible.": {
+    "en": "The Zhipu / BigModel account has no available credit.",
+    "zh-Hans": "Zhipu / BigModel 账户无可用余额。"
+  },
+  "Zhipu / BigModel está recibiendo demasiadas solicitudes. Inténtalo en unos minutos.": {
+    "en": "Zhipu / BigModel is receiving too many requests. Try again in a few minutes.",
+    "zh-Hans": "Zhipu / BigModel 请求过多，请稍后重试。"
+  },
+  "Zhipu / BigModel no está disponible. Inténtalo más tarde.": {
+    "en": "Zhipu / BigModel is unavailable. Try again later.",
+    "zh-Hans": "Zhipu / BigModel 不可用，请稍后重试。"
+  },
+  "No se pudo obtener una respuesta válida del proveedor de IA. Inténtalo de nuevo.": {
+    "en": "Could not get a valid the configured AI provider response. Try again.",
+    "zh-Hans": "无法获取有效的 已配置的 AI 提供方 响应，请重试。"
+  },
+  "No se pudo obtener una respuesta válida de Zhipu / BigModel. Inténtalo de nuevo.": {
+    "en": "Could not get a valid Zhipu / BigModel response. Try again.",
+    "zh-Hans": "无法获取有效的 Zhipu / BigModel 响应，请重试。"
+  },
+  "IA educativa con {provider}. Puede equivocarse.": {
+    "en": "Educational AI powered by {provider}. It can make mistakes.",
+    "zh-Hans": "教育型 AI 由 {provider} 提供，可能出错。"
+  },
+  "Tu consulta y el contexto se envían a {provider}. Sin asesoría de inversión.": {
+    "en": "Your question and context are sent to {provider}. No investment advice.",
+    "zh-Hans": "你的问题和背景将发送至 {provider}。不提供投资建议。"
+  },
+  "Analizando titulares…": {
+    "en": "Analyzing headlines…",
+    "zh-Hans": "正在分析新闻标题…"
+  },
+  "Configura la clave del proveedor de IA en el servidor para activar el asistente.": {
+    "en": "Configure the AI provider key on the server to enable the assistant.",
+    "zh-Hans": "请在服务器配置 AI 提供方密钥以启用助手。"
+  },
+  "Proveedor de IA no reconocido. Revisa AI_PROVIDER en el servidor.": {
+    "en": "Unrecognized AI provider. Check AI_PROVIDER on the server.",
+    "zh-Hans": "无法识别 AI 提供方。请检查服务器上的 AI_PROVIDER。"
+  },
+  "La respuesta del proveedor de IA es demasiado grande.": {
+    "en": "The AI provider response is too large.",
+    "zh-Hans": "AI 提供方的响应过大。"
+  },
+  "El proveedor de IA no pudo completar esta consulta.": {
+    "en": "The AI provider could not complete this request.",
+    "zh-Hans": "AI 提供方未能完成此请求。"
   }
 }

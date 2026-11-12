@@ -14,4 +14,7 @@ EPHEMERAL_SECRET = not SECRET_KEY
 SECRET_KEY = SECRET_KEY or secrets.token_hex(32)
 DEEPSEEK_KEY = os.environ.get('DEEPSEEK_API_KEY', '')
 DEEPSEEK_MODEL = os.environ.get('DEEPSEEK_MODEL', 'deepseek-flash')
+AI_PROVIDER = os.environ.get('AI_PROVIDER', 'deepseek').lower()
+BIGMODEL_KEY = os.environ.get('BIGMODEL_API_KEY', '')
+BIGMODEL_MODEL = os.environ.get('BIGMODEL_MODEL', 'glm-5.3-flash')
 DATABASE = os.environ.get('DATABASE_PATH', str(DATA_DIR / 'market-live.db'))

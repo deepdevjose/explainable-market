@@ -32,8 +32,10 @@ con permisos 0600 y una clave de sesión estable generada una sola vez. Se manti
 fuera de Git. No reutilizar credenciales históricamente expuestas. El servidor usa
 cookies seguras y escucha solo en loopback; el túnel proporciona HTTPS. El acceso
 HTTP local no sustituye la prueba de registro/login mediante la URL HTTPS pública.
-Para activar DeepSeek, añadir una **nueva clave válida** a ese archivo local como
-`DEEPSEEK_API_KEY=...` y reiniciar únicamente el servicio web. Nunca compartirlo.
+Para seleccionar la IA, usar `AI_PROVIDER=bigmodel`, `BIGMODEL_MODEL=glm-5.3-flash`
+y `BIGMODEL_API_KEY` en ese archivo privado; la clave ya está configurada en esta
+instalación. DeepSeek sigue disponible con `AI_PROVIDER=deepseek` y su variable
+`DEEPSEEK_API_KEY`. Reiniciar únicamente el servicio web. Nunca compartir claves.
 
 ```bash
 systemctl --user restart market-explained-demo-web
@@ -60,7 +62,7 @@ La gráfica breve de cripto muestra hasta 60 observaciones **recibidas durante l
 visita**, no todos los trades ni una serie inventada; el gráfico histórico SVG se
 conserva. Las acciones siguen usando cierres diarios, nunca simulación de tiempo real.
 
-Sin DeepSeek se ofrece una guía local determinista, identificada expresamente como
+Sin clave del proveedor de IA seleccionado se ofrece una guía local determinista, identificada expresamente como
 no generativa, para conceptos básicos. No clasifica titulares ni promete conversación
 libre. El análisis de sentimiento sigue requiriendo una clave y saldo válidos.
 Los modelos de persistencia, ridge y XGBoost CPU se entrenan fuera del servidor
@@ -115,3 +117,9 @@ La instalación actual verificó `Linger=yes`, seis servicios activos y recupera
 automática de web después de terminar su proceso: nuevo PID y `/health` HTTP 200.
 No se reinició el túnel durante esta actualización, por lo que se conservó el enlace.
 Consultar el informe de [modelos](PREDICTIVE_INTELLIGENCE.md) para resultados.
+
+
+El asistente y la clasificación de titulares usan ahora **Zhipu / BigModel** en esta
+instalación. La interfaz identifica proveedor y modelo y explica qué se envía.
+Los modelos numéricos y la ingesta siguen siendo procesos independientes de la IA.
+Ver [validación de proveedores IA](AI_PROVIDERS.md).

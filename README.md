@@ -25,18 +25,28 @@ Python 3.11 o superior. El servidor HTTP es Waitress, con ocho hilos y depuraci�
 - Consultar series de cierres de uno, tres y seis meses; descargar CSV con fuente.
 - Abrir titulares originales y filtrar por activo o sentimiento.
 - Comparar variaciones a una, tres y siete sesiones con ventanas completas.
-- Solicitar a DeepSeek la clasificación del tono de hasta ocho titulares desde el detalle de un activo, con sesión iniciada.
+- Solicitar al proveedor de IA la clasificación del tono de hasta ocho titulares desde el detalle de un activo, con sesión iniciada.
 - Abrir el asistente flotante desde cualquier pantalla. Tiene contexto del activo, datos y noticias del servidor, y un historial separado por usuario o visitante.
 - Borrar el historial local del asistente y consultar la metodología y biblioteca educativa.
 
-## Configurar DeepSeek
+## Configurar el asistente: BigModel o DeepSeek
 
 La configuración se toma únicamente de variables del proceso. `.env.example` es
 una referencia: no se cargan `.env` ni `env (1).txt`. No se admite el alias
-DEEPSEEK_KEY. Exporta DEEPSEEK_API_KEY desde tu gestor de secretos o servicio.
+DEEPSEEK_KEY. Configura la clave del proveedor seleccionado desde tu gestor de
+secretos o el archivo privado del servicio, nunca desde el navegador.
+
+| Proveedor | Selección | Clave del entorno | Modelo |
+| --- | --- | --- | --- |
+| Zhipu / BigModel | `AI_PROVIDER=bigmodel` | `BIGMODEL_API_KEY` | `BIGMODEL_MODEL=glm-5.3-flash` |
+| DeepSeek (compatibilidad predeterminada) | `AI_PROVIDER=deepseek` | `DEEPSEEK_API_KEY` | `DEEPSEEK_MODEL=deepseek-flash` |
+
+La instalación actual selecciona BigModel. Su clave está únicamente en el archivo
+privado del servicio (0600), fuera de Git. Twelve Data conserva su propia clave;
+esta selección controla el asistente y el sentimiento, no la ingesta de precios.
 Sin clave, los mercados siguen funcionando y el asistente ofrece una guía educativa
 local determinista, identificada como no generativa. El análisis de titulares y la
-conversación libre requieren DeepSeek; no se simulan respuestas del modelo.
+conversación libre requieren el proveedor de IA seleccionado; no se simulan respuestas del modelo.
 
 ```bash
 # Mantén este valor estable y privado entre arranques. En producción usa tu gestor de secretos.
@@ -49,11 +59,28 @@ al reiniciar. APP_ENV=production exige una clave explícita de al menos 32 carac
 y activa cookies seguras para HTTPS. Las credenciales que entraron en el historial
 deben rotarse: consulta [SECURITY.md](SECURITY.md). No reutilices la clave antigua.
 
-Si el servidor ya está abierto, reinícialo después de cambiar la clave. El modelo predeterminado es `deepseek-flash`, configurable mediante `DEEPSEEK_MODEL`. Las llamadas salen únicamente del backend hacia `https://api.deepseek.com/chat/completions`; la clave nunca se incorpora al HTML, JavaScript ni respuestas de la API.
+Si el servidor ya está abierto, reinícialo después de cambiar la configuración:
+
+```bash
+systemctl --user restart market-explained-demo-web
+```
+
+Las llamadas salen únicamente del backend al endpoint fijo del proveedor:
+`https://open.bigmodel.cn/api/paas/v4/chat/completions` o
+`https://api.deepseek.com/chat/completions`. La clave viaja en Authorization y nunca
+se incorpora al HTML, JavaScript, logs ni respuestas de la API. No se cambia de
+proveedor automáticamente si hay un fallo. GLM-5.3-Flash requiere `thinking=enabled`;
+se usa `reasoning_effort=low`, salida JSON, un presupuesto máximo de 4096 tokens en
+las llamadas actuales y timeout de 45 s. El razonamiento interno no se muestra ni
+se guarda en el historial. Las respuestas truncadas o inválidas se rechazan.
 
 El asistente se limita mediante instrucciones de sistema y una respuesta estructurada validada a explicaciones de la plataforma y educación financiera; no cuenta con herramientas ni ejecuta operaciones. Los límites del modelo no constituyen una garantía contra respuestas incorrectas o intentos de eludir instrucciones. El contexto procede del servidor, no del contenido arbitrario del navegador.
 
-**Estado de la validación inicial, 6 de noviembre de 2026:** el proveedor rechazó la credencial suministrada con HTTP 401. La conexión está implementada; la conversación y el sentimiento en vivo requieren una clave válida. Por decisión del usuario esa configuración queda pendiente. No hay respuestas sustitutivas que aparenten proceder del modelo.
+**Validación actual, 12 de noviembre de 2026:** BigModel aceptó la credencial
+privada y devolvió JSON válido con `glm-5.3-flash`. La verificación inicial de
+DeepSeek del 6 de noviembre había devuelto HTTP 401; ese resultado anterior no
+representa el estado actual del proveedor seleccionado. Consulta
+[la verificación de IA](docs/AI_PROVIDERS.md) para alcance y pruebas reales.
 
 ## Datos y actualización
 
@@ -82,7 +109,7 @@ SQLite usa claves foráneas, WAL y transacciones. Las contraseñas usan scrypt c
 
 El límite de IA es 30 consultas de chat por hora por IP, seis solicitudes de análisis de titulares por hora por IP y 200 solicitudes combinadas por día para esta instancia. Estos límites son para un MVP de una instancia; en un despliegue con proxy o varios procesos deben adaptarse al tráfico e infraestructura. Las respuestas del modelo se muestran como texto y no se ejecuta HTML del proveedor.
 
-SECRET_KEY debe proporcionarse por entorno para conservar sesiones entre arranques. No se lee `data/.session-secret`. Conserva `data/` para mantener cuentas, listas e historial; las bases y backups están ignorados en Git. El historial conserva las últimas 30 entradas por usuario o visitante; se envían como máximo ocho entradas anteriores, la pregunta y un contexto limitado a DeepSeek. El borrado del chat elimina el historial local, no lo ya procesado por el proveedor.
+SECRET_KEY debe proporcionarse por entorno para conservar sesiones entre arranques. No se lee `data/.session-secret`. Conserva `data/` para mantener cuentas, listas e historial; las bases y backups están ignorados en Git. El historial conserva las últimas 30 entradas por usuario o visitante; se envían como máximo ocho entradas anteriores, la pregunta y un contexto limitado al proveedor de IA seleccionado. El borrado del chat elimina el historial local, no lo ya procesado por el proveedor.
 
 Para un servidor público usa HTTPS mediante un proxy, `COOKIE_SECURE=1`, gestión de secretos, copias de seguridad y supervisión. `HOST=0.0.0.0` habilita acceso de red únicamente cuando lo configuras explícitamente. Registro y login están implementados; verificación de correo y recuperación de contraseña no forman parte de esta entrega.
 
@@ -94,7 +121,8 @@ node --check static/app.js
 curl http://127.0.0.1:5050/health
 ```
 
-Las 53 pruebas usan bases temporales, fixtures con procedencia y un WebSocket local, sin gastar crédito de DeepSeek ni tocar datos del usuario. `/health` comprueba la base y si existe configuración de IA; `ai_configured: true` **no valida** credencial, saldo ni disponibilidad del proveedor.
+Las 70 pruebas actuales usan bases temporales, fixtures y un WebSocket local,
+sin llamadas externas ni gasto de crédito de los proveedores de IA. `/health` comprueba la base y si existe configuración de IA; `ai_configured: true` **no valida** credencial, saldo ni disponibilidad del proveedor.
 
 Consulta [la auditoría](docs/ARCHITECTURE_AUDIT.md), [el informe de esta entrega](docs/IMPLEMENTATION_REPORT.md) y [las operaciones de datos](docs/DATA_OPERATIONS.md). La actualización del 12 de noviembre incluye revisión de idiomas y disposición responsive en Chromium. El documento VALIDACION.md conserva la evidencia anterior y sus correcciones.
 
@@ -104,7 +132,7 @@ Consulta [la auditoría](docs/ARCHITECTURE_AUDIT.md), [el informe de esta entreg
 app.py                  Entrada WSGI/CLI e importaciones compatibles
 market_explained/       Aplicación Flask, APIs v1, mercados, proveedores, worker y almacenamiento
 collector.py            Fuentes externas, caché y recogida en segundo plano
-ai.py                   DeepSeek, contexto acotado y validación JSON
+ai.py                   Proveedores IA, contexto acotado y validación JSON
 config.py               Variables de entorno y secreto de sesión
 db.py                   Esquema SQLite, transacciones y límites
 charts.py               Gráficas SVG accesibles sin CDN
@@ -115,7 +143,7 @@ tests/test_app.py       Pruebas de integración aisladas
 
 La demo pública actual usa la laptop como servidor mediante Cloudflare Tunnel. No hay alojamiento cloud independiente. La implementación mantiene el backend Python existente; el hosting de Sites requiere un runtime de Workers y no ejecuta este proceso Flask/Waitress sin una migración adicional.
 
-Referencias: [DeepSeek Chat Completions](https://api-docs.deepseek.com/api/create-chat-completion/), [fundamentos de Carbon](https://www.carbondesignsystem.com/building-blocks/foundations/themes/overview). IBM Plex Sans se distribuye localmente con su licencia en `static/fonts/OFL.txt`.
+Referencias: [BigModel GLM-5.3-Flash](https://docs.bigmodel.cn/cn/guide/models/vlm/glm-5.3-flash), [DeepSeek Chat Completions](https://api-docs.deepseek.com/api/create-chat-completion/), [fundamentos de Carbon](https://www.carbondesignsystem.com/building-blocks/foundations/themes/overview). IBM Plex Sans se distribuye localmente con su licencia en `static/fonts/OFL.txt`.
 
 ## Fundación multimercado — fases A y primer flujo B
 

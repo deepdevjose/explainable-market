@@ -29,7 +29,7 @@ async function pollSync(reload=true){
 }
 if($('#sync-indicator'))pollSync();
 document.querySelectorAll('.refresh-button').forEach(b=>b.addEventListener('click',async()=>{b.disabled=true;try{const data=await api('/api/refresh','POST',{ticker:b.dataset.ticker});toast(data.message);if(data.active.length)pollSync();else b.disabled=false}catch(e){toast(e.message);b.disabled=false}}));
-document.querySelectorAll('.analyze-button').forEach(b=>b.addEventListener('click',async()=>{const previous=b.textContent;b.disabled=true;b.textContent=t('Analizando con DeepSeek…');try{const data=await api('/api/analyze/'+encodeURIComponent(b.dataset.ticker),'POST',{});if(data.analyzed)location.reload();else toast(t('No hay titulares nuevos por analizar.'))}catch(e){toast(e.message)}finally{b.disabled=false;b.textContent=previous}}));
+document.querySelectorAll('.analyze-button').forEach(b=>b.addEventListener('click',async()=>{const previous=b.textContent;b.disabled=true;b.textContent=t('Analizando titulares…');try{const data=await api('/api/analyze/'+encodeURIComponent(b.dataset.ticker),'POST',{});if(data.analyzed)location.reload();else toast(t('No hay titulares nuevos por analizar.'))}catch(e){toast(e.message)}finally{b.disabled=false;b.textContent=previous}}));
 // All model and upstream content is rendered as text, never HTML.
 let loadedChat=false,chatBusy=false,chatLoadPromise=null;
 const panel=$('#chat-panel'),toggle=$('#chat-toggle'),input=$('#chat-input'),messages=$('#chat-messages');
