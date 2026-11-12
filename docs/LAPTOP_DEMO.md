@@ -18,11 +18,13 @@ No se descarga ni ejecuta software al abrir la web.
 .venv/bin/python scripts/demo_services.py url
 ```
 
-El instalador crea cuatro servicios de **usuario**, habilitados para el inicio de
-sesión: `market-explained-demo-web`, `-worker`, `-daily` y `-tunnel`. Se reinician
+El instalador crea seis servicios de **usuario**: `market-explained-demo-web`,
+`-worker`, `-daily`, `-twelve`, `-forecast` y `-tunnel`. Habilita `loginctl enable-linger`
+para arrancarlos al encender el equipo y mantenerlos después del cierre de sesión. Se reinician
 si fallan y no dependen del proceso del asistente ni de una terminal abierta.
-No se configura ejecución después del cierre de sesión ni se modifica la política
-de suspensión del equipo. El colector diario consulta cada 900 segundos; Binance
+No se modifica la política de suspensión del equipo. El servidor no funciona
+mientras la laptop duerme o está apagada. Se configuró el inicio al arrancar, pero
+no se reinició físicamente la laptop durante la validación. El colector diario consulta cada 900 segundos; Binance
 recibe eventos por WebSocket, y la interfaz lee el estado persistido cada 5 segundos.
 
 La configuración privada queda en `~/.config/market-explained-demo/server.env`,
@@ -61,8 +63,10 @@ conserva. Las acciones siguen usando cierres diarios, nunca simulación de tiemp
 Sin DeepSeek se ofrece una guía local determinista, identificada expresamente como
 no generativa, para conceptos básicos. No clasifica titulares ni promete conversación
 libre. El análisis de sentimiento sigue requiriendo una clave y saldo válidos.
-Los modelos predictivos y los proveedores aún no conectados no se presentan como
-implementados. La ilustración de la portada es conceptual y está etiquetada.
+Los modelos de persistencia, ridge y XGBoost CPU se entrenan fuera del servidor
+web y aparecen en `/intelligence`. Twelve Data se consulta cada 15 minutos y
+sus observaciones se etiquetan DELAYED o STALE, según la frescura. Los demás
+proveedores pendientes se mantienen identificados como tales. La ilustración de la portada es conceptual y está etiquetada.
 
 ## Comprobación realizada el 12 de noviembre de 2026
 
@@ -82,3 +86,32 @@ convierte los endpoints públicos de terceros en una licencia de redistribución
 
 Validaciones estáticas: Ruff sin errores, mypy sin incidencias en los 14 módulos
 seleccionados y Bandit sin hallazgos de gravedad media/alta en el alcance revisado.
+
+
+## Actualización: mercados y pronósticos
+
+Instalar también `requirements-ml.txt` antes de ejecutar el instalador de servicios.
+El worker de modelos revisa nuevos cierres cada 30 minutos y no reentrena si el
+hash del conjunto no cambia. `-twelve` usa límites locales persistentes de 6 créditos
+por minuto y 600 por ventana de 24 horas, inferiores al plan Basic documentado de
+8/min y 800/día. Cada petición consume un crédito; otras aplicaciones que usen la
+misma clave pueden agotar la cuota fuera de estos contadores.
+
+La configuración privada acepta `TWELVE_DATA_API_KEY` y
+`TWELVE_DATA_PUBLIC_DISPLAY` (predeterminado 0). Mantener ese segundo valor en 0
+si no existen derechos de visualización externa. Los precios y derivados de Twelve
+Data se ocultan en todo acceso externo, incluidos el historial y el contexto del
+asistente. La consulta interna directa por loopback permite inspeccionarlos.
+Después de cambiar el archivo privado, reiniciar los servicios afectados:
+
+```bash
+systemctl --user restart market-explained-demo-web market-explained-demo-twelve
+systemctl --user restart market-explained-demo-forecast
+loginctl show-user "$USER" -p Linger
+systemctl --user is-enabled market-explained-demo-web
+```
+
+La instalación actual verificó `Linger=yes`, seis servicios activos y recuperación
+automática de web después de terminar su proceso: nuevo PID y `/health` HTTP 200.
+No se reinició el túnel durante esta actualización, por lo que se conservó el enlace.
+Consultar el informe de [modelos](PREDICTIVE_INTELLIGENCE.md) para resultados.

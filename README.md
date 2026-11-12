@@ -113,7 +113,7 @@ static/                 CSS, JavaScript, marca y tipografía local
 tests/test_app.py       Pruebas de integración aisladas
 ```
 
-No se ha publicado una instancia externa. La implementación mantiene el backend Python existente; el hosting de Sites requiere un runtime de Workers y no ejecuta este proceso Flask/Waitress sin una migración adicional.
+La demo pública actual usa la laptop como servidor mediante Cloudflare Tunnel. No hay alojamiento cloud independiente. La implementación mantiene el backend Python existente; el hosting de Sites requiere un runtime de Workers y no ejecuta este proceso Flask/Waitress sin una migración adicional.
 
 Referencias: [DeepSeek Chat Completions](https://api-docs.deepseek.com/api/create-chat-completion/), [fundamentos de Carbon](https://www.carbondesignsystem.com/building-blocks/foundations/themes/overview). IBM Plex Sans se distribuye localmente con su licencia en `static/fonts/OFL.txt`.
 
@@ -135,8 +135,8 @@ al proveedor. El worker solicita hasta 365 velas diarias cerradas. BTCUSDT cotiz
 en USDT (Tether), no USD. No se asignan equivalencias implícitas entre tickers.
 
 Los estados son LIVE (evento y recepción de menos de 30 segundos con colector
-conectado), HISTORICAL, STALE, DELAYED, DEMO y UNAVAILABLE. Los dos últimos tipos
-de feed simulados/retrasados no están habilitados por ningún adaptador actual.
+conectado), HISTORICAL, STALE, DELAYED, DEMO y UNAVAILABLE. DEMO no se usa en producción. Twelve Data se consulta por REST cada 15 minutos
+y se identifica como DELAYED, nunca como LIVE; tras 30 minutos sin frescura pasa a STALE.
 Los datos históricos no se presentan como en vivo; detener el worker conserva
 observaciones y las vuelve desactualizadas. No se siembran fixtures en producción.
 
@@ -159,10 +159,13 @@ Los precios nuevos son strings decimales y las fechas son UTC. La paginación
 admite 1–200 registros y offset no negativo. Los errores v1 tienen
 `{"error":{"code":"...","message":"..."}}`; el límite es 120 lecturas/minuto/IP
 por instancia con Retry-After. Las APIs existentes conservan sus formatos.
-`/analysis/<symbol>` y `/predictions/<symbol>` bajo `/api/v1` responden 501:
-los modelos no están implementados. WS `/api/v1/stream` está pendiente; la web
-usa polling. Forex, Alpaca (IEX/SIP), índices, materias primas y FRED figuran
-como planificados, sin precios inventados ni peticiones por falta de credenciales.
+`/analysis/<symbol>` y `/predictions/<symbol>` bajo `/api/v1` leen análisis y
+pronósticos persistidos por un worker independiente. Devuelven 503 si aún no hay
+entrenamiento suficiente y 403 si la licencia impide mostrar datos de Twelve Data.
+WS `/api/v1/stream` está pendiente; la web usa polling. Twelve Data ya conecta
+EUR/USD, USD/JPY y XAU/USD con la configuración privada de esta instalación.
+Los índices SPX/FTSE devolvieron HTTP 404 y permanecen no disponibles.
+Alpaca (IEX/SIP) y FRED continúan planificados.
 
 SQLite aplica la migración aditiva versionada y crea automáticamente un backup
 privado antes del primer cambio. Mantiene cuentas, listas, conversaciones y datos
@@ -184,8 +187,8 @@ requiere cuenta cloud. No se crean recursos pagos ni se publica el backend en
 GitHub Pages. GitHub Actions prepara pruebas, lint, tipos, seguridad y build.
 
 **Aviso financiero:** información y educación únicamente. No hay conexión a
-brokers, ejecución de órdenes, promesas de rentabilidad ni predicciones de esta
-entrega. Correlación no implica causalidad. Revisa fecha, fuente y límites de datos.
+brokers, ejecución de órdenes ni promesas de rentabilidad. Los pronósticos
+educativos pueden fallar y muestran incertidumbre y límites de evaluación. Correlación no implica causalidad. Revisa fecha, fuente y límites de datos.
 
 Documentación primaria del adaptador: [Binance WebSocket](https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams),
 [REST de mercado](https://developers.binance.com/docs/binance-spot-api-docs/rest-api/market-data-endpoints)
@@ -208,4 +211,54 @@ La laptop puede mantener web, Binance, colector diario y Cloudflare Quick Tunnel
 mediante servicios supervisados. Consulta [la guía de demo](docs/LAPTOP_DEMO.md)
 para iniciar, consultar la URL temporal, detener y revisar los límites comprobados.
 La laptop debe permanecer encendida y conectada. Esto no es un despliegue cloud
-permanente ni la implementación completa de la hoja de ruta de ML/múltiples mercados.
+permanente. Los modelos iniciales ya funcionan; la hoja de ruta completa sigue
+siendo incremental.
+
+
+## Arranque automático, Twelve Data y modelos
+
+En esta laptop ya están habilitados seis servicios systemd con `Linger=yes`:
+web, Binance, colector diario, Twelve Data, pronósticos y túnel. Se ejecutan al
+arrancar el equipo y sobreviven al cierre de sesión. No se requiere abrir VS Code.
+La laptop debe estar encendida, despierta y conectada. El enlace Quick Tunnel es
+temporal y puede cambiar al reiniciarse; Cloudflare Workers no aloja automáticamente
+esta aplicación Flask con SQLite y workers persistentes.
+
+```bash
+.venv/bin/python -m pip install -r requirements.txt -r requirements-ml.txt
+.venv/bin/python scripts/demo_services.py install
+.venv/bin/python scripts/demo_services.py status
+.venv/bin/python scripts/demo_services.py url
+```
+
+Para ejecutar manualmente en terminales independientes, compartiendo DATABASE_PATH:
+
+```bash
+./run.sh
+# Otras terminales con las variables privadas exportadas de forma segura:
+.venv/bin/python -m market_explained.ingestion.workers
+.venv/bin/python -m market_explained.ingestion.twelve_worker
+.venv/bin/python -m market_explained.intelligence.worker
+# Una sola ejecución de entrenamiento/backfill: agregar --once a los dos últimos.
+```
+
+La clave `TWELVE_DATA_API_KEY` se configura únicamente en el entorno del proceso o
+en el archivo privado del servicio descrito en [la guía](docs/LAPTOP_DEMO.md).
+No se lee automáticamente un archivo `.env`. No publicar claves en Git ni en chats.
+La ausencia de credenciales no bloquea Flask ni Binance.
+
+`/intelligence` compara persistencia, regresión autorregresiva con regularización
+ridge y XGBoost CPU, entrenados con al menos 120 cierres reales. La selección usa
+calibración cronológica y se informa una prueba posterior walk-forward. Se conserva
+el historial de pronósticos y la procedencia por instrumento/proveedor. La dependencia
+ML es opcional para el servidor web; el worker necesita `requirements-ml.txt`.
+No se usan datos sintéticos para resultados visibles.
+
+La autorización de consulta no equivale a autorización de redistribución. Por defecto
+`TWELVE_DATA_PUBLIC_DISPLAY=0`: precios, historias y pronósticos de ese proveedor
+se pueden inspeccionar directamente por loopback sin cabeceras de proxy y están
+ocultos por el enlace público. Solo establecer `TWELVE_DATA_PUBLIC_DISPLAY=1` después
+de confirmar derechos de visualización externa con Twelve Data. Los límites del
+plan y los rechazos por instrumento siguen aplicándose.
+
+Detalles, evidencia y límites: [inteligencia predictiva](docs/PREDICTIVE_INTELLIGENCE.md).

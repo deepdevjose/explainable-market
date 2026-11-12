@@ -87,3 +87,20 @@ not operational feeds. Redis, browser WebSocket endpoint, account recovery,
 one-year stock history, deterministic indicators, forecasting, XGBoost/SHAP,
 production performance acceptance and cloud deployment require later phases.
 No prices, predictions, license permissions or deployment success are invented.
+
+
+## Evolución verificada — 12 de noviembre de 2026
+
+Se mantuvieron Flask/Jinja, autenticación, watchlists y SVG. La configuración sigue
+siendo explícita por entorno. Se añadieron migraciones aditivas 002/003, adaptador
+REST Twelve Data con cuotas/checkpoints y restricciones de visualización externa,
+workers independientes de polling y entrenamiento, y lectura de pronósticos por API.
+No se movió la persistencia a otro motor ni se introdujo dependencia de IA generativa
+para la ingesta o el entrenamiento. Las dependencias ML no se importan en Flask.
+
+La implementación de modelos usa cierres completos por fuente, retornos, ventanas
+crecientes, calibración previa a la prueba y explicaciones sin afirmaciones causales.
+No constituye validación independiente ni resuelve revisiones retrospectivas, ajustes
+corporativos o cambios de régimen. La ingesta streaming de acciones, FRED, la
+entrega WebSocket al navegador y el alojamiento externo permanente siguen pendientes.
+La evidencia y el alcance exacto están en [PREDICTIVE_INTELLIGENCE.md](PREDICTIVE_INTELLIGENCE.md).

@@ -9,7 +9,7 @@ import subprocess
 
 ROOT = Path(__file__).resolve().parent.parent
 PREFIX = 'market-explained-demo'
-SERVICES = ('web', 'worker', 'daily', 'tunnel')
+SERVICES = ('web', 'worker', 'daily', 'twelve', 'forecast', 'tunnel')
 
 
 def run(*args, **kwargs):
@@ -25,6 +25,7 @@ def install():
     tunnel = ROOT / 'artifacts/tools/cloudflared-package/usr/bin/cloudflared'
     if not python.exists() or not tunnel.exists():
         raise SystemExit('Prepare .venv and the official cloudflared binary first.')
+    run(str(python), '-c', 'import numpy, xgboost')
     config_dir = Path.home() / '.config' / PREFIX
     config_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
     env = config_dir / 'server.env'
@@ -39,6 +40,8 @@ def install():
         'web': [python, ROOT / 'app.py'],
         'worker': [python, '-m', 'market_explained.ingestion.workers'],
         'daily': [python, ROOT / 'collector.py', '--loop', '--interval', '900'],
+        'twelve': [python, '-m', 'market_explained.ingestion.twelve_worker'],
+        'forecast': [python, '-m', 'market_explained.intelligence.worker'],
         'tunnel': [tunnel, 'tunnel', '--url', 'http://127.0.0.1:5050',
                    '--protocol', 'http2', '--no-autoupdate'],
     }
@@ -67,6 +70,7 @@ WantedBy=default.target
     run('systemctl', '--user', 'daemon-reload')
     run('systemctl', '--user', 'enable', '--now',
         *(f'{PREFIX}-{name}.service' for name in SERVICES))
+    run('loginctl', 'enable-linger', os.environ.get('USER', str(os.getuid())))
     print('Demo services installed. Keep the laptop awake and connected.')
 
 
