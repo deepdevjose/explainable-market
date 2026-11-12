@@ -28,7 +28,7 @@ class MigrationTests(unittest.TestCase):
                 db.init()
                 for table, rows in before.items():
                     self.assertEqual(db.q('SELECT * FROM ' + table), rows)
-                self.assertEqual(db.q1('SELECT count(*) n FROM schema_migrations')['n'], 1)
+                self.assertEqual(db.q1('SELECT count(*) n FROM schema_migrations')['n'], 3)
                 self.assertEqual(db.q1('SELECT count(*) n FROM stock_observations')['n'], 1)
                 backups = list((Path(tmp) / 'backups').glob('*.backup'))
                 self.assertEqual(len(backups), 1)

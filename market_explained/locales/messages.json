@@ -1626,5 +1626,173 @@
   "Los modelos y análisis cuantitativos aún no están implementados.": {
     "en": "Models and quantitative analysis are not implemented yet.",
     "zh-Hans": "模型与量化分析尚未实现。"
+  },
+  "Inteligencia predictiva": {
+    "en": "Predictive intelligence",
+    "zh-Hans": "预测分析"
+  },
+  "EVALUAR ANTES DE CONFIAR": {
+    "en": "EVALUATE BEFORE TRUSTING",
+    "zh-Hans": "评估之后再信任"
+  },
+  "Modelos entrenados con cierres reales. Una estimación puede fallar; no es una recomendación de inversión.": {
+    "en": "Models trained on real closing prices. Estimates can fail; this is not investment advice.",
+    "zh-Hans": "模型使用真实收盘价训练。估计可能出错，不构成投资建议。"
+  },
+  "Instrumento": {
+    "en": "Instrument",
+    "zh-Hans": "金融工具"
+  },
+  "Consultar": {
+    "en": "View",
+    "zh-Hans": "查看"
+  },
+  "Evaluación histórica limitada; sin validación independiente. Los intervalos no garantizan cobertura futura.": {
+    "en": "Limited historical evaluation; no independent validation. Intervals do not guarantee future coverage.",
+    "zh-Hans": "历史评估有限，尚未经独立验证。区间不保证未来覆盖率。"
+  },
+  "Próximo cierre observado": {
+    "en": "Next observed close",
+    "zh-Hans": "下一个观测收盘价"
+  },
+  "Retorno estimado": {
+    "en": "Estimated return",
+    "zh-Hans": "估计收益率"
+  },
+  "Precio de referencia": {
+    "en": "Reference price",
+    "zh-Hans": "参考价格"
+  },
+  "No representa una cotización en vivo.": {
+    "en": "This is not a live quote.",
+    "zh-Hans": "这不是实时行情。"
+  },
+  "INCERTIDUMBRE": {
+    "en": "UNCERTAINTY",
+    "zh-Hans": "不确定性"
+  },
+  "Intervalo empírico nominal del 80%": {
+    "en": "Nominal 80% empirical interval",
+    "zh-Hans": "名义80%经验区间"
+  },
+  "Observaciones de calibración": {
+    "en": "Calibration observations",
+    "zh-Hans": "校准观测数"
+  },
+  "Puede quedar fuera del intervalo. Cambios de régimen y muestras pequeñas limitan el resultado.": {
+    "en": "Outcomes may fall outside the interval. Regime changes and small samples limit the result.",
+    "zh-Hans": "实际结果可能超出区间。市场状态变化和小样本会限制结果。"
+  },
+  "Evaluación cronológica": {
+    "en": "Chronological evaluation",
+    "zh-Hans": "时间顺序评估"
+  },
+  "Selección por error de calibración; prueba posterior con ventanas crecientes. Todos los errores se expresan en retornos.": {
+    "en": "Selection uses calibration error; later testing uses expanding windows. All errors are in return units.",
+    "zh-Hans": "根据校准误差选择模型，再使用扩展窗口测试。所有误差以收益率表示。"
+  },
+  "Modelo": {
+    "en": "Model",
+    "zh-Hans": "模型"
+  },
+  "Observaciones de prueba": {
+    "en": "Test observations",
+    "zh-Hans": "测试观测数"
+  },
+  "Prueba": {
+    "en": "Test",
+    "zh-Hans": "测试"
+  },
+  "Cobertura observada del intervalo en la prueba": {
+    "en": "Observed interval coverage in testing",
+    "zh-Hans": "测试中的实际区间覆盖率"
+  },
+  "Datos y explicación": {
+    "en": "Data and explanation",
+    "zh-Hans": "数据与解释"
+  },
+  "Corte de datos UTC": {
+    "en": "Data cutoff UTC",
+    "zh-Hans": "数据截止时间 UTC"
+  },
+  "Generado UTC": {
+    "en": "Generated UTC",
+    "zh-Hans": "生成时间 UTC"
+  },
+  "Versión del modelo": {
+    "en": "Model version",
+    "zh-Hans": "模型版本"
+  },
+  "Cierres disponibles": {
+    "en": "Available closes",
+    "zh-Hans": "可用收盘价数"
+  },
+  "El corte de datos tiene más de cuatro días. Revisa la fuente antes de interpretar el pronóstico.": {
+    "en": "The data cutoff is more than four days old. Check the source before interpreting this forecast.",
+    "zh-Hans": "数据截止时间已超过四天。解读预测前请检查来源。"
+  },
+  "Las contribuciones describen el cálculo del modelo; no prueban causalidad. Persistencia estima retorno cero.": {
+    "en": "Contributions describe model calculations; they do not prove causality. Persistence estimates zero return.",
+    "zh-Hans": "贡献值描述模型的计算，不证明因果关系。持久性基线估计收益率为零。"
+  },
+  "Variable": {
+    "en": "Feature",
+    "zh-Hans": "特征"
+  },
+  "Valor": {
+    "en": "Value",
+    "zh-Hans": "数值"
+  },
+  "Contribución al retorno": {
+    "en": "Return contribution",
+    "zh-Hans": "对收益率的贡献"
+  },
+  "Sesgo del modelo": {
+    "en": "Model bias",
+    "zh-Hans": "模型偏置"
+  },
+  "Datos restringidos": {
+    "en": "Restricted data",
+    "zh-Hans": "受限数据"
+  },
+  "Pronóstico no disponible": {
+    "en": "Forecast unavailable",
+    "zh-Hans": "预测不可用"
+  },
+  "La visualización externa de Twelve Data no está autorizada.": {
+    "en": "External display of Twelve Data is not authorized.",
+    "zh-Hans": "尚未获得 Twelve Data 对外展示授权。"
+  },
+  "Se requieren al menos 120 cierres y el proceso independiente de entrenamiento. Aquí no se generan resultados ficticios.": {
+    "en": "At least 120 closes and the separate training worker are required. No fictional results are generated.",
+    "zh-Hans": "需要至少120个收盘价及独立训练进程。此处不会生成虚构结果。"
+  },
+  "Información educativa. No ejecuta operaciones ni garantiza resultados.": {
+    "en": "Educational information. No trades are executed and no results are guaranteed.",
+    "zh-Hans": "仅供教育参考。不执行交易，也不保证结果。"
+  },
+  "Acciones: cierres históricos. Cripto: Binance Spot en USDT. Twelve Data: consultas cada 15 minutos, según plan y autorización de visualización.": {
+    "en": "Stocks: historical closes. Crypto: Binance Spot in USDT. Twelve Data: 15-minute polling, subject to plan and display authorization.",
+    "zh-Hans": "股票：历史收盘价。加密货币：Binance 现货，以USDT计价。Twelve Data：每15分钟查询，取决于套餐及展示授权。"
+  },
+  "Consultas cada 15 minutos. La disponibilidad y el retraso dependen del proveedor.": {
+    "en": "Polled every 15 minutes. Availability and delay depend on the provider.",
+    "zh-Hans": "每15分钟查询。可用性和延迟取决于提供商。"
+  },
+  "Cierres diarios": {
+    "en": "Daily closes",
+    "zh-Hans": "每日收盘价"
+  },
+  "Datos de": {
+    "en": "Data by",
+    "zh-Hans": "数据提供方"
+  },
+  "Aún no hay un pronóstico: se requieren al menos 120 cierres y el proceso de entrenamiento.": {
+    "en": "No forecast yet: at least 120 closes and the training worker are required.",
+    "zh-Hans": "暂无预测：需要至少120个收盘价及训练进程。"
+  },
+  "· UTC · hasta 365 cierres según disponibilidad. Gráfica histórica; no representa operaciones en vivo.": {
+    "en": "· UTC · up to 365 closes, subject to availability. Historical chart; not live trades.",
+    "zh-Hans": "· UTC · 最多365个收盘价，取决于数据可用性。历史图表，不代表实时交易。"
   }
 }

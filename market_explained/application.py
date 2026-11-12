@@ -38,7 +38,8 @@ PAGES={'landing':'Inicio de Explainable Market: plataforma para relacionar preci
        'learn':'Biblioteca educativa y metodología: correlación no significa causalidad.',
        'symbol_detail':'Detalle de activo. Serie de cierres y coincidencias temporales de noticias; ventanas completas de 1, 3 y 7 sesiones.',
        'markets.explorer':'Explorador de acciones históricas y criptomonedas de Binance Spot con estados de frescura y proveedor.',
-       'markets.detail':'Detalle de criptomoneda en Binance Spot; USDT no es USD. Las velas diarias son históricas y las observaciones recientes pueden quedar desactualizadas.',
+       'markets.detail':'Detalle de instrumento con atribución. Binance usa USDT; Twelve Data usa consultas cada 15 minutos. Las velas diarias son históricas.',
+       'markets.intelligence':'Pronósticos educativos de retornos con persistencia, ridge y XGBoost. Se seleccionan por calibración y se evalúan después cronológicamente. No son recomendaciones ni resultados garantizados.',
        'markets.sources':'Disponibilidad de proveedores, atribución, límites y condiciones de uso de datos. Integración planificada no implica datos disponibles.',
        'login':'Iniciar sesión para guardar una lista personal.', 'register':'Crear una cuenta propia.'}
 

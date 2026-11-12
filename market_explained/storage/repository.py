@@ -9,12 +9,16 @@ FRESH_SECONDS = 30
 
 
 def health(provider: str, connection: str, error_code: str | None = None, *, reconnect: bool = False) -> None:
+    last_event = timestamp(utcnow()) if connection=='STREAMING' else None
+    if connection in ('POLLING','DEGRADED'):
+        row = db.q1('SELECT max(event_time) last_event FROM market_events WHERE provider=?',(provider,))
+        last_event = row['last_event'] if row else None
     with db.connect() as c:
         c.execute('''INSERT INTO provider_health(provider,connection,updated_at,last_event_at,error_code,reconnects)
             VALUES (?,?,?,?,?,?) ON CONFLICT(provider) DO UPDATE SET connection=excluded.connection,
             updated_at=excluded.updated_at,last_event_at=coalesce(excluded.last_event_at,provider_health.last_event_at),
             error_code=excluded.error_code,reconnects=provider_health.reconnects+excluded.reconnects''',
-            (provider,connection,timestamp(utcnow()),timestamp(utcnow()) if connection=='STREAMING' else None,error_code,int(reconnect)))
+            (provider,connection,timestamp(utcnow()),last_event,error_code,int(reconnect)))
 
 
 def quality(provider: str, flag: str, instrument_id: str | None = None, event_id: str | None = None) -> None:
@@ -75,6 +79,10 @@ def snapshot(instrument_id: str, now: datetime | None = None) -> dict:
     instrument = db.q1('SELECT * FROM instruments WHERE instrument_id=?', (instrument_id,))
     if not instrument:
         raise ValueError('Unknown instrument')
+    from market_explained.security.display import restricted
+    if restricted(instrument_id):
+        return dict(instrument=instrument,status='UNAVAILABLE',observation=None,
+                    access_reason='TWELVE_DATA_DISPLAY_NOT_AUTHORIZED')
     if instrument['asset_class'] == 'stocks':
         row = db.q1('''SELECT p.*,s.source,s.fetched_at FROM prices p JOIN symbols s USING(ticker)
             WHERE ticker=? ORDER BY date DESC LIMIT 1''', (instrument['symbol'],))
@@ -89,7 +97,7 @@ def snapshot(instrument_id: str, now: datetime | None = None) -> dict:
         observation = json.loads(rows[0]['payload'])
     else:
         candidates = db.q('''SELECT payload FROM market_events WHERE instrument_id=? AND event_type='candle'
-            AND status='HISTORICAL' ORDER BY event_time DESC LIMIT 1''', (instrument_id,))
+            AND status='HISTORICAL' ORDER BY event_time DESC,received_at DESC,rowid DESC LIMIT 1''', (instrument_id,))
         observation = json.loads(candidates[0]['payload']) if candidates else None
     status = observation['status'] if observation else 'UNAVAILABLE'
     if status == 'LIVE':
@@ -97,6 +105,11 @@ def snapshot(instrument_id: str, now: datetime | None = None) -> dict:
         provider = db.q1('SELECT * FROM provider_health WHERE provider=?', (observation['provider'],))
         ages = [(current-datetime.fromisoformat(observation[k])).total_seconds() for k in ('event_time','received_at')]
         if not provider or provider['connection'] != 'STREAMING' or max(ages) > FRESH_SECONDS:
+            status = 'STALE'
+    if status == 'DELAYED' and observation:
+        current = now or utcnow()
+        if max((current-datetime.fromisoformat(observation[k])).total_seconds()
+               for k in ('event_time','received_at'))>1800:
             status = 'STALE'
     return dict(instrument=instrument,status=status,observation=observation)
 

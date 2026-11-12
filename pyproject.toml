@@ -5,7 +5,7 @@ exclude = ["venv", ".venv"]
 select = ["F", "E9"]
 
 [tool.mypy]
-files = ["market_explained/markets", "market_explained/providers", "market_explained/ingestion", "market_explained/storage", "market_explained/api"]
+files = ["market_explained/markets", "market_explained/providers", "market_explained/ingestion", "market_explained/storage", "market_explained/api", "market_explained/intelligence", "market_explained/security"]
 follow_imports = "silent"
 check_untyped_defs = true
 

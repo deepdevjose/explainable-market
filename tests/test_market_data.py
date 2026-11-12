@@ -153,7 +153,7 @@ class PersistenceTests(unittest.TestCase):
         for route in ('/markets','/markets?asset_class=crypto','/markets?asset_class=forex','/market/BTCUSDT','/sources','/health','/api/status','/api/asset/AAPL'):
             self.assertEqual(self.client.get(route).status_code,200,route)
         self.assertIn('No disponible',self.client.get('/market/BTCUSDT').text)
-        self.assertIn('aún no está conectada',self.client.get('/markets?asset_class=forex').text)
+        self.assertIn('EURUSD',self.client.get('/markets?asset_class=forex').text)
         with self.client.get('/static/style.css') as response:
             self.assertIn('IBM Plex Sans',response.text)
         self.assertEqual(self.client.get('/market/AAPL').location,'/symbol/AAPL')
@@ -168,7 +168,7 @@ class PersistenceTests(unittest.TestCase):
             self.assertEqual(r.status_code,400)
             self.assertIn('code',r.json['error'])
         self.assertEqual(self.client.get('/api/v1/market/BTC-USD').status_code,404)
-        self.assertEqual(self.client.get('/api/v1/predictions/BTCUSDT').status_code,501)
+        self.assertEqual(self.client.get('/api/v1/predictions/BTCUSDT').status_code,503)
         providers=self.client.get('/api/v1/providers/status').json['data']
         self.assertFalse(next(p for p in providers if p['provider']=='alpaca')['implemented'])
         self.assertEqual(self.client.get('/api/v1/system/health').json['status'],'ok')

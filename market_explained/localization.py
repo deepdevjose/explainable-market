@@ -16,6 +16,7 @@ def translate(message):
 
 def install(app):
     app.jinja_env.filters['marketprice'] = format_price
+    app.jinja_env.filters['forecastprice'] = format_forecast_price
 
     @app.before_request
     def choose_language():
@@ -63,3 +64,9 @@ def format_price(value):
     group, decimal = ('.', ',') if language == 'es' else (',', '.')
     whole = re.sub(r'(\d)(?=(\d{3})+$)', r'\1' + group, whole)
     return whole + decimal + fraction
+
+
+def format_forecast_price(value, asset_class='stocks'):
+    from decimal import Decimal
+    precision = Decimal('0.00001') if asset_class=='forex' else Decimal('0.01')
+    return format_price(Decimal(str(value)).quantize(precision))

@@ -9,6 +9,8 @@ import db
 from market_explained.markets.events import utcnow, timestamp
 from market_explained.providers.base import CAPABILITIES
 from market_explained.storage import repository
+from market_explained.security.display import restricted
+from market_explained.intelligence.data import latest
 
 api = Blueprint('market_api', __name__, url_prefix='/api/v1')
 pages = Blueprint('markets', __name__)
@@ -76,13 +78,15 @@ def provider_status() -> list[dict]:
     result = []
     for capability in CAPABILITIES:
         row = db.q1('SELECT * FROM provider_health WHERE provider=?', (capability['provider'],))
-        if row and (utcnow()-datetime.fromisoformat(row['updated_at'])).total_seconds()>repository.FRESH_SECONDS:
+        if row and (utcnow()-datetime.fromisoformat(row['updated_at'])).total_seconds()>(1800 if capability['provider']=='twelve_data' else repository.FRESH_SECONDS):
             row['connection'] = 'STALE'
         if row is None and capability['provider'] in ('yahoo','nasdaq'):
             source = 'Yahoo Finance' if capability['provider']=='yahoo' else 'Nasdaq'
             daily = db.q1('SELECT max(fetched_at) fetched_at FROM symbols WHERE source=?', (source,))
             row = {'connection':'HISTORICAL' if daily and daily['fetched_at'] else 'UNAVAILABLE',
                    'last_event_at':daily['fetched_at'] if daily else None}
+        if row and capability['provider']=='twelve_data':
+            row['instruments'] = db.q('SELECT i.symbol,s.state,s.error_code,s.checked_at,s.next_attempt_at FROM provider_instrument_status s JOIN instruments i USING(instrument_id) WHERE s.provider=?',('twelve_data',))
         result.append({**capability,'health':row or {'connection':'UNAVAILABLE' if capability['implemented'] else 'NOT_IMPLEMENTED'}})
     return result
 
@@ -91,7 +95,7 @@ def provider_status() -> list[dict]:
 def markets_api():
     return jsonify(data=[{'asset_class':key,'name':value,'instrument_count':db.q1(
         'SELECT count(*) n FROM instruments WHERE asset_class=?',(key,))['n'],
-        'implemented':key in ('stocks','crypto')} for key,value in CLASSES.items()])
+        'implemented':True} for key,value in CLASSES.items()])
 
 
 @api.get('/instruments')
@@ -110,6 +114,8 @@ def market_api(symbol):
 def history_api(symbol):
     item = instrument(symbol)
     limit, offset = pagination()
+    if restricted(item['instrument_id']):
+        raise APIError('display_restricted','La visualización externa de Twelve Data no está autorizada.',403)
     source = request.args.get('provider')
     if source and len(source)>80:
         raise APIError('invalid_provider','Proveedor inválido.')
@@ -134,14 +140,43 @@ def providers_api():
 def system_api():
     db.q1('SELECT 1')
     return jsonify(status='ok',database='connected',worker_independent=True,
-        schema_versions=[r['version'] for r in db.q('SELECT version FROM schema_migrations')],providers=provider_status())
+        schema_versions=[r['version'] for r in db.q('SELECT version FROM schema_migrations')],providers=provider_status(),
+        forecasting=db.q1("SELECT * FROM provider_health WHERE provider='forecasting'"))
+
+
+def prediction_for(symbol):
+    item = instrument(symbol)
+    if restricted(item['instrument_id']):
+        raise APIError('display_restricted','La visualización externa de Twelve Data no está autorizada.',403)
+    prediction = latest(item['instrument_id'])
+    if not prediction:
+        raise APIError('prediction_unavailable','Aún no hay un pronóstico: se requieren al menos 120 cierres y el proceso de entrenamiento.',503)
+    # Model artifacts stay in the private model registry, not in public responses.
+    prediction['model_metadata']['explanation'].pop('booster_json',None)
+    return prediction
+
+
+@api.get('/predictions/<symbol>')
+def predictions_api(symbol):
+    return jsonify(data=prediction_for(symbol))
 
 
 @api.get('/analysis/<symbol>')
-@api.get('/predictions/<symbol>')
-def planned_intelligence(symbol):
-    instrument(symbol)
-    raise APIError('not_implemented','Los modelos y análisis cuantitativos aún no están implementados.',501)
+def analysis_api(symbol):
+    result = prediction_for(symbol)
+    return jsonify(data=dict(instrument=result['instrument'],provider=result['provider'],
+        data_cutoff=result['data_cutoff_timestamp'],indicators=result['indicators'],
+        explanation=result['model_metadata']['explanation'],
+        features=result['model_metadata']['features'],data_quality=result['data_quality']))
+
+
+@pages.get('/intelligence')
+def intelligence():
+    selected = request.args.get('symbol','BTCUSDT')
+    item = instrument(selected)
+    result = None if restricted(item['instrument_id']) else latest(item['instrument_id'])
+    return render_template('intelligence.html',instruments=catalog(),selected=item,
+        prediction=result,restricted=restricted(item['instrument_id']))
 
 
 @pages.errorhandler(APIError)
@@ -163,14 +198,15 @@ def detail(symbol):
         from flask import redirect, url_for
         return redirect(url_for('symbol_detail',ticker=item['symbol']))
     view = repository.snapshot(item['instrument_id'])
-    rows = db.q('''SELECT payload FROM market_events WHERE instrument_id=? AND provider='binance'
+    provider = 'twelve_data' if item['instrument_id'].startswith('twelve:') else 'binance'
+    rows = [] if restricted(item['instrument_id']) else db.q('''SELECT payload FROM market_events WHERE instrument_id=? AND provider=?
         AND event_type='candle' AND json_extract(payload,'$.interval')='1d'
-        AND json_extract(payload,'$.candle_closed')=1 ORDER BY event_time,received_at''',(item['instrument_id'],))
+        AND json_extract(payload,'$.candle_closed')=1 ORDER BY event_time,received_at''',(item['instrument_id'],provider))
     # Retain revisions in history, but display the latest observation for each day.
-    by_day = {json.loads(r['payload'])['event_time'][:10]:json.loads(r['payload']) for r in rows}
+    by_day = {json.loads(r['payload'])['candle_open_time'][:10]:json.loads(r['payload']) for r in rows}
     candles = list(by_day.values())[-365:]
-    chart = charts.price_chart([r['event_time'][:10] for r in candles],
-        [float(r['price']) for r in candles],label='Cierres diarios · Binance Spot · USDT · UTC') if candles else None
+    chart = charts.price_chart([r['candle_open_time'][:10] for r in candles],
+        [float(r['price']) for r in candles],label='Daily closes · ' + provider + ' · ' + item['quote_currency'] + ' · UTC') if candles else None
     return render_template('market.html',view=view,chart=chart,status_labels=STATUS_LABELS)
 
 
