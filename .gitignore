@@ -17,3 +17,21 @@ venv/
 artifacts/
 .playwright-cli/
 output/playwright/
+
+# Local configuration, credentials and editor state
+*.env
+*.pem
+*.key
+.session-secret
+credentials*.json
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+.coverage
+htmlcov/
+output/
+# Legacy academic/demo references retained locally, excluded from publication
+/Checkpoint2.pdf
+/141cf24c20339c48808160b946b4ea06.png
