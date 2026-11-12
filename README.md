@@ -8,7 +8,7 @@ Una plataforma en español para comprender movimientos del mercado a partir de c
 ./run.sh
 ```
 
-Abre **http://127.0.0.1:5050**. El script usa `venv/`, lo crea si hace falta e instala dependencias cuando Flask o Waitress no están disponibles. También puedes preparar el entorno manualmente:
+Abre **http://127.0.0.1:5050**. El script prefiere `.venv/` si existe; en caso contrario usa `venv/` y lo crea si hace falta e instala dependencias cuando Flask o Waitress no están disponibles. También puedes preparar el entorno manualmente:
 
 ```bash
 python3 -m venv venv
@@ -34,8 +34,9 @@ Python 3.11 o superior. El servidor HTTP es Waitress, con ocho hilos y depuraci�
 La configuración se toma únicamente de variables del proceso. `.env.example` es
 una referencia: no se cargan `.env` ni `env (1).txt`. No se admite el alias
 DEEPSEEK_KEY. Exporta DEEPSEEK_API_KEY desde tu gestor de secretos o servicio.
-Sin clave, los mercados siguen funcionando y el asistente muestra su error de
-configuración; no se simulan respuestas del modelo.
+Sin clave, los mercados siguen funcionando y el asistente ofrece una guía educativa
+local determinista, identificada como no generativa. El análisis de titulares y la
+conversación libre requieren DeepSeek; no se simulan respuestas del modelo.
 
 ```bash
 # Mantén este valor estable y privado entre arranques. En producción usa tu gestor de secretos.
@@ -93,9 +94,9 @@ node --check static/app.js
 curl http://127.0.0.1:5050/health
 ```
 
-Las 48 pruebas usan bases temporales, fixtures con procedencia y un WebSocket local, sin gastar crédito de DeepSeek ni tocar datos del usuario. `/health` comprueba la base y si existe configuración de IA; `ai_configured: true` **no valida** credencial, saldo ni disponibilidad del proveedor.
+Las 53 pruebas usan bases temporales, fixtures con procedencia y un WebSocket local, sin gastar crédito de DeepSeek ni tocar datos del usuario. `/health` comprueba la base y si existe configuración de IA; `ai_configured: true` **no valida** credencial, saldo ni disponibilidad del proveedor.
 
-Consulta [la auditoría](docs/ARCHITECTURE_AUDIT.md), [el informe de esta entrega](docs/IMPLEMENTATION_REPORT.md) y [las operaciones de datos](docs/DATA_OPERATIONS.md). La inspección visual en navegador queda pendiente porque el host de automatización no está disponible. El documento VALIDACION.md conserva la evidencia anterior y sus correcciones.
+Consulta [la auditoría](docs/ARCHITECTURE_AUDIT.md), [el informe de esta entrega](docs/IMPLEMENTATION_REPORT.md) y [las operaciones de datos](docs/DATA_OPERATIONS.md). La actualización del 12 de noviembre incluye revisión de idiomas y disposición responsive en Chromium. El documento VALIDACION.md conserva la evidencia anterior y sus correcciones.
 
 ## Estructura
 
@@ -195,3 +196,16 @@ Para publicar la aplicación completa sin depender de la laptop, sigue
 Always Free sujeta a disponibilidad, procesos independientes, volumen SQLite y
 proxy HTTPS. GitHub Pages por sí solo no ejecuta el backend. La guía y configuración
 no significan que exista ya una instancia pública.
+
+## Demo pública e idiomas
+
+La interfaz permite **Español / English / 简体中文**, con preferencia por sesión.
+Las noticias conservan el idioma de la fuente. Los precios cripto recibidos se
+actualizan cada cinco segundos y resaltan al cambiar; las acciones conservan cierres
+diarios identificados como históricos. No se generan precios sintéticos.
+
+La laptop puede mantener web, Binance, colector diario y Cloudflare Quick Tunnel
+mediante servicios supervisados. Consulta [la guía de demo](docs/LAPTOP_DEMO.md)
+para iniciar, consultar la URL temporal, detener y revisar los límites comprobados.
+La laptop debe permanecer encendida y conectada. Esto no es un despliegue cloud
+permanente ni la implementación completa de la hoja de ruta de ML/múltiples mercados.
