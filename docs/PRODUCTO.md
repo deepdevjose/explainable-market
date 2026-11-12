@@ -7,7 +7,7 @@ Explainable Market ayuda a una persona que está aprendiendo o analizando el mer
 
 ## Lectura de los materiales
 
-`Checkpoint2.pdf` define como núcleo una lista de seguimiento explicable, movimientos acompañados de noticias y una línea temporal por activo con reacciones a una, tres y siete sesiones. También identifica que la fuente original de datos es estática y que falta conectar proveedores financieros reales y DeepSeek.
+El informe académico original definía como núcleo una lista de seguimiento explicable, movimientos acompañados de noticias y una línea temporal por activo con reacciones a una, tres y siete sesiones. Describía datos estáticos y proveedores pendientes en aquel momento. Se conserva como referencia privada, fuera del árbol publicable, porque contiene credenciales antiguas. Este documento describe el contexto original; el [README actual](../README.md) recoge la funcionalidad y límites vigentes.
 
 La imagen suministrada explora una experiencia educativa ligera, con navegación simple, seguimiento y explicaciones. Sus porcentajes de pronóstico, escenarios y rendimiento de predictores no aportan un modelo validado ni una fuente operativa. No se convierten en cifras ni funcionalidades pretendidamente reales.
 

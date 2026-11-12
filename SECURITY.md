@@ -7,18 +7,52 @@ Do not post live keys, account data or database dumps in public issues.
 
 ## Known historical exposure
 
-Commit `f51fc78` included `env (1).txt` with a DeepSeek credential,
-`data/.session-secret`, and both local databases (including legacy account records).
-These paths are removed from tracking and ignored in the foundation branch; local
-copies are retained. The original history remains reachable. Treat all credentials
-in that history as compromised even if a provider previously rejected them.
+Early commits included a provider credential, a session secret, local databases
+with legacy account records, and a PDF containing demo-account credentials. The
+provider credential also appeared in an older configuration example. Treat all
+previously exposed credentials as compromised, even if they no longer work.
 
-The owner must revoke/rotate the exposed provider credential, export a new
-SECRET_KEY, restart the web process to invalidate old sessions, and review exposed
-account records and any reused passwords. Credential revocation was not performed
-by this change. Do not reactivate or redistribute the historical credential file.
-A separate, coordinated history cleanup may reduce accidental exposure but does
-not replace rotation and is outside this non-destructive change.
+On 12 November 2026, the repository history was sanitized with `git-filter-repo`:
+credential files, databases, bytecode, the legacy PDF and screenshot were removed;
+known exposed values were redacted from remaining historical text and commit
+messages. Both `main` and `feat/multi-market-data-foundation` publish the current
+application on the cleaned history. The current working tree was preserved;
+local user data and the private service configuration were not published or reset.
+A recovery copy of the old repository is stored privately outside this checkout.
+
+The cleaned reachable history was checked for forbidden paths, selected token
+patterns and known historical/current service secrets. No matches were found in
+215 historical file versions before the final documentation update. All 79 tests
+passed against a separate checkout of the cleaned history. These targeted checks
+are not a guarantee that every possible secret has been identified.
+
+Rewriting branches cannot revoke credentials or erase other people's clones,
+forks, GitHub caches or inaccessible internal references. Revoke the exposed old
+provider key and review any reused demo passwords; review old account records as
+well. The current service uses separate private credentials and a stable private
+session key, which were not found in the historical scan. Revocation of old keys
+has not been performed by this repository change.
+
+Collaborators must clone the cleaned repository again or carefully rebase reviewed
+changes; do not merge or push the previous history. Previously shared commit IDs
+have changed. See [the cleanup report](docs/HISTORY_CLEANUP.md) for scope and
+GitHub's cache-removal procedure. Do not upload the private recovery copy.
+
+## Checks before committing
+
+```sh
+python3 scripts/check_repository_hygiene.py
+# Select only reviewed files with git add, then inspect the actual staged blobs:
+python3 scripts/check_repository_hygiene.py --staged
+git diff --cached --check
+```
+
+The checker rejects local databases, credential files, browser artifacts, nonempty
+credentials in `.env.example`, private-key blocks and selected provider/token
+patterns. It prints paths and reasons only. Its default scan includes nonignored
+untracked files; `--staged` checks the exact index even if the working copy was
+subsequently cleaned. It is a guardrail, not a full historical secret scanner.
+Review diffs privately; do not paste them into public issues before checking.
 
 ## Operating assumptions
 
