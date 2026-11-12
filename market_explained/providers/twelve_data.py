@@ -23,9 +23,22 @@ class PollingProvider(Protocol):
     def quote(self, instrument: Instrument, symbol: str) -> MarketEvent: ...
 
 
-def normalize_candles(payload: dict, instrument: Instrument, symbol: str, received: datetime) -> list[MarketEvent]:
-    if payload.get('meta', {}).get('symbol') != symbol:
+def validate_metadata(meta: dict, instrument: Instrument, symbol: str) -> None:
+    if meta.get('symbol') != symbol:
         raise ValueError('Provider symbol mismatch')
+    if meta.get('currency') and meta['currency'] != instrument.quote_currency:
+        raise ValueError('Provider currency mismatch')
+    kind = str(meta.get('type','')).lower().replace(' ','').replace('_','')
+    allowed = {'forex':{'physicalcurrency'},'commodities':{'commodity','physicalcurrency'},
+               'indices':{'index'}}
+    if kind and kind not in allowed.get(instrument.asset_class,set()):
+        raise ValueError('Provider instrument type mismatch')
+
+
+def normalize_candles(payload: dict, instrument: Instrument, symbol: str, received: datetime) -> list[MarketEvent]:
+    validate_metadata(payload.get('meta',{}),instrument,symbol)
+    if payload.get('meta',{}).get('interval') != '1day':
+        raise ValueError('Daily candles required')
     events = []
     for row in payload.get('values', []):
         opened = datetime.strptime(row['datetime'], '%Y-%m-%d').replace(tzinfo=timezone.utc)
@@ -45,8 +58,7 @@ def normalize_candles(payload: dict, instrument: Instrument, symbol: str, receiv
 
 
 def normalize_quote(payload: dict, instrument: Instrument, symbol: str, received: datetime) -> MarketEvent:
-    if payload.get('symbol') != symbol:
-        raise ValueError('Provider symbol mismatch')
+    validate_metadata(payload,instrument,symbol)
     stamp = payload.get('timestamp')
     if isinstance(stamp, bool) or not isinstance(stamp, int):
         raise ValueError('Provider quote timestamp missing')

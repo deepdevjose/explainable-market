@@ -41,7 +41,7 @@ class ProviderTests(unittest.TestCase):
         event = normalize_quote(payload,ITEM,'EUR/USD',RECEIVED)
         self.assertEqual(event.status.value,'DELAYED')
         self.assertEqual(event.event_time,RECEIVED-timedelta(seconds=10))
-        for field,value in (('timestamp',None),('timestamp',True),('close','NaN'),('symbol','EUR/USDT')):
+        for field,value in (('timestamp',None),('timestamp',True),('close','NaN'),('symbol','EUR/USDT'),('currency','JPY'),('type','Common Stock')):
             with self.assertRaises(ValueError):
                 normalize_quote(dict(payload,**{field:value}),ITEM,'EUR/USD',RECEIVED)
 
