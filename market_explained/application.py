@@ -10,7 +10,7 @@ from datetime import datetime, timedelta
 from functools import wraps
 from urllib.parse import urlsplit
 
-from flask import Flask, Response, abort, flash, jsonify, redirect, render_template, request, session, url_for
+from flask import Flask, Response, abort, flash, g, jsonify, redirect, render_template, request, session, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 import ai
 import charts
@@ -24,6 +24,8 @@ app.config.update(SECRET_KEY=config.SECRET_KEY, MAX_CONTENT_LENGTH=16*1024,
     SESSION_COOKIE_HTTPONLY=True,SESSION_COOKIE_SAMESITE='Lax',
     SESSION_COOKIE_SECURE=config.PRODUCTION or os.environ.get('COOKIE_SECURE','0')=='1',
     PERMANENT_SESSION_LIFETIME=timedelta(days=7))
+from market_explained.localization import install as install_localization
+install_localization(app)
 db.init()
 from market_explained.api.routes import api as market_api, pages as market_pages
 app.register_blueprint(market_api)
@@ -320,7 +322,7 @@ def chat_api():
                  'price':observation.get('price'),'source':observation.get('provider'),
                  'asof':observation.get('event_time'),'received_at':observation.get('received_at'),
                  'status':view['status'],'quality_flags':observation.get('quality_flags',[])}
-    context={'screen':PAGES.get(page,PAGES['dashboard']),'asset':sym,
+    context={'response_language':g.language,'screen':PAGES.get(page,PAGES['dashboard']),'asset':sym,
         'news':[{k:n[k] for k in ('id','ticker','headline','published','source','url','sentiment')} for n in news_for(ticker if sym else None,limit=5)],
         'data_policy':'Acciones: cierres diarios históricos. Cripto: observaciones de Binance Spot en USDT; solo LIVE indica recepción reciente conectada. STALE es desactualizado, HISTORICAL no es en vivo y UNAVAILABLE es desconocido. Correlación no implica causalidad.'}
     history=db.q('SELECT role,content FROM (SELECT id,role,content FROM messages WHERE owner=? ORDER BY id DESC LIMIT 8) ORDER BY id',(who,))

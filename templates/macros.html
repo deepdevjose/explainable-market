@@ -20,6 +20,6 @@
 {% elif name == 'logout' %}<path d="M10 4H4v16h6m4-13 5 5-5 5m-5-5h10"/>
 {% endif %}</svg>
 {%- endmacro %}
-{% macro badge(sentiment) %}<span class="badge {{ 'positive' if sentiment==1 else 'negative' if sentiment==-1 else 'neutral' }}"><span class="tiny-dot"></span>{{ sentiment_label[sentiment] }}</span>{% endmacro %}
-{% macro empty(title, text, symbol='chart') %}<div class="empty-state"><span class="empty-icon">{{ icon(symbol,28) }}</span><h3>{{ title }}</h3><p>{{ text }}</p></div>{% endmacro %}
+{% macro badge(sentiment) %}<span class="badge {{ 'positive' if sentiment==1 else 'negative' if sentiment==-1 else 'neutral' }}"><span class="tiny-dot"></span>{{ _(sentiment_label[sentiment]) }}</span>{% endmacro %}
+{% macro empty(title, text, symbol='chart') %}<div class="empty-state"><span class="empty-icon">{{ icon(symbol,28) }}</span><h3>{{ _(title) }}</h3><p>{{ _(text) }}</p></div>{% endmacro %}
 {% macro news_item(n) %}<article class="news-item"><div class="news-meta"><a href="{{ url_for('symbol_detail',ticker=n.ticker) }}" class="ticker-tag">{{ n.ticker }}</a><span>{{ n.published|shortdate }} UTC</span>{{ badge(n.sentiment) }}</div><h3><a href="{{ n.url }}" target="_blank" rel="noopener noreferrer">{{ n.headline }} {{ icon('external',14) }}</a></h3><p class="source">{{ n.source }}{% if n.rationale %} · {{ n.rationale }}{% endif %}</p></article>{% endmacro %}

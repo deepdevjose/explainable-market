@@ -26,6 +26,8 @@ def price_chart(dates, closes, markers=None, width=920, height=360, label='Cierr
 
     markers: list of (index, sentiment, headline, is_market) tuples.
     """
+    from market_explained.localization import translate
+    label = translate(label)
     markers = markers or []
     pad_l, pad_r, pad_t, pad_b = 64, 18, 18, 30
     plot_w, plot_h = width - pad_l - pad_r, height - pad_t - pad_b

@@ -17,3 +17,24 @@
 /* Multi-market extension uses the existing semantic tokens and layout system. */
 .market-discovery{margin-bottom:18px}.market-grid .asset-numbers>strong{font-size:23px;overflow-wrap:anywhere}.market-grid .asset-logo{font-size:10px;padding:4px;min-width:36px}.market-grid .badge{margin:10px 0 5px}.market-time{overflow-wrap:anywhere}.market-metadata{padding:18px 23px;display:grid;gap:10px;overflow-wrap:anywhere}.market-metadata p{font-size:12px}.market-filters input{background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:9px;max-width:100%;min-width:0}.market-filters label{min-width:0}
 @media(max-width:760px){.market-metadata{padding:18px}.market-grid .asset-numbers>strong{font-size:21px}.market-filters input{width:100%}.market-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* Progressive live updates: only received prices animate. */
+.language-form{display:flex;align-items:center;gap:4px;margin:0}
+.language-form select{font:inherit;font-size:12px;color:var(--text,#242424);background:var(--surface,#fff);border:1px solid var(--border,#ddd);border-radius:6px;padding:6px;max-width:110px}
+.language-submit{background:transparent;border:0;color:var(--blue,#0f62fe);cursor:pointer;padding:6px}
+:lang(zh-Hans){font-family:'IBM Plex Sans','Noto Sans CJK SC','Microsoft YaHei','PingFang SC',sans-serif}
+.stream-caption{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted,#666)}
+[data-field=price]{font-variant-numeric:tabular-nums;display:inline-block;border-radius:5px}
+[data-field=price].price-rise{animation:price-rise 1.2s ease-out}
+[data-field=price].price-fall{animation:price-fall 1.2s ease-out}
+[data-field=price].price-rise::after,[data-field=price].price-fall::after{content:attr(data-direction);font-size:.6em;margin-inline-start:5px}
+@keyframes price-rise{0%{background:#24a14830;color:#198038;transform:translateY(2px)}100%{background:transparent;transform:none}}
+@keyframes price-fall{0%{background:#da1e2830;color:#da1e28;transform:translateY(-2px)}100%{background:transparent;transform:none}}
+.live-preview{margin-block:24px}.live-preview-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;padding:20px}
+.live-preview-grid>a{display:flex;flex-wrap:wrap;align-items:center;gap:12px;text-decoration:none;color:inherit;min-width:0}
+.live-preview-grid .source{width:100%;overflow-wrap:anywhere}.live-price{font-size:24px;font-weight:600}
+@media(max-width:760px){.live-preview-grid{grid-template-columns:1fr}.header-actions{gap:6px}.language-form select{max-width:90px}.public-links{display:none}:lang(zh-Hans) .hero h1{font-size:clamp(32px,7vw,60px)}}
+@media(prefers-reduced-motion:reduce){[data-field=price].price-rise,[data-field=price].price-fall{animation:none}}
+.live-trace{width:100%;height:100px;color:var(--blue);margin-top:16px;overflow:visible}
+@media(max-width:760px){.market-filters{display:grid;grid-template-columns:1fr 1fr;gap:12px}.market-filters label{grid-column:1/-1;width:100%;min-width:0}.market-filters select,.market-filters input{width:100%;max-width:none}.market-grid [data-field=price]{font-size:clamp(18px,5vw,26px);overflow-wrap:normal;white-space:nowrap}}
+section.market-observation>.source{margin-inline:24px}section.market-observation>.live-trace{width:calc(100% - 48px);margin-inline:24px}

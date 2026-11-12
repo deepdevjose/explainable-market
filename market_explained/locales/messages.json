@@ -1,0 +1,1630 @@
+{
+  "Panorama": {
+    "en": "Overview",
+    "zh-Hans": "市场概览"
+  },
+  "Mercados": {
+    "en": "Markets",
+    "zh-Hans": "市场"
+  },
+  "Mi seguimiento": {
+    "en": "Watchlist",
+    "zh-Hans": "自选列表"
+  },
+  "Noticias": {
+    "en": "News",
+    "zh-Hans": "新闻"
+  },
+  "Aprender": {
+    "en": "Learn",
+    "zh-Hans": "学习"
+  },
+  "Fuentes y estado": {
+    "en": "Sources & health",
+    "zh-Hans": "数据来源与状态"
+  },
+  "Iniciar sesión": {
+    "en": "Sign in",
+    "zh-Hans": "登录"
+  },
+  "Inicia sesión": {
+    "en": "Sign in",
+    "zh-Hans": "登录"
+  },
+  "Cerrar sesión": {
+    "en": "Sign out",
+    "zh-Hans": "退出登录"
+  },
+  "Cambiar tema": {
+    "en": "Change theme",
+    "zh-Hans": "切换主题"
+  },
+  "Cómo funciona": {
+    "en": "How it works",
+    "zh-Hans": "使用指南"
+  },
+  "Metodología": {
+    "en": "Methodology",
+    "zh-Hans": "方法说明"
+  },
+  "Explorar mercado": {
+    "en": "Explore markets",
+    "zh-Hans": "探索市场"
+  },
+  "Explorar el mercado": {
+    "en": "Explore markets",
+    "zh-Hans": "探索市场"
+  },
+  "Mi espacio": {
+    "en": "My workspace",
+    "zh-Hans": "我的空间"
+  },
+  "Saltar al contenido": {
+    "en": "Skip to content",
+    "zh-Hans": "跳到内容"
+  },
+  "ESPACIO DE ANÁLISIS": {
+    "en": "RESEARCH WORKSPACE",
+    "zh-Hans": "分析空间"
+  },
+  "Espacio de análisis": {
+    "en": "Research workspace",
+    "zh-Hans": "分析空间"
+  },
+  "Datos con fuente": {
+    "en": "Attributed data",
+    "zh-Hans": "数据来源明确"
+  },
+  "La evidencia, primero.": {
+    "en": "Evidence first.",
+    "zh-Hans": "以证据为先。"
+  },
+  "Fuentes visibles.": {
+    "en": "Visible sources.",
+    "zh-Hans": "来源透明。"
+  },
+  "Decisiones informadas.": {
+    "en": "Informed decisions.",
+    "zh-Hans": "理性判断。"
+  },
+  "Tu espacio personal": {
+    "en": "Your workspace",
+    "zh-Hans": "个人空间"
+  },
+  "Cuenta personal": {
+    "en": "Personal account",
+    "zh-Hans": "个人账户"
+  },
+  "Inicia sesión para guardar": {
+    "en": "Sign in to save",
+    "zh-Hans": "登录后保存"
+  },
+  "Datos y metodología": {
+    "en": "Data & methodology",
+    "zh-Hans": "数据与方法"
+  },
+  "Información educativa · Sin asesoría ni ejecución de operaciones.": {
+    "en": "Educational information · No investment advice or trade execution.",
+    "zh-Hans": "仅供教育参考 · 不提供投资建议或交易执行。"
+  },
+  "Consultando fuentes externas…": {
+    "en": "Checking external sources…",
+    "zh-Hans": "正在查询外部数据源…"
+  },
+  "Tu contexto, más claro.": {
+    "en": "Your context, clearer.",
+    "zh-Hans": "让背景更清晰。"
+  },
+  "Asistente de Explainable Market": {
+    "en": "Explainable Market assistant",
+    "zh-Hans": "Explainable Market 助手"
+  },
+  "Asistente del mercado": {
+    "en": "Market assistant",
+    "zh-Hans": "市场助手"
+  },
+  "Abrir asistente del mercado": {
+    "en": "Open market assistant",
+    "zh-Hans": "打开市场助手"
+  },
+  "Cerrar asistente del mercado": {
+    "en": "Close market assistant",
+    "zh-Hans": "关闭市场助手"
+  },
+  "Cerrar asistente": {
+    "en": "Close assistant",
+    "zh-Hans": "关闭助手"
+  },
+  "Abrir navegación": {
+    "en": "Open navigation",
+    "zh-Hans": "打开导航"
+  },
+  "Navegación principal": {
+    "en": "Main navigation",
+    "zh-Hans": "主导航"
+  },
+  "Navegación de la aplicación": {
+    "en": "Application navigation",
+    "zh-Hans": "应用导航"
+  },
+  "Entiende esta pantalla contigo": {
+    "en": "Understand this screen",
+    "zh-Hans": "了解当前页面"
+  },
+  "Borrar": {
+    "en": "Clear",
+    "zh-Hans": "清除"
+  },
+  "Borrar conversación": {
+    "en": "Clear conversation",
+    "zh-Hans": "清除对话"
+  },
+  "UN POCO DE CONTEXTO": {
+    "en": "A LITTLE CONTEXT",
+    "zh-Hans": "了解背景"
+  },
+  "El mercado tiene preguntas.": {
+    "en": "Markets raise questions.",
+    "zh-Hans": "市场引发疑问。"
+  },
+  "Empecemos por las tuyas.": {
+    "en": "Let's start with yours.",
+    "zh-Hans": "从你的问题开始。"
+  },
+  "Puedo explicarte lo que ves o ayudarte a entender un concepto financiero.": {
+    "en": "I can explain this screen or help you understand a financial concept.",
+    "zh-Hans": "我可以解释当前页面，或帮助你理解金融概念。"
+  },
+  "Explica esta pantalla": {
+    "en": "Explain this screen",
+    "zh-Hans": "解释此页面"
+  },
+  "¿Qué es la volatilidad?": {
+    "en": "What is volatility?",
+    "zh-Hans": "什么是波动率？"
+  },
+  "Tu pregunta": {
+    "en": "Your question",
+    "zh-Hans": "你的问题"
+  },
+  "Pregunta para entender…": {
+    "en": "Ask to understand…",
+    "zh-Hans": "提问以加深理解…"
+  },
+  "Enviar pregunta": {
+    "en": "Send question",
+    "zh-Hans": "发送问题"
+  },
+  "IA educativa con DeepSeek. Puede equivocarse.": {
+    "en": "Educational AI powered by DeepSeek. It can make mistakes.",
+    "zh-Hans": "由 DeepSeek 提供的教育型 AI，可能出现错误。"
+  },
+  "Tu consulta y el contexto se envían a DeepSeek. Sin asesoría de inversión.": {
+    "en": "Your question and context are sent to DeepSeek. No investment advice.",
+    "zh-Hans": "你的问题与背景将发送至 DeepSeek。不提供投资建议。"
+  },
+  "¿Un poco de contexto?": {
+    "en": "Need some context?",
+    "zh-Hans": "想了解背景？"
+  },
+  "UNA PERSPECTIVA MÁS AMPLIA": {
+    "en": "A BROADER PERSPECTIVE",
+    "zh-Hans": "更广阔的视角"
+  },
+  "Mercados, con contexto": {
+    "en": "Markets in context",
+    "zh-Hans": "在背景中理解市场"
+  },
+  "Revisa el origen y la fecha. Un precio reciente también tiene límites.": {
+    "en": "Check the source and timestamp. Even a recent price has limitations.",
+    "zh-Hans": "请核对来源与时间，即使最新价格也存在局限。"
+  },
+  "Acciones: cierres históricos. Cripto: Binance Spot en USDT, según disponibilidad. Divisas, índices y materias primas: no disponibles en esta etapa.": {
+    "en": "Stocks: historical closes. Crypto: Binance Spot in USDT, subject to availability. Forex, indices and commodities are not connected yet.",
+    "zh-Hans": "股票：历史收盘价。加密资产：Binance 现货 USDT 报价，视来源可用性而定。外汇、指数及商品暂未接入。"
+  },
+  "Clase de activo": {
+    "en": "Asset class",
+    "zh-Hans": "资产类别"
+  },
+  "Todas las clases": {
+    "en": "All asset classes",
+    "zh-Hans": "全部资产类别"
+  },
+  "Buscar instrumento": {
+    "en": "Find an instrument",
+    "zh-Hans": "搜索金融工具"
+  },
+  "Nombre o símbolo": {
+    "en": "Name or symbol",
+    "zh-Hans": "名称或代码"
+  },
+  "Buscar": {
+    "en": "Search",
+    "zh-Hans": "搜索"
+  },
+  "Restablecer": {
+    "en": "Reset",
+    "zh-Hans": "重置"
+  },
+  "Sin observaciones": {
+    "en": "No observations",
+    "zh-Hans": "暂无观测数据"
+  },
+  "Sin fecha disponible": {
+    "en": "No timestamp available",
+    "zh-Hans": "暂无时间记录"
+  },
+  "Sin instrumentos disponibles": {
+    "en": "No instruments available",
+    "zh-Hans": "暂无可用金融工具"
+  },
+  "Esta clase de activo aún no está conectada. No se generan cotizaciones.": {
+    "en": "This asset class is not connected yet. No prices are generated.",
+    "zh-Hans": "此资产类别尚未接入，系统不会生成虚构报价。"
+  },
+  "En vivo exige un evento y recepción de hace menos de 30 segundos, y un colector conectado. Los datos antiguos se conservan como desactualizados. No se ejecutan operaciones.": {
+    "en": "Live requires event and receipt timestamps within 30 seconds and a connected collector. Older observations are retained as stale. No trades are executed.",
+    "zh-Hans": "实时状态要求事件与接收时间均在30秒内，且采集器已连接。旧数据保留并标为过期。不执行交易。"
+  },
+  "← Volver a mercados": {
+    "en": "← Back to markets",
+    "zh-Hans": "← 返回市场"
+  },
+  "USDT es Tether; esta cotización no es un par en dólares estadounidenses.": {
+    "en": "USDT is Tether; this pair is not quoted in US dollars.",
+    "zh-Hans": "USDT 是泰达币；此交易对并非美元报价。"
+  },
+  "Última observación": {
+    "en": "Latest observation",
+    "zh-Hans": "最新观测"
+  },
+  "Proveedor:": {
+    "en": "Provider:",
+    "zh-Hans": "数据提供方："
+  },
+  "Evento UTC:": {
+    "en": "Event UTC:",
+    "zh-Hans": "事件时间 UTC："
+  },
+  "Recibido UTC:": {
+    "en": "Received UTC:",
+    "zh-Hans": "接收时间 UTC："
+  },
+  "Calidad:": {
+    "en": "Quality:",
+    "zh-Hans": "数据质量："
+  },
+  "Sin incidencias registradas": {
+    "en": "No issues recorded",
+    "zh-Hans": "暂无已记录异常"
+  },
+  "HISTORIA CON FUENTE": {
+    "en": "ATTRIBUTED HISTORY",
+    "zh-Hans": "有来源的历史数据"
+  },
+  "Cierres diarios · Binance Spot": {
+    "en": "Daily closes · Binance Spot",
+    "zh-Hans": "每日收盘价 · Binance 现货"
+  },
+  "Aún no hay velas históricas": {
+    "en": "No historical candles yet",
+    "zh-Hans": "暂无历史K线"
+  },
+  "El colector independiente consulta únicamente velas cerradas. Si la fuente no responde, aquí no se generan datos.": {
+    "en": "The independent collector requests closed candles only. If the source fails, no data is generated.",
+    "zh-Hans": "独立采集器仅请求已收盘K线。来源无响应时不会生成数据。"
+  },
+  "· UTC · hasta 365 días según disponibilidad. Gráfica histórica; no representa operaciones en vivo.": {
+    "en": "· UTC · Up to 365 days subject to availability. Historical chart, not live trades.",
+    "zh-Hans": "· UTC · 最多365天，视来源可用性而定。此为历史图表，不代表实时成交。"
+  },
+  "Información educativa. No es asesoría de inversión ni una predicción. Un estado desactualizado conserva el último dato recibido; revisa su fecha.": {
+    "en": "Educational information, not investment advice or a forecast. Stale status retains the last observation; check its timestamp.",
+    "zh-Hans": "仅供教育参考，不构成投资建议或预测。过期状态保留最新收到的数据，请核对时间。"
+  },
+  "En vivo": {
+    "en": "Live",
+    "zh-Hans": "实时"
+  },
+  "Con retraso": {
+    "en": "Delayed",
+    "zh-Hans": "延迟"
+  },
+  "Histórico": {
+    "en": "Historical",
+    "zh-Hans": "历史"
+  },
+  "Desactualizado": {
+    "en": "Stale",
+    "zh-Hans": "已过期"
+  },
+  "Demostración": {
+    "en": "Demo",
+    "zh-Hans": "演示"
+  },
+  "No disponible": {
+    "en": "Unavailable",
+    "zh-Hans": "不可用"
+  },
+  "Acciones": {
+    "en": "Stocks",
+    "zh-Hans": "股票"
+  },
+  "Divisas": {
+    "en": "Forex",
+    "zh-Hans": "外汇"
+  },
+  "Criptomonedas": {
+    "en": "Cryptocurrencies",
+    "zh-Hans": "加密资产"
+  },
+  "Índices": {
+    "en": "Indices",
+    "zh-Hans": "指数"
+  },
+  "Materias primas": {
+    "en": "Commodities",
+    "zh-Hans": "大宗商品"
+  },
+  "TU PERSPECTIVA DEL MERCADO": {
+    "en": "YOUR MARKET PERSPECTIVE",
+    "zh-Hans": "你的市场视角"
+  },
+  "El contexto cambia todo": {
+    "en": "Context changes everything",
+    "zh-Hans": "背景改变理解"
+  },
+  "Observa los movimientos. Explora las noticias. Forma tu criterio.": {
+    "en": "Observe moves. Explore news. Build your own understanding.",
+    "zh-Hans": "观察行情，探索新闻，形成自己的判断。"
+  },
+  "Actualizar datos": {
+    "en": "Refresh data",
+    "zh-Hans": "刷新数据"
+  },
+  "Actualizar": {
+    "en": "Refresh",
+    "zh-Hans": "刷新"
+  },
+  "Actualizar fuentes": {
+    "en": "Refresh sources",
+    "zh-Hans": "刷新来源"
+  },
+  "Explorar acciones y criptomonedas con fecha y fuente →": {
+    "en": "Explore stocks and crypto with timestamps and sources →",
+    "zh-Hans": "探索附有时间与来源的股票及加密资产 →"
+  },
+  "Precios de cierre diarios en USD. Pueden estar retrasados; revisa la fecha de cada activo.": {
+    "en": "Daily closing prices in USD. Data may be delayed; check each instrument's date.",
+    "zh-Hans": "美元每日收盘价可能存在延迟，请核对每项资产的日期。"
+  },
+  "Cómo leer los datos ↗": {
+    "en": "How to read the data ↗",
+    "zh-Hans": "如何解读数据 ↗"
+  },
+  "Tu seguimiento": {
+    "en": "Your watchlist",
+    "zh-Hans": "你的自选列表"
+  },
+  "Una mirada al mercado": {
+    "en": "A look at the market",
+    "zh-Hans": "市场一览"
+  },
+  "Gestionar seguimiento": {
+    "en": "Manage watchlist",
+    "zh-Hans": "管理自选"
+  },
+  "Personaliza tu seguimiento": {
+    "en": "Personalize your watchlist",
+    "zh-Hans": "自定义自选列表"
+  },
+  "Esperando cotización": {
+    "en": "Waiting for prices",
+    "zh-Hans": "等待报价"
+  },
+  "PRECIO EN CONTEXTO": {
+    "en": "PRICE IN CONTEXT",
+    "zh-Hans": "价格与背景"
+  },
+  "vs. cierre anterior": {
+    "en": "vs. previous close",
+    "zh-Hans": "对比前收盘"
+  },
+  "Cierre diario · últimos 6 meses": {
+    "en": "Daily close · last 6 months",
+    "zh-Hans": "每日收盘 · 近6个月"
+  },
+  "● Noticias en la línea temporal": {
+    "en": "● News on the timeline",
+    "zh-Hans": "● 时间轴上的新闻"
+  },
+  "Un buen análisis empieza con datos reales.": {
+    "en": "Good analysis starts with real data.",
+    "zh-Hans": "好的分析始于真实数据。"
+  },
+  "Estamos consultando la fuente. Si no responde, puedes volver a actualizar; aquí no se generan precios.": {
+    "en": "Checking the source. Retry if it is unavailable; no prices are generated here.",
+    "zh-Hans": "正在查询来源。若不可用请重试；系统不会生成价格。"
+  },
+  "Fuente de precios pendiente": {
+    "en": "Price source pending",
+    "zh-Hans": "价格来源待更新"
+  },
+  "Sin cierre disponible": {
+    "en": "No closing price available",
+    "zh-Hans": "暂无收盘价"
+  },
+  "Explorar el contexto": {
+    "en": "Explore the context",
+    "zh-Hans": "探索背景"
+  },
+  "CONECTA LOS PUNTOS": {
+    "en": "CONNECT THE DOTS",
+    "zh-Hans": "串联信息"
+  },
+  "El precio es": {
+    "en": "Price is",
+    "zh-Hans": "价格只是"
+  },
+  "solo el principio.": {
+    "en": "just the beginning.",
+    "zh-Hans": "理解的起点。"
+  },
+  "Una variación te dice qué pasó. Las noticias te ayudan a explorar qué pudo influir.": {
+    "en": "A price change shows what happened. News helps explore possible influences.",
+    "zh-Hans": "价格变动说明发生了什么，新闻帮助探索可能的影响因素。"
+  },
+  "Empieza con una pregunta": {
+    "en": "Start with a question",
+    "zh-Hans": "从问题开始"
+  },
+  "¿Qué estoy viendo en": {
+    "en": "What am I seeing for",
+    "zh-Hans": "我正在查看"
+  },
+  "¿Qué significa el sentimiento?": {
+    "en": "What does sentiment mean?",
+    "zh-Hans": "情绪分析意味着什么？"
+  },
+  "La correlación no demuestra causalidad.": {
+    "en": "Correlation does not establish causation.",
+    "zh-Hans": "相关性不代表因果关系。"
+  },
+  "EL OTRO LADO DE LA GRÁFICA": {
+    "en": "BEYOND THE CHART",
+    "zh-Hans": "图表之外"
+  },
+  "Noticias de": {
+    "en": "News for",
+    "zh-Hans": "相关新闻"
+  },
+  "Ver todas": {
+    "en": "View all",
+    "zh-Hans": "查看全部"
+  },
+  "Esperando las primeras noticias": {
+    "en": "Waiting for news",
+    "zh-Hans": "等待新闻"
+  },
+  "Actualiza los datos para consultar titulares de fuentes externas.": {
+    "en": "Refresh data to fetch headlines from external sources.",
+    "zh-Hans": "刷新数据以获取外部来源的新闻标题。"
+  },
+  "← Volver al panorama": {
+    "en": "← Back to overview",
+    "zh-Hans": "← 返回概览"
+  },
+  "Del movimiento del precio al contexto que lo rodea.": {
+    "en": "From price movements to their surrounding context.",
+    "zh-Hans": "从价格变动到其背后的背景。"
+  },
+  "En seguimiento · quitar": {
+    "en": "Following · remove",
+    "zh-Hans": "已关注 · 移除"
+  },
+  "Seguir activo": {
+    "en": "Follow instrument",
+    "zh-Hans": "关注资产"
+  },
+  "Último cierre": {
+    "en": "Latest close",
+    "zh-Hans": "最新收盘"
+  },
+  "Pendiente": {
+    "en": "Pending",
+    "zh-Hans": "待更新"
+  },
+  "Variación diaria": {
+    "en": "Daily change",
+    "zh-Hans": "日涨跌幅"
+  },
+  "Respecto al cierre anterior": {
+    "en": "Compared with previous close",
+    "zh-Hans": "对比上一收盘价"
+  },
+  "Variación del período": {
+    "en": "Period change",
+    "zh-Hans": "区间涨跌幅"
+  },
+  "Ventana seleccionada": {
+    "en": "Selected window",
+    "zh-Hans": "选定区间"
+  },
+  "Máximo / mínimo": {
+    "en": "High / low",
+    "zh-Hans": "最高 / 最低"
+  },
+  "Cierres del período": {
+    "en": "Closing prices in the period",
+    "zh-Hans": "区间收盘价"
+  },
+  "PRECIO + NOTICIAS": {
+    "en": "PRICE + NEWS",
+    "zh-Hans": "价格 + 新闻"
+  },
+  "Un movimiento, más perspectiva.": {
+    "en": "One move, more perspective.",
+    "zh-Hans": "一次变动，更多视角。"
+  },
+  "Período de la gráfica": {
+    "en": "Chart period",
+    "zh-Hans": "图表区间"
+  },
+  "1 mes": {
+    "en": "1 month",
+    "zh-Hans": "1个月"
+  },
+  "3 meses": {
+    "en": "3 months",
+    "zh-Hans": "3个月"
+  },
+  "6 meses": {
+    "en": "6 months",
+    "zh-Hans": "6个月"
+  },
+  "Aún no hay cierres disponibles": {
+    "en": "No closing prices available yet",
+    "zh-Hans": "暂无收盘价"
+  },
+  "Consulta la fuente con Actualizar. Las noticias pueden estar disponibles aunque el proveedor de precios no responda.": {
+    "en": "Use Refresh to query the source. News may be available even if prices are not.",
+    "zh-Hans": "点击刷新以查询来源。价格提供方不可用时，新闻仍可能可用。"
+  },
+  "● Sentimiento de la noticia: positivo, negativo, neutral o sin analizar": {
+    "en": "● News sentiment: positive, negative, neutral or not analyzed",
+    "zh-Hans": "● 新闻情绪：正面、负面、中性或未分析"
+  },
+  "Los puntos agrupan la noticia en la siguiente sesión disponible.": {
+    "en": "Markers assign news to the next available trading session.",
+    "zh-Hans": "标记将新闻归入下一可用交易日。"
+  },
+  "Fuente:": {
+    "en": "Source:",
+    "zh-Hans": "来源："
+  },
+  "pendiente": {
+    "en": "pending",
+    "zh-Hans": "待更新"
+  },
+  "· Consultado:": {
+    "en": "· Retrieved:",
+    "zh-Hans": "· 查询时间："
+  },
+  "Exportar CSV": {
+    "en": "Export CSV",
+    "zh-Hans": "导出 CSV"
+  },
+  "EVIDENCIA PARA EXPLORAR": {
+    "en": "EVIDENCE TO EXPLORE",
+    "zh-Hans": "探索证据"
+  },
+  "Noticias y reacción del precio": {
+    "en": "News and price reactions",
+    "zh-Hans": "新闻与价格反应"
+  },
+  "Analizar titulares con IA": {
+    "en": "Analyze headlines with AI",
+    "zh-Hans": "使用 AI 分析标题"
+  },
+  "Inicia sesión para analizar con IA ↗": {
+    "en": "Sign in for AI analysis ↗",
+    "zh-Hans": "登录以使用 AI 分析 ↗"
+  },
+  "Noticia / fuente": {
+    "en": "News / source",
+    "zh-Hans": "新闻 / 来源"
+  },
+  "Sentimiento IA": {
+    "en": "AI sentiment",
+    "zh-Hans": "AI 情绪分析"
+  },
+  "1 sesión": {
+    "en": "1 session",
+    "zh-Hans": "1个交易日"
+  },
+  "3 sesiones": {
+    "en": "3 sessions",
+    "zh-Hans": "3个交易日"
+  },
+  "7 sesiones": {
+    "en": "7 sessions",
+    "zh-Hans": "7个交易日"
+  },
+  "Sesión asociada:": {
+    "en": "Associated session:",
+    "zh-Hans": "关联交易日："
+  },
+  "Todavía no hay noticias para este activo": {
+    "en": "No news for this instrument yet",
+    "zh-Hans": "该资产暂无新闻"
+  },
+  "Actualiza las fuentes para consultar el feed.": {
+    "en": "Refresh sources to fetch the feed.",
+    "zh-Hans": "刷新来源以获取资讯。"
+  },
+  "El sentimiento clasifica el tono del titular mediante DeepSeek. No mide rentabilidad futura ni constituye una recomendación.": {
+    "en": "DeepSeek classifies headline tone. Sentiment does not measure future returns or constitute a recommendation.",
+    "zh-Hans": "DeepSeek 对标题语气进行分类，不能衡量未来收益，也不构成建议。"
+  },
+  "INFORMACIÓN CON ORIGEN": {
+    "en": "INFORMATION WITH SOURCES",
+    "zh-Hans": "信息有据可查"
+  },
+  "Detrás de los titulares": {
+    "en": "Behind the headlines",
+    "zh-Hans": "标题背后"
+  },
+  "Abre las fuentes, contrasta las fechas y explora el contexto.": {
+    "en": "Open sources, compare dates and explore context.",
+    "zh-Hans": "打开来源，核对日期，探索背景。"
+  },
+  "Activo": {
+    "en": "Instrument",
+    "zh-Hans": "资产"
+  },
+  "Todos los activos": {
+    "en": "All instruments",
+    "zh-Hans": "全部资产"
+  },
+  "Sentimiento": {
+    "en": "Sentiment",
+    "zh-Hans": "情绪"
+  },
+  "Cualquier sentimiento": {
+    "en": "Any sentiment",
+    "zh-Hans": "全部情绪"
+  },
+  "Filtrar": {
+    "en": "Filter",
+    "zh-Hans": "筛选"
+  },
+  "noticias": {
+    "en": "news items",
+    "zh-Hans": "条新闻"
+  },
+  "No hay noticias con estos filtros": {
+    "en": "No news matches these filters",
+    "zh-Hans": "没有符合筛选条件的新闻"
+  },
+  "Restablece los filtros o actualiza las fuentes para consultar el feed.": {
+    "en": "Reset filters or refresh sources to fetch the feed.",
+    "zh-Hans": "重置筛选条件或刷新来源以获取资讯。"
+  },
+  "LEE CON PERSPECTIVA": {
+    "en": "READ WITH PERSPECTIVE",
+    "zh-Hans": "多角度阅读"
+  },
+  "Un titular es": {
+    "en": "A headline is",
+    "zh-Hans": "标题只是"
+  },
+  "un punto de partida.": {
+    "en": "a starting point.",
+    "zh-Hans": "理解的起点。"
+  },
+  "El sentimiento refleja el tono del titular, no garantiza cómo se moverá un activo.": {
+    "en": "Sentiment reflects headline tone and does not guarantee an asset's direction.",
+    "zh-Hans": "情绪反映标题语气，并不能保证资产走势。"
+  },
+  "«Sin analizar» significa que DeepSeek aún no ha clasificado esa noticia. Puedes solicitarlo desde el detalle del activo.": {
+    "en": "Not analyzed means DeepSeek has not classified the headline yet. Request analysis from the instrument page.",
+    "zh-Hans": "“未分析”表示 DeepSeek 尚未分类该新闻，可在资产详情页请求分析。"
+  },
+  "Conoce la metodología": {
+    "en": "Read the methodology",
+    "zh-Hans": "了解方法"
+  },
+  "Feed RSS de Yahoo Finance. Los artículos pueden estar en inglés y pertenecer a terceros; cada enlace abre la publicación original.": {
+    "en": "Yahoo Finance RSS feed. Articles may be in English and belong to third parties; links open the original publication.",
+    "zh-Hans": "Yahoo Finance RSS 新闻。文章可能为英文且属于第三方；链接将打开原始报道。"
+  },
+  "TU MERCADO, A TU MANERA": {
+    "en": "YOUR MARKET, YOUR WAY",
+    "zh-Hans": "你的市场，由你定义"
+  },
+  "Una lista. Tu perspectiva": {
+    "en": "One list. Your perspective",
+    "zh-Hans": "一个列表，你的视角"
+  },
+  "Elige los activos que quieres seguir. Tu selección se guarda en tu cuenta.": {
+    "en": "Choose instruments to follow. Your selection is saved in your account.",
+    "zh-Hans": "选择你要关注的资产，选择将保存至账户。"
+  },
+  "activos guardados": {
+    "en": "saved instruments",
+    "zh-Hans": "项已保存资产"
+  },
+  "Empieza por lo que te interesa.": {
+    "en": "Start with what interests you.",
+    "zh-Hans": "从感兴趣的资产开始。"
+  },
+  "Añade un activo de la lista. Después encontrarás su precio y sus noticias en el panorama.": {
+    "en": "Add an instrument below to see its price and news in your overview.",
+    "zh-Hans": "从下方添加资产，即可在概览中查看价格与新闻。"
+  },
+  "Explora los activos": {
+    "en": "Explore instruments",
+    "zh-Hans": "探索资产"
+  },
+  "Buscar nombre, símbolo o sector": {
+    "en": "Search name, symbol or sector",
+    "zh-Hans": "搜索名称、代码或行业"
+  },
+  "Buscar activos": {
+    "en": "Search instruments",
+    "zh-Hans": "搜索资产"
+  },
+  "Sector": {
+    "en": "Sector",
+    "zh-Hans": "行业"
+  },
+  "Estado": {
+    "en": "Status",
+    "zh-Hans": "状态"
+  },
+  "Seguimiento": {
+    "en": "Watchlist",
+    "zh-Hans": "自选"
+  },
+  "En tu lista": {
+    "en": "In your list",
+    "zh-Hans": "已在列表"
+  },
+  "Disponible": {
+    "en": "Available",
+    "zh-Hans": "可用"
+  },
+  "Quitar": {
+    "en": "Remove",
+    "zh-Hans": "移除"
+  },
+  "Añadir": {
+    "en": "Add",
+    "zh-Hans": "添加"
+  },
+  "No hay activos que coincidan con tu búsqueda.": {
+    "en": "No instruments match your search.",
+    "zh-Hans": "没有符合搜索条件的资产。"
+  },
+  "El seguimiento guarda intereses de análisis. No se conecta a cuentas bancarias ni representa posiciones de inversión.": {
+    "en": "Watchlists save research interests. They do not connect to bank accounts or represent investment positions.",
+    "zh-Hans": "自选列表用于保存研究兴趣，不连接银行账户，也不代表投资持仓。"
+  },
+  "TU ESPACIO PARA ENTENDER": {
+    "en": "YOUR SPACE TO UNDERSTAND",
+    "zh-Hans": "你的理解空间"
+  },
+  "Una mejor": {
+    "en": "A better",
+    "zh-Hans": "更好的"
+  },
+  "perspectiva": {
+    "en": "perspective",
+    "zh-Hans": "视角"
+  },
+  "empieza contigo.": {
+    "en": "starts with you.",
+    "zh-Hans": "从你开始。"
+  },
+  "Tu seguimiento, las noticias y las preguntas que te ayudan a conectar los puntos.": {
+    "en": "Your watchlist, news and questions help connect the dots.",
+    "zh-Hans": "自选、新闻与问题，帮助你串联信息。"
+  },
+  "Sin conexión a bancos.": {
+    "en": "No bank connections.",
+    "zh-Hans": "不连接银行账户。"
+  },
+  "Sin ejecución de operaciones.": {
+    "en": "No trade execution.",
+    "zh-Hans": "不执行交易。"
+  },
+  "Hazlo tuyo.": {
+    "en": "Make it yours.",
+    "zh-Hans": "打造你的空间。"
+  },
+  "Bienvenido de nuevo.": {
+    "en": "Welcome back.",
+    "zh-Hans": "欢迎回来。"
+  },
+  "Crea una cuenta para guardar los activos que te interesan.": {
+    "en": "Create an account to save instruments you follow.",
+    "zh-Hans": "创建账户以保存关注的资产。"
+  },
+  "Vuelve a tu contexto, tus activos y tus preguntas.": {
+    "en": "Return to your context, instruments and questions.",
+    "zh-Hans": "回到你的背景、资产与问题。"
+  },
+  "Nombre": {
+    "en": "Name",
+    "zh-Hans": "姓名"
+  },
+  "Cómo te llamas": {
+    "en": "Your name",
+    "zh-Hans": "你的姓名"
+  },
+  "Correo electrónico": {
+    "en": "Email",
+    "zh-Hans": "电子邮箱"
+  },
+  "Contraseña": {
+    "en": "Password",
+    "zh-Hans": "密码"
+  },
+  "Mínimo 10 caracteres": {
+    "en": "At least 10 characters",
+    "zh-Hans": "至少10个字符"
+  },
+  "Tu contraseña": {
+    "en": "Your password",
+    "zh-Hans": "你的密码"
+  },
+  "Mostrar contraseña": {
+    "en": "Show password",
+    "zh-Hans": "显示密码"
+  },
+  "Ocultar contraseña": {
+    "en": "Hide password",
+    "zh-Hans": "隐藏密码"
+  },
+  "Ver": {
+    "en": "Show",
+    "zh-Hans": "显示"
+  },
+  "Ocultar": {
+    "en": "Hide",
+    "zh-Hans": "隐藏"
+  },
+  "Usa una contraseña única de al menos 10 caracteres.": {
+    "en": "Use a unique password with at least 10 characters.",
+    "zh-Hans": "请使用至少10个字符的独立密码。"
+  },
+  "Crear mi cuenta": {
+    "en": "Create account",
+    "zh-Hans": "创建账户"
+  },
+  "¿Ya tienes cuenta?": {
+    "en": "Already have an account?",
+    "zh-Hans": "已有账户？"
+  },
+  "¿Es tu primera visita?": {
+    "en": "First visit?",
+    "zh-Hans": "首次访问？"
+  },
+  "Crea tu cuenta": {
+    "en": "Create an account",
+    "zh-Hans": "创建账户"
+  },
+  "Seguir explorando sin cuenta": {
+    "en": "Continue without an account",
+    "zh-Hans": "无需账户继续浏览"
+  },
+  "Tus listas se guardan en este servicio. Las consultas al asistente se procesan con DeepSeek.": {
+    "en": "Your lists are stored on this service. Assistant requests are processed by DeepSeek.",
+    "zh-Hans": "列表保存在此服务中，助手请求由 DeepSeek 处理。"
+  },
+  "MENOS RUIDO. MÁS CONTEXTO.": {
+    "en": "LESS NOISE. MORE CONTEXT.",
+    "zh-Hans": "少些噪声，多些背景。"
+  },
+  "El mercado se mueve.": {
+    "en": "Markets move.",
+    "zh-Hans": "市场不断变化。"
+  },
+  "Entiende el porqué.": {
+    "en": "Understand the context.",
+    "zh-Hans": "理解变化背景。"
+  },
+  "Conecta los movimientos del mercado con las noticias que los rodean. Explora la evidencia y convierte la información en comprensión.": {
+    "en": "Connect market moves with surrounding news. Explore evidence and turn information into understanding.",
+    "zh-Hans": "关联市场变动与相关新闻，探索证据，将信息转化为理解。"
+  },
+  "Conoce cómo funciona": {
+    "en": "See how it works",
+    "zh-Hans": "了解如何使用"
+  },
+  "Sin conectar tu banco. Sin ejecutar operaciones.": {
+    "en": "No bank connections. No trade execution.",
+    "zh-Hans": "不连接银行，不执行交易。"
+  },
+  "Del movimiento al contexto": {
+    "en": "From movement to context",
+    "zh-Hans": "从变动到背景"
+  },
+  "OBSERVAR → COMPRENDER": {
+    "en": "OBSERVE → UNDERSTAND",
+    "zh-Hans": "观察 → 理解"
+  },
+  "Detrás de cada movimiento,": {
+    "en": "Behind every move,",
+    "zh-Hans": "每一次变动背后，"
+  },
+  "hay una mejor pregunta.": {
+    "en": "there is a better question.",
+    "zh-Hans": "都有值得探索的问题。"
+  },
+  "Visualización conceptual · no es una cotización": {
+    "en": "Concept illustration · not a market quote",
+    "zh-Hans": "概念示意图 · 非市场报价"
+  },
+  "Ilustración conceptual de una tendencia, sin datos de cotización": {
+    "en": "Conceptual trend illustration without price data",
+    "zh-Hans": "趋势概念示意，不含实际报价"
+  },
+  "Un movimiento. Sus noticias. Tu contexto.": {
+    "en": "One move. Its news. Your context.",
+    "zh-Hans": "一次变动，相关新闻，你的背景。"
+  },
+  "Explora fuentes y fechas antes de sacar conclusiones.": {
+    "en": "Explore sources and dates before drawing conclusions.",
+    "zh-Hans": "在得出结论前，先核对来源与日期。"
+  },
+  "PRECIO": {
+    "en": "PRICE",
+    "zh-Hans": "价格"
+  },
+  "NOTICIAS": {
+    "en": "NEWS",
+    "zh-Hans": "新闻"
+  },
+  "COMPRENSIÓN": {
+    "en": "UNDERSTANDING",
+    "zh-Hans": "理解"
+  },
+  "Datos con fecha y fuente": {
+    "en": "Data with dates and sources",
+    "zh-Hans": "带有日期和来源的数据"
+  },
+  "Noticias que puedes verificar": {
+    "en": "News you can verify",
+    "zh-Hans": "可核查的新闻"
+  },
+  "IA para aprender contigo": {
+    "en": "AI to help you learn",
+    "zh-Hans": "与你一起学习的 AI"
+  },
+  "Evidencia antes que certezas": {
+    "en": "Evidence before certainty",
+    "zh-Hans": "先看证据，再谈确定性"
+  },
+  "DEL QUÉ AL PORQUÉ": {
+    "en": "FROM WHAT TO CONTEXT",
+    "zh-Hans": "从现象到背景"
+  },
+  "Más perspectiva.": {
+    "en": "More perspective.",
+    "zh-Hans": "更多视角。"
+  },
+  "Menos pestañas abiertas.": {
+    "en": "Fewer open tabs.",
+    "zh-Hans": "更少页面切换。"
+  },
+  "Una lectura del mercado que empieza en los datos y termina en algo que puedes entender.": {
+    "en": "A view of markets that starts with data and ends with understanding.",
+    "zh-Hans": "从数据出发，以理解市场为目标。"
+  },
+  "01 / OBSERVA": {
+    "en": "01 / OBSERVE",
+    "zh-Hans": "01 / 观察"
+  },
+  "Tu mercado.": {
+    "en": "Your market.",
+    "zh-Hans": "你的市场。"
+  },
+  "A tu manera.": {
+    "en": "Your way.",
+    "zh-Hans": "由你定义。"
+  },
+  "Reúne los activos que te interesan en una lista personal. Revisa cierres, variaciones y tendencias desde un mismo lugar.": {
+    "en": "Bring instruments into a personal list. Review closes, changes and trends in one place.",
+    "zh-Hans": "将感兴趣的资产汇入个人列表，在同一页面查看收盘、涨跌与趋势。"
+  },
+  "Crea tu seguimiento": {
+    "en": "Create your watchlist",
+    "zh-Hans": "创建自选列表"
+  },
+  "02 / CONECTA": {
+    "en": "02 / CONNECT",
+    "zh-Hans": "02 / 关联"
+  },
+  "La noticia junto": {
+    "en": "News alongside",
+    "zh-Hans": "新闻与"
+  },
+  "al movimiento.": {
+    "en": "the movement.",
+    "zh-Hans": "行情相伴。"
+  },
+  "Relaciona titulares y fechas con el comportamiento del precio. Abre la fuente y compara lo que ocurrió después.": {
+    "en": "Compare headlines and dates with price behavior. Open the source and examine what followed.",
+    "zh-Hans": "对照新闻标题、日期与价格走势，打开原始来源并比较后续变化。"
+  },
+  "Explora las noticias": {
+    "en": "Explore the news",
+    "zh-Hans": "探索新闻"
+  },
+  "03 / COMPRENDE": {
+    "en": "03 / UNDERSTAND",
+    "zh-Hans": "03 / 理解"
+  },
+  "Una pregunta.": {
+    "en": "One question.",
+    "zh-Hans": "一个问题。"
+  },
+  "Más claridad.": {
+    "en": "More clarity.",
+    "zh-Hans": "更多清晰认识。"
+  },
+  "Pregunta al asistente qué significa una gráfica o un concepto. Recibe explicaciones educativas en el contexto de tu pantalla.": {
+    "en": "Ask the assistant about a chart or concept. Get educational explanations in the context of your screen.",
+    "zh-Hans": "向助手询问图表或概念含义，结合当前页面获取教育性解释。"
+  },
+  "Habla con el asistente": {
+    "en": "Talk to the assistant",
+    "zh-Hans": "与助手交流"
+  },
+  "DISEÑADO PARA PENSAR MEJOR": {
+    "en": "DESIGNED FOR CLEARER THINKING",
+    "zh-Hans": "为清晰思考而设计"
+  },
+  "Una explicación útil": {
+    "en": "A useful explanation",
+    "zh-Hans": "有用的解释"
+  },
+  " también reconoce sus límites.": {
+    "en": " also acknowledges its limits.",
+    "zh-Hans": "也会承认自身局限。"
+  },
+  "también reconoce sus límites.": {
+    "en": "also acknowledges its limits.",
+    "zh-Hans": "也会承认自身局限。"
+  },
+  "Que una noticia coincida con un movimiento no demuestra que lo haya causado. Aquí puedes revisar la evidencia, sus fechas y lo que todavía no sabemos.": {
+    "en": "A news item coinciding with a price move does not prove causation. Review the evidence, dates and what remains unknown.",
+    "zh-Hans": "新闻与价格变动同时出现并不证明因果关系。请核查证据、时间及尚不确定的信息。"
+  },
+  "Nuestra metodología": {
+    "en": "Our methodology",
+    "zh-Hans": "我们的方法"
+  },
+  "Fuentes a la vista": {
+    "en": "Sources in view",
+    "zh-Hans": "来源清晰可见"
+  },
+  "Enlaces al origen de cada noticia.": {
+    "en": "Links to every original news source.",
+    "zh-Hans": "每条新闻均链接至原始来源。"
+  },
+  "Fechas, sin letra pequeña": {
+    "en": "Dates, clearly shown",
+    "zh-Hans": "日期清楚呈现"
+  },
+  "Cierres diarios y última actualización.": {
+    "en": "Daily closes and latest update.",
+    "zh-Hans": "每日收盘与最近更新时间。"
+  },
+  "IA con un propósito": {
+    "en": "AI with a purpose",
+    "zh-Hans": "目标明确的 AI"
+  },
+  "Comprender el mercado y la plataforma.": {
+    "en": "Understand markets and this platform.",
+    "zh-Hans": "理解市场与平台。"
+  },
+  "TU SIGUIENTE PASO ES ENTENDER": {
+    "en": "YOUR NEXT STEP IS UNDERSTANDING",
+    "zh-Hans": "下一步，理解市场"
+  },
+  "Haz espacio para": {
+    "en": "Make room for",
+    "zh-Hans": "留出空间，迎接"
+  },
+  "una mejor perspectiva.": {
+    "en": "a better perspective.",
+    "zh-Hans": "更好的视角。"
+  },
+  "Empieza a explorar": {
+    "en": "Start exploring",
+    "zh-Hans": "开始探索"
+  },
+  "Explora sin cuenta. Guarda tu seguimiento al registrarte.": {
+    "en": "Explore without an account. Register to save your watchlist.",
+    "zh-Hans": "无需账户即可浏览，注册后可保存自选列表。"
+  },
+  "Información para comprender. Sin asesoría de inversión.": {
+    "en": "Information for understanding. No investment advice.",
+    "zh-Hans": "信息用于理解市场，不构成投资建议。"
+  },
+  "Fuentes y metodología ↗": {
+    "en": "Sources & methodology ↗",
+    "zh-Hans": "来源与方法 ↗"
+  },
+  "TRANSPARENCIA POR DISEÑO": {
+    "en": "TRANSPARENCY BY DESIGN",
+    "zh-Hans": "透明源于设计"
+  },
+  "La fuente también importa": {
+    "en": "The source matters too",
+    "zh-Hans": "来源同样重要"
+  },
+  "La disponibilidad del servidor no garantiza la disponibilidad de un proveedor.": {
+    "en": "Server availability does not guarantee provider availability.",
+    "zh-Hans": "服务器可用并不代表数据来源始终可用。"
+  },
+  "Recibiendo datos": {
+    "en": "Receiving data",
+    "zh-Hans": "正在接收数据"
+  },
+  "Conectando": {
+    "en": "Connecting",
+    "zh-Hans": "正在连接"
+  },
+  "Colector detenido": {
+    "en": "Collector stopped",
+    "zh-Hans": "采集器已停止"
+  },
+  "Error de conexión": {
+    "en": "Connection error",
+    "zh-Hans": "连接错误"
+  },
+  "Planificado": {
+    "en": "Planned",
+    "zh-Hans": "计划中"
+  },
+  "Última observación/consulta UTC:": {
+    "en": "Latest observation / request UTC:",
+    "zh-Hans": "最近观测 / 查询时间 UTC："
+  },
+  "Sin registro": {
+    "en": "No record",
+    "zh-Hans": "暂无记录"
+  },
+  "Incidencia:": {
+    "en": "Issue:",
+    "zh-Hans": "异常："
+  },
+  "Integración disponible": {
+    "en": "Integration available",
+    "zh-Hans": "已接入"
+  },
+  "Integración planificada; aún no implementada": {
+    "en": "Planned integration; not implemented yet",
+    "zh-Hans": "计划接入，尚未实现"
+  },
+  "La disponibilidad de un endpoint público no concede permiso de redistribución. Revisa las condiciones y los derechos aplicables antes de compartir sus datos.": {
+    "en": "A public endpoint does not grant redistribution rights. Review applicable terms before sharing data.",
+    "zh-Hans": "公开接口并不授予数据再分发权，分享前请核查适用条款及权利。"
+  },
+  "Condiciones del proveedor": {
+    "en": "Provider terms",
+    "zh-Hans": "提供方条款"
+  },
+  "La licencia MIT cubre el código propio. No concede derechos sobre datos, noticias, marcas ni fuentes de terceros.": {
+    "en": "The MIT license covers our code. It grants no rights over third-party data, news, trademarks or sources.",
+    "zh-Hans": "MIT 许可证适用于本项目代码，不授予第三方数据、新闻、商标及来源的权利。"
+  },
+  "ENTENDER ES UNA VENTAJA": {
+    "en": "UNDERSTANDING IS AN ADVANTAGE",
+    "zh-Hans": "理解就是优势"
+  },
+  "Un concepto a la vez": {
+    "en": "One concept at a time",
+    "zh-Hans": "一次理解一个概念"
+  },
+  "Menos jerga. Más herramientas para leer el mercado con criterio.": {
+    "en": "Less jargon. More tools for informed understanding.",
+    "zh-Hans": "少些术语，多些理性解读市场的工具。"
+  },
+  "Volatilidad": {
+    "en": "Volatility",
+    "zh-Hans": "波动率"
+  },
+  "Sentimiento de noticias": {
+    "en": "News sentiment",
+    "zh-Hans": "新闻情绪"
+  },
+  "Correlación y causalidad": {
+    "en": "Correlation and causation",
+    "zh-Hans": "相关性与因果关系"
+  },
+  "Ventanas de reacción": {
+    "en": "Reaction windows",
+    "zh-Hans": "反应窗口"
+  },
+  "Diversificación": {
+    "en": "Diversification",
+    "zh-Hans": "分散化"
+  },
+  "Explícamelo mejor": {
+    "en": "Explain this further",
+    "zh-Hans": "进一步解释"
+  },
+  "Así construimos el contexto.": {
+    "en": "How we build context.",
+    "zh-Hans": "我们如何构建背景。"
+  },
+  "¿De dónde vienen los datos?": {
+    "en": "Where does the data come from?",
+    "zh-Hans": "数据来自哪里？"
+  },
+  "¿Cómo se relacionan noticias y precios?": {
+    "en": "How are news and prices linked?",
+    "zh-Hans": "新闻与价格如何关联？"
+  },
+  "¿Cómo se calculan las variaciones?": {
+    "en": "How are changes calculated?",
+    "zh-Hans": "如何计算涨跌幅？"
+  },
+  "¿Qué puede hacer el asistente?": {
+    "en": "What can the assistant do?",
+    "zh-Hans": "助手可以做什么？"
+  },
+  "¿Qué se guarda y qué se envía a DeepSeek?": {
+    "en": "What is stored and sent to DeepSeek?",
+    "zh-Hans": "哪些数据被保存并发送至 DeepSeek？"
+  },
+  "¿Qué pasa si una fuente no responde?": {
+    "en": "What if a source is unavailable?",
+    "zh-Hans": "来源无响应时怎么办？"
+  },
+  "Positivo": {
+    "en": "Positive",
+    "zh-Hans": "正面"
+  },
+  "Neutral": {
+    "en": "Neutral",
+    "zh-Hans": "中性"
+  },
+  "Negativo": {
+    "en": "Negative",
+    "zh-Hans": "负面"
+  },
+  "Sin analizar": {
+    "en": "Not analyzed",
+    "zh-Hans": "未分析"
+  },
+  "Página no disponible": {
+    "en": "Page unavailable",
+    "zh-Hans": "页面不可用"
+  },
+  "Volver al panorama →": {
+    "en": "Back to overview →",
+    "zh-Hans": "返回概览 →"
+  },
+  "Usar tema claro": {
+    "en": "Use light theme",
+    "zh-Hans": "使用浅色主题"
+  },
+  "Usar tema oscuro": {
+    "en": "Use dark theme",
+    "zh-Hans": "使用深色主题"
+  },
+  "Leyendo el contexto…": {
+    "en": "Reading the context…",
+    "zh-Hans": "正在读取背景…"
+  },
+  "Analizando con DeepSeek…": {
+    "en": "Analyzing with DeepSeek…",
+    "zh-Hans": "正在使用 DeepSeek 分析…"
+  },
+  "Estado sin verificar": {
+    "en": "Status unverified",
+    "zh-Hans": "状态未验证"
+  },
+  "Sin conexión al servidor. Se conserva la última observación visible con su fecha.": {
+    "en": "Server unavailable. The last observation and its timestamp remain visible.",
+    "zh-Hans": "无法连接服务器，保留最近观测及其时间。"
+  },
+  "No se pudo consultar el estado.": {
+    "en": "Could not check status.",
+    "zh-Hans": "无法查询状态。"
+  },
+  "Los datos se actualizaron. Recarga cuando termines la conversación.": {
+    "en": "Data updated. Reload after finishing your conversation.",
+    "zh-Hans": "数据已更新，结束对话后请刷新页面。"
+  },
+  "No hay titulares nuevos por analizar.": {
+    "en": "No new headlines to analyze.",
+    "zh-Hans": "暂无待分析的新标题。"
+  },
+  "Se perdió la conexión al consultar el estado.": {
+    "en": "Connection lost while checking status.",
+    "zh-Hans": "查询状态时连接中断。"
+  },
+  "La consulta está tardando. Vuelve a actualizar en unos minutos.": {
+    "en": "The request is taking longer. Try again in a few minutes.",
+    "zh-Hans": "查询耗时较长，请稍后重试。"
+  },
+  "Conversación borrada. ¿Qué te gustaría entender?": {
+    "en": "Conversation cleared. What would you like to understand?",
+    "zh-Hans": "对话已清除，你想了解什么？"
+  },
+  "No se pudo leer la respuesta. Recarga la página.": {
+    "en": "Could not read the response. Reload the page.",
+    "zh-Hans": "无法读取响应，请刷新页面。"
+  },
+  "No se pudo completar la solicitud.": {
+    "en": "Could not complete the request.",
+    "zh-Hans": "无法完成请求。"
+  },
+  "Idioma": {
+    "en": "Language",
+    "zh-Hans": "语言"
+  },
+  "Actualiza cada 5 s · precios recibidos, no simulados": {
+    "en": "Updates every 5 s · received prices, never simulated",
+    "zh-Hans": "每5秒更新 · 来自接收数据，非模拟价格"
+  },
+  "Cuánto cambia el último cierre frente al cierre de la sesión anterior. Un porcentaje describe un movimiento; no explica su causa.": {
+    "en": "How the latest close changes compared with the previous session. A percentage describes a movement, not its cause.",
+    "zh-Hans": "最新收盘价相对上一交易日收盘价的变化。百分比描述变动，并不解释原因。"
+  },
+  "Cuánto fluctúa el precio en un período. Más volatilidad implica mayores oscilaciones; no una dirección asegurada.": {
+    "en": "How much prices fluctuate over a period. Higher volatility means larger swings, not a guaranteed direction.",
+    "zh-Hans": "一段时间内价格波动的程度。波动率越高，起伏越大，但并不保证方向。"
+  },
+  "La clasificación del tono de un titular. No equivale a medir su impacto real ni a anticipar una rentabilidad.": {
+    "en": "A classification of headline tone. It does not measure actual impact or predict returns.",
+    "zh-Hans": "对新闻标题语气的分类，不等于衡量实际影响或预测收益。"
+  },
+  "Dos eventos pueden coincidir sin que uno provoque al otro. Otras noticias, expectativas o factores pueden influir a la vez.": {
+    "en": "Events can coincide without one causing the other. Other news, expectations or factors may influence both.",
+    "zh-Hans": "两个事件可能同时发生但互无因果。其他新闻、预期或因素也可能同时产生影响。"
+  },
+  "Comparamos el cierre anterior a la sesión asociada con los cierres al final de 1, 3 y 7 sesiones. Si falta una sesión, no hay resultado.": {
+    "en": "We compare the close before the associated session with closes after 1, 3 and 7 sessions. Incomplete windows produce no result.",
+    "zh-Hans": "比较关联交易日前的收盘价与之后第1、3、7个交易日收盘价。窗口不完整时不显示结果。"
+  },
+  "Distribuir exposición entre activos o factores para comprender y gestionar concentraciones de riesgo. No elimina las pérdidas.": {
+    "en": "Spreading exposure across assets or factors helps understand and manage concentrated risk. It does not eliminate losses.",
+    "zh-Hans": "将风险敞口分散于资产或因素，以理解和管理集中风险，但无法消除损失。"
+  },
+  "Explícame la diversificación de forma educativa, sin recomendar inversiones.": {
+    "en": "Explain diversification for education, without investment recommendations.",
+    "zh-Hans": "请以教育方式解释分散化，不推荐投资。"
+  },
+  "Explícame la volatilidad con un ejemplo sencillo sin usar cotizaciones actuales.": {
+    "en": "Explain volatility with a simple example without current quotes.",
+    "zh-Hans": "请用简单例子解释波动率，不使用当前报价。"
+  },
+  "¿Cómo leo las ventanas de 1, 3 y 7 sesiones?": {
+    "en": "How do I read the 1, 3 and 7-session windows?",
+    "zh-Hans": "如何解读1、3、7个交易日的窗口？"
+  },
+  "¿Cómo se calcula la variación diaria de un activo?": {
+    "en": "How is an instrument's daily change calculated?",
+    "zh-Hans": "如何计算资产的日涨跌幅？"
+  },
+  "¿Por qué una noticia y una subida de precio no prueban causalidad?": {
+    "en": "Why do a news item and a price rise not prove causation?",
+    "zh-Hans": "为什么新闻与价格上涨不能证明因果关系？"
+  },
+  "¿Qué límites tiene el análisis de sentimiento financiero?": {
+    "en": "What are the limitations of financial sentiment analysis?",
+    "zh-Hans": "金融情绪分析有哪些局限？"
+  },
+  "Conservamos el último dato obtenido, mostramos su fecha y avisamos del fallo. Cuando aún no hay datos, el espacio queda pendiente. Los precios y titulares del prototipo anterior no se importan a esta versión.": {
+    "en": "We retain the latest observation with its date and report failures. Without observations, data stays unavailable. Prices and headlines from the former prototype are not imported.",
+    "zh-Hans": "保留最新数据及日期，并提示失败。没有观测时显示不可用，不导入早期原型的价格与标题。"
+  },
+  "Consultamos series diarias públicas de Yahoo Finance y, si no están disponibles, Nasdaq. El proveedor, la fecha del cierre y el momento de consulta aparecen en el detalle. Son fuentes externas sujetas a cambios, retrasos y bloqueos; el colector independiente puede recibir operaciones, ticker y velas públicas de Binance Spot. Cada estado indica si el dato es histórico, reciente o desactualizado. USDT no es USD. No contamos con un contrato de redistribución comercial. Consulta Fuentes y estado.": {
+    "en": "Daily series come from Yahoo Finance, with Nasdaq as fallback. Details show the provider, closing date and retrieval time. External sources may change, lag or fail. The independent collector receives public Binance Spot trades, tickers and candles. Status distinguishes historical, recent and stale observations. USDT is not USD. No commercial redistribution agreement is included; consult Sources & health.",
+    "zh-Hans": "每日数据来自 Yahoo Finance，Nasdaq 为备用来源。详情显示提供方、收盘日期及查询时间。外部来源可能变化、延迟或不可用。独立采集器接收 Binance 现货公开成交、行情及K线。状态区分历史、近期及过期数据。USDT 不等于美元。本项目不含商业再分发协议，请查看数据来源与状态。"
+  },
+  "Los titulares proceden del RSS de Yahoo Finance y se agrupan por activo. Convertimos la fecha de publicación a Nueva York y la asociamos a la primera sesión disponible de esa fecha en adelante. Si se publicó desde las 16:00 de Nueva York, se asocia a la siguiente sesión disponible. Se usa el cierre habitual: las sesiones con cierre anticipado requieren un calendario bursátil específico. Esto permite explorar coincidencias, sin atribuir causalidad. El sentimiento es una lectura de DeepSeek del titular, con sus limitaciones.": {
+    "en": "Yahoo Finance RSS headlines are grouped by instrument. Publication times are converted to New York time and assigned to the first available session on or after that date. News at or after 16:00 is assigned to the next session. Early closes require a dedicated exchange calendar. This explores coincidence, not causation. DeepSeek sentiment reflects headline tone and has limitations.",
+    "zh-Hans": "Yahoo Finance RSS 标题按资产分组。发布时间转换为纽约时间，并归入当日或之后首个可用交易日。16:00及之后的新闻归入下一交易日。提前收盘需要专用交易日历。此方法探索时间关联而非因果。DeepSeek 情绪分析反映标题语气，存在局限。"
+  },
+  "Variación diaria = (último cierre / cierre anterior − 1) × 100. La reacción a N sesiones = (cierre de la sesión N de la ventana / cierre previo a la sesión asociada − 1) × 100. Solo mostramos ventanas completas. Los máximos y mínimos corresponden a cierres, no a extremos intradía. No se calcula retorno total ni se incorporan dividendos. Un cambio de proveedor puede producir diferencias por ajustes corporativos.": {
+    "en": "Daily change = (latest close / previous close − 1) × 100. N-session reaction = (close at session N / close before the associated session − 1) × 100. Only complete windows are shown. Highs and lows use closes, not intraday extremes. Total return and dividends are excluded. Corporate-action adjustments may differ by provider.",
+    "zh-Hans": "日涨跌幅 =（最新收盘价 / 前收盘价 − 1）×100。N日反应 =（窗口第N日收盘价 / 关联日前收盘价 − 1）×100。仅显示完整窗口。最高最低使用收盘价，而非日内极值。不计算总回报或股息；不同来源的公司行为调整可能不同。"
+  },
+  "Explica esta interfaz y conceptos del mercado a partir del contexto disponible en el servidor. No accede a tu banco ni ejecuta operaciones. Tiene instrucciones para rechazar temas ajenos y consejos personalizados; como cualquier modelo, puede equivocarse. Verifica sus respuestas en las fuentes.": {
+    "en": "The assistant explains this interface and market concepts using server context. It cannot access your bank or execute trades. It is instructed to reject unrelated topics and personalized advice, but can make mistakes. Verify answers against sources.",
+    "zh-Hans": "助手使用服务器背景解释界面及市场概念，不访问银行或执行交易。它被要求拒绝无关主题及个性化建议，但可能出错，请核对原始来源。"
+  },
+  "Las cuentas, listas, datos de fuentes y las últimas 30 entradas de conversación se guardan en SQLite en este servidor. Cada consulta al asistente envía tu pregunta, hasta 8 mensajes previos y el contexto financiero visible a DeepSeek; no se envían contraseña ni correo. Puedes borrar tu conversación con «Borrar» en el chat. El análisis de sentimiento envía hasta 8 titulares, solo cuando lo solicitas. Eliminar la conversación local no elimina datos que el proveedor haya procesado.": {
+    "en": "Accounts, watchlists, source data and the last 30 conversation entries are stored in SQLite on this server. Assistant requests send your question, up to 8 previous messages and financial context to DeepSeek, without your password or email. Clear removes local chat history. Requested sentiment analysis sends up to 8 headlines. Local deletion does not delete data already processed by the provider.",
+    "zh-Hans": "账户、自选、来源数据及最近30条对话保存在本服务器 SQLite。助手请求会发送问题、最多8条历史消息及金融背景至 DeepSeek，不发送密码或邮箱。清除功能删除本地对话。按需情绪分析最多发送8条标题。本地删除不代表删除提供方已处理的数据。"
+  },
+  "En vivo: observación reciente con colector conectado. Histórico: cierre guardado. Desactualizado: última observación fuera de su ventana de frescura. Con retraso: feed identificado como retrasado. Demostración: datos simulados explícitos; esta aplicación no los genera. No disponible: sin observación.": {
+    "en": "Live: recent observation and connected collector. Historical: saved close. Stale: observation outside the freshness window. Delayed: explicitly delayed feed. Demo: explicitly simulated data, which this app does not generate. Unavailable: no observation.",
+    "zh-Hans": "实时：近期观测且采集器已连接。历史：已保存收盘。过期：超出新鲜度窗口。延迟：明确标记为延迟的数据流。演示：明确模拟的数据，本应用不生成。不可用：没有观测。"
+  },
+  "Variación desde el cierre anterior a la sesión asociada, hasta la sesión 1, 3 o 7 de la ventana. Una coincidencia temporal no prueba causalidad. Las ventanas incompletas aparecen como «—».": {
+    "en": "Change from the close before the associated session to session 1, 3 or 7. Temporal coincidence does not establish causation. Incomplete windows display “—”.",
+    "zh-Hans": "从关联日前收盘至第1、3或7个交易日的变化。时间重合并不证明因果，不完整窗口显示“—”。"
+  },
+  "Aprender · Explainable Market": {
+    "en": "Learn · Explainable Market",
+    "zh-Hans": "学习 · Explainable Market"
+  },
+  "Mercados · Explainable Market": {
+    "en": "Markets · Explainable Market",
+    "zh-Hans": "市场 · Explainable Market"
+  },
+  "Mi seguimiento · Explainable Market": {
+    "en": "Watchlist · Explainable Market",
+    "zh-Hans": "自选列表 · Explainable Market"
+  },
+  "Noticias · Explainable Market": {
+    "en": "News · Explainable Market",
+    "zh-Hans": "新闻 · Explainable Market"
+  },
+  "Panorama · Explainable Market": {
+    "en": "Overview · Explainable Market",
+    "zh-Hans": "市场概览 · Explainable Market"
+  },
+  "Fuentes y estado · Explainable Market": {
+    "en": "Sources & health · Explainable Market",
+    "zh-Hans": "数据来源与状态 · Explainable Market"
+  },
+  "Explainable Market · El contexto cambia todo": {
+    "en": "Explainable Market · Context changes everything",
+    "zh-Hans": "Explainable Market · 背景改变理解"
+  },
+  "Guía educativa local · sin IA generativa. DeepSeek no está configurado.": {
+    "en": "Local educational guide · no generative AI. DeepSeek is not configured.",
+    "zh-Hans": "本地教育指南 · 不使用生成式 AI。尚未配置 DeepSeek。"
+  },
+  "Observaciones recibidas durante esta visita · intervalo de consulta: 5 s · no es un historial de todas las operaciones.": {
+    "en": "Observations received during this visit · polling interval: 5 s · not a history of every trade.",
+    "zh-Hans": "本次访问期间接收的观测 · 每5秒查询 · 并非全部成交历史。"
+  },
+  "Esperando dos observaciones recientes para dibujar la tendencia.": {
+    "en": "Waiting for two recent observations to draw the trend.",
+    "zh-Hans": "等待两个近期观测以绘制趋势。"
+  },
+  "Cierres diarios y noticias relacionadas": {
+    "en": "Daily closes and related news",
+    "zh-Hans": "每日收盘与相关新闻"
+  },
+  "Cierres diarios · Binance Spot · USDT · UTC": {
+    "en": "Daily closes · Binance Spot · USDT · UTC",
+    "zh-Hans": "每日收盘 · Binance 现货 · USDT · UTC"
+  },
+  "La sesión cambió. Recarga la página e inténtalo de nuevo.": {
+    "en": "Your session changed. Reload the page and try again.",
+    "zh-Hans": "会话已更改，请刷新页面后重试。"
+  },
+  "Origen no permitido.": {
+    "en": "Origin not allowed.",
+    "zh-Hans": "不允许此来源。"
+  },
+  "Inicia sesión para guardar tu seguimiento.": {
+    "en": "Sign in to save your watchlist.",
+    "zh-Hans": "登录以保存自选列表。"
+  },
+  "Escribe tu nombre y un correo válido.": {
+    "en": "Enter your name and a valid email address.",
+    "zh-Hans": "请输入姓名及有效邮箱。"
+  },
+  "Usa una contraseña de entre 10 y 200 caracteres.": {
+    "en": "Use a password between 10 and 200 characters.",
+    "zh-Hans": "请使用10至200个字符的密码。"
+  },
+  "No se pudo crear la cuenta con ese correo. Prueba iniciar sesión.": {
+    "en": "Could not create an account with that email. Try signing in.",
+    "zh-Hans": "无法使用此邮箱创建账户，请尝试登录。"
+  },
+  "El correo o la contraseña no son correctos.": {
+    "en": "Email or password is incorrect.",
+    "zh-Hans": "邮箱或密码不正确。"
+  },
+  "Espera unos minutos antes de volver a actualizar.": {
+    "en": "Wait a few minutes before refreshing again.",
+    "zh-Hans": "请等待几分钟后再刷新。"
+  },
+  "Se alcanzó el límite de análisis. Inténtalo más tarde.": {
+    "en": "Analysis limit reached. Try again later.",
+    "zh-Hans": "已达分析次数限制，请稍后重试。"
+  },
+  "Escribe una pregunta de entre 1 y 1.200 caracteres.": {
+    "en": "Enter a question between 1 and 1,200 characters.",
+    "zh-Hans": "请输入1至1200个字符的问题。"
+  },
+  "Llegaste al límite de consultas. Inténtalo más tarde.": {
+    "en": "Request limit reached. Try again later.",
+    "zh-Hans": "已达查询次数限制，请稍后重试。"
+  },
+  "La solicitud no es válida.": {
+    "en": "Invalid request.",
+    "zh-Hans": "请求无效。"
+  },
+  "Esta página no existe.": {
+    "en": "This page does not exist.",
+    "zh-Hans": "此页面不存在。"
+  },
+  "Demasiadas solicitudes. Espera unos minutos.": {
+    "en": "Too many requests. Wait a few minutes.",
+    "zh-Hans": "请求过多，请稍候。"
+  },
+  "La solicitud es demasiado grande.": {
+    "en": "Request is too large.",
+    "zh-Hans": "请求过大。"
+  },
+  "Actualización solicitada.": {
+    "en": "Refresh requested.",
+    "zh-Hans": "已请求刷新。"
+  },
+  "Los datos se actualizaron recientemente o ya se están consultando.": {
+    "en": "Data was updated recently or is already being fetched.",
+    "zh-Hans": "数据近期已更新，或正在查询中。"
+  },
+  "La clave de DeepSeek no fue aceptada.": {
+    "en": "DeepSeek rejected the API key.",
+    "zh-Hans": "DeepSeek 拒绝了此 API 密钥。"
+  },
+  "La cuenta de DeepSeek no tiene saldo disponible.": {
+    "en": "The DeepSeek account has no available credit.",
+    "zh-Hans": "DeepSeek 账户无可用余额。"
+  },
+  "DeepSeek está recibiendo demasiadas solicitudes. Inténtalo en unos minutos.": {
+    "en": "DeepSeek is receiving too many requests. Try again in a few minutes.",
+    "zh-Hans": "DeepSeek 请求过多，请稍后重试。"
+  },
+  "DeepSeek no está disponible. Inténtalo más tarde.": {
+    "en": "DeepSeek is unavailable. Try again later.",
+    "zh-Hans": "DeepSeek 不可用，请稍后重试。"
+  },
+  "No se pudo obtener una respuesta válida de DeepSeek. Inténtalo de nuevo.": {
+    "en": "Could not get a valid DeepSeek response. Try again.",
+    "zh-Hans": "无法获取有效的 DeepSeek 响应，请重试。"
+  },
+  "El asistente no devolvió una respuesta válida. Inténtalo de nuevo.": {
+    "en": "The assistant returned an invalid response. Try again.",
+    "zh-Hans": "助手返回无效响应，请重试。"
+  },
+  "La respuesta no pudo validarse. Inténtalo de nuevo.": {
+    "en": "Could not validate the response. Try again.",
+    "zh-Hans": "无法验证响应，请重试。"
+  },
+  "La respuesta quedó incompleta. Prueba una pregunta más breve.": {
+    "en": "The response was incomplete. Try a shorter question.",
+    "zh-Hans": "响应不完整，请尝试更简短的问题。"
+  },
+  "No se pudo validar el análisis de titulares.": {
+    "en": "Could not validate the headline analysis.",
+    "zh-Hans": "无法验证标题分析结果。"
+  },
+  "El proveedor de precios no está disponible. Conservamos el último dato verificado.": {
+    "en": "The price provider is unavailable. The last verified observation is retained.",
+    "zh-Hans": "价格提供方不可用，保留最新已验证数据。"
+  },
+  "No se pudo actualizar el feed de noticias.": {
+    "en": "Could not refresh the news feed.",
+    "zh-Hans": "无法刷新新闻来源。"
+  },
+  "Espera un minuto antes de consultar de nuevo.": {
+    "en": "Wait a minute before requesting again.",
+    "zh-Hans": "请等待一分钟后再查询。"
+  },
+  "Instrumento no registrado.": {
+    "en": "Instrument not registered.",
+    "zh-Hans": "资产尚未注册。"
+  },
+  "Los modelos y análisis cuantitativos aún no están implementados.": {
+    "en": "Models and quantitative analysis are not implemented yet.",
+    "zh-Hans": "模型与量化分析尚未实现。"
+  }
+}
