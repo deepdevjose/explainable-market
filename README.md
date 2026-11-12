@@ -177,6 +177,7 @@ infrastructure/         Docker Compose and deployment preparation
 ```
 
 - [Architecture audit](docs/ARCHITECTURE_AUDIT.md) and [initial implementation report](docs/IMPLEMENTATION_REPORT.md).
+- [Tunnel recovery and link preservation](docs/TUNNEL_RECOVERY.md): diagnose outages, preserve a running tunnel when possible and understand when a new URL is required.
 - [Supervised Linux laptop demo](docs/LAPTOP_DEMO.md): startup services and temporary tunnel. Requires an awake, connected computer; it is not independent hosting.
 - [Deployment and Docker](infrastructure/deployment/README.md): optional preparation, not a certified cloud deployment. GitHub Pages cannot run Flask or its workers.
 - [Release review](docs/RELEASE_CHECKLIST.md): check scope and historical exposure.

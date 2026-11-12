@@ -123,6 +123,9 @@ installation. The interface identifies the provider and model and explains the
 submitted data. Numerical models and ingestion remain independent of AI. See
 [AI provider validation](AI_PROVIDERS.md).
 
+For step-by-step outage recovery and when the same link can be preserved, see
+[TUNNEL_RECOVERY.md](TUNNEL_RECOVERY.md).
+
 ## Fedora 45: operation independent of VS Code
 
 The six processes are systemd **user services**, enabled under `default.target`.
