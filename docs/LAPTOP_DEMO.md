@@ -1,16 +1,16 @@
-# Demo pública desde la laptop
+# Public demo from a laptop
 
-La laptop ejecuta la aplicación Flask existente, SQLite y los colectores reales.
-Cloudflare Quick Tunnel publica una URL HTTPS temporal; no utiliza la pantalla
-intermedia de Microsoft Dev Tunnels. No es alojamiento permanente ni garantiza
-acceso desde China. Mantener la laptop despierta y con Internet durante la demo.
+The laptop runs the existing Flask application, SQLite and real collectors.
+Cloudflare Quick Tunnel provides a temporary HTTPS URL without the Microsoft
+Dev Tunnels interstitial. This is not permanent hosting and does not guarantee
+access from China. Keep the laptop awake and online during the demo.
 
-## Servicios supervisados
+## Supervised services
 
-En esta instalación Linux se usa Python 3.12 en `.venv/` y el binario oficial de
-Cloudflare 2026.10.7, extraído sin privilegios de administrador. Se verificó su
-SHA-256 contra el índice oficial de paquetes de `pkg.cloudflare.com`.
-No se descarga ni ejecuta software al abrir la web.
+This Linux installation uses Python 3.12 in `.venv/` and the official Cloudflare
+2026.10.7 binary, extracted without administrator privileges. Its SHA-256 was
+checked against the official `pkg.cloudflare.com` package index. Opening the
+website does not download or execute software on the visitor's device.
 
 ```bash
 .venv/bin/python scripts/demo_services.py install
@@ -18,24 +18,24 @@ No se descarga ni ejecuta software al abrir la web.
 .venv/bin/python scripts/demo_services.py url
 ```
 
-El instalador crea seis servicios de **usuario**: `market-explained-demo-web`,
-`-worker`, `-daily`, `-twelve`, `-forecast` y `-tunnel`. Habilita `loginctl enable-linger`
-para arrancarlos al encender el equipo y mantenerlos después del cierre de sesión. Se reinician
-si fallan y no dependen del proceso del asistente ni de una terminal abierta.
-No se modifica la política de suspensión del equipo. El servidor no funciona
-mientras la laptop duerme o está apagada. Se configuró el inicio al arrancar, pero
-no se reinició físicamente la laptop durante la validación. El colector diario consulta cada 900 segundos; Binance
-recibe eventos por WebSocket, y la interfaz lee el estado persistido cada 5 segundos.
+The installer creates six **user** services: `market-explained-demo-web`,
+`-worker`, `-daily`, `-twelve`, `-forecast` and `-tunnel`. It enables
+`loginctl enable-linger` so they start at boot and continue after logout. They
+restart after failure and do not depend on an assistant process or open terminal.
+The computer's suspend policy is unchanged. The server cannot work while the
+laptop is asleep or off. Startup was configured, but the laptop was not physically
+rebooted during validation. The daily collector polls every 900 seconds; Binance
+receives WebSocket events and the interface reads persisted state every 5 seconds.
 
-La configuración privada queda en `~/.config/market-explained-demo/server.env`,
-con permisos 0600 y una clave de sesión estable generada una sola vez. Se mantiene
-fuera de Git. No reutilizar credenciales históricamente expuestas. El servidor usa
-cookies seguras y escucha solo en loopback; el túnel proporciona HTTPS. El acceso
-HTTP local no sustituye la prueba de registro/login mediante la URL HTTPS pública.
-Para seleccionar la IA, usar `AI_PROVIDER=bigmodel`, `BIGMODEL_MODEL=glm-5.3-flash`
-y `BIGMODEL_API_KEY` en ese archivo privado; la clave ya está configurada en esta
-instalación. DeepSeek sigue disponible con `AI_PROVIDER=deepseek` y su variable
-`DEEPSEEK_API_KEY`. Reiniciar únicamente el servicio web. Nunca compartir claves.
+Private configuration lives in `~/.config/market-explained-demo/server.env`, mode
+0600, with a stable session key generated once. It stays outside Git. Never reuse
+historically exposed credentials. The server uses secure cookies and listens only
+on loopback; the tunnel supplies HTTPS. Local HTTP is not a substitute for testing
+registration/login through the public HTTPS URL. To select AI, set
+`AI_PROVIDER=bigmodel`, `BIGMODEL_MODEL=glm-5.3-flash` and `BIGMODEL_API_KEY` in that
+private file; the current installation already has a configured key. DeepSeek
+remains available through `AI_PROVIDER=deepseek` and `DEEPSEEK_API_KEY`. Restart
+only the web service. Never share keys.
 
 ```bash
 systemctl --user restart market-explained-demo-web
@@ -44,67 +44,67 @@ journalctl --user -u market-explained-demo-worker -n 30 --no-pager
 .venv/bin/python scripts/demo_services.py start
 ```
 
-No detener o reiniciar el túnel durante la grabación: su URL cambiará cuando se
-cree una nueva conexión Quick Tunnel. Consultar de nuevo `url` tras reiniciarlo.
-No compartir bases de datos, secretos ni archivos de configuración privada.
+Do not stop or restart the tunnel while recording: its URL changes when a new
+Quick Tunnel connection is created. Run `url` again after restarting. Never share
+databases, secrets or private configuration files.
 
-## Idiomas y comportamiento visible
+## Languages and visible behavior
 
-El selector permite español, inglés y chino mandarín simplificado (`zh-Hans`).
-Se conserva por sesión y funciona entre páginas. Los catálogos son locales:
-no se llama a un traductor externo ni se envían titulares o datos personales para
-traducir. Noticias originales, nombres de compañías, textos ya guardados del chat,
-atribución y códigos de calidad se mantienen en su idioma original.
+The selector supports Spanish, English and Simplified Mandarin Chinese (`zh-Hans`).
+The choice persists in the session across pages. Catalogs are local: no external
+translator receives headlines or personal data. Original news, company names,
+saved chat text, attribution and quality codes remain in their original language.
 
-Los precios cripto se leen cada cinco segundos y destellan en verde o rojo solo
-cuando cambia una observación recibida. Se respeta `prefers-reduced-motion`.
-La gráfica breve de cripto muestra hasta 60 observaciones **recibidas durante la
-visita**, no todos los trades ni una serie inventada; el gráfico histórico SVG se
-conserva. Las acciones siguen usando cierres diarios, nunca simulación de tiempo real.
+Crypto prices are read every five seconds and flash green or red only when a
+received observation changes. `prefers-reduced-motion` is respected. The short
+crypto chart shows up to 60 observations **received during the visit**, rather
+than every trade or an invented series; the historical SVG chart is preserved.
+Stocks continue to use daily closes, never simulated real-time prices.
 
-Sin clave del proveedor de IA seleccionado se ofrece una guía local determinista, identificada expresamente como
-no generativa, para conceptos básicos. No clasifica titulares ni promete conversación
-libre. El análisis de sentimiento sigue requiriendo una clave y saldo válidos.
-Los modelos de persistencia, ridge y XGBoost CPU se entrenan fuera del servidor
-web y aparecen en `/intelligence`. Twelve Data se consulta cada 15 minutos y
-sus observaciones se etiquetan DELAYED o STALE, según la frescura. Los demás
-proveedores pendientes se mantienen identificados como tales. La ilustración de la portada es conceptual y está etiquetada.
+Without a key for the selected AI provider, the assistant supplies clearly
+identified, local deterministic guidance for basic concepts. It neither classifies
+headlines nor promises unrestricted conversation. Sentiment analysis still needs
+a valid key and balance. Persistence, ridge and CPU XGBoost models train outside
+the web server and appear at `/intelligence`. Twelve Data is polled every
+15 minutes; observations are labeled DELAYED or STALE according to freshness.
+Pending providers remain identified as pending. The landing-page illustration is
+conceptual and labeled accordingly.
 
-## Comprobación realizada el 12 de noviembre de 2026
+## Checks performed on 12 November 2026
 
-- 53 pruebas automatizadas: las 48 anteriores y cinco de idiomas/aislamiento/guía local.
-- Doce acciones actualizadas hasta el cierre del 11 de noviembre; noticias consultadas.
-- Binance con eventos reales recientes y estado LIVE; almacenamiento conservado.
-- Cuatro servicios de usuario activos. `/health` y portada accesibles por HTTPS.
-- Navegador Chromium: selector, chino e inglés, escritorio y móvil; revisión de capturas.
-- La red local no resolvió inicialmente el dominio Quick Tunnel. La comprobación HTTPS
-  usó `curl --resolve` con la IP obtenida de un resolvedor público, manteniendo TLS.
-  Una comprobación posterior respondió también con el DNS habitual. Esto no certifica
-  la accesibilidad desde el dispositivo del compañero.
+This initial check preceded the market/forecast update below:
 
-Antes del vídeo: abrir la URL desde el equipo que grabará, navegar a Mercados,
-comprobar timestamps/estado y probar registro, lista personal y CSV. La demo no
-convierte los endpoints públicos de terceros en una licencia de redistribución.
+- 53 automated tests: the earlier 48 plus five for languages, isolation and local guidance.
+- Twelve stocks updated through the 11 November close; news fetched.
+- Recent real Binance events with LIVE status; storage preserved.
+- Four user services active at that stage; `/health` and landing accessible over HTTPS.
+- Chromium: language selector, Chinese/English, desktop/mobile and screenshot review.
+- Local DNS initially failed to resolve the Quick Tunnel domain. HTTPS was checked
+  using `curl --resolve` with an IP from a public resolver, retaining TLS validation.
+  A later check also worked with normal DNS. This does not certify access from
+  the teammate's device.
 
-Validaciones estáticas: Ruff sin errores, mypy sin incidencias en los 14 módulos
-seleccionados y Bandit sin hallazgos de gravedad media/alta en el alcance revisado.
+Before recording, open the URL on the recording computer, visit Markets and
+check timestamps/status, registration, watchlist and CSV. A demo does not turn
+public third-party endpoints into redistribution permission.
 
+Static checks: Ruff passed, mypy found no issues in 14 selected modules, and
+Bandit found no medium/high-severity issues in the reviewed scope.
 
-## Actualización: mercados y pronósticos
+## Update: markets and forecasts
 
-Instalar también `requirements-ml.txt` antes de ejecutar el instalador de servicios.
-El worker de modelos revisa nuevos cierres cada 30 minutos y no reentrena si el
-hash del conjunto no cambia. `-twelve` usa límites locales persistentes de 6 créditos
-por minuto y 600 por ventana de 24 horas, inferiores al plan Basic documentado de
-8/min y 800/día. Cada petición consume un crédito; otras aplicaciones que usen la
-misma clave pueden agotar la cuota fuera de estos contadores.
+Install `requirements-ml.txt` before running the service installer. The model
+worker checks for new closes every 30 minutes and skips retraining when the
+dataset hash has not changed. `-twelve` uses persistent local limits of 6 credits
+per minute and 600 per 24-hour window, below the documented Basic allowance of
+8/min and 800/day. Each request consumes a credit; other applications using the
+same key can exhaust quota outside these counters.
 
-La configuración privada acepta `TWELVE_DATA_API_KEY` y
-`TWELVE_DATA_PUBLIC_DISPLAY` (predeterminado 0). Mantener ese segundo valor en 0
-si no existen derechos de visualización externa. Los precios y derivados de Twelve
-Data se ocultan en todo acceso externo, incluidos el historial y el contexto del
-asistente. La consulta interna directa por loopback permite inspeccionarlos.
-Después de cambiar el archivo privado, reiniciar los servicios afectados:
+Private configuration accepts `TWELVE_DATA_API_KEY` and
+`TWELVE_DATA_PUBLIC_DISPLAY` (default 0). Keep the latter at 0 without external
+display rights. Twelve Data prices and derivatives are hidden from all external
+access, including history and assistant context. Direct internal loopback requests
+allow inspection. After editing the private file, restart affected services:
 
 ```bash
 systemctl --user restart market-explained-demo-web market-explained-demo-twelve
@@ -113,13 +113,12 @@ loginctl show-user "$USER" -p Linger
 systemctl --user is-enabled market-explained-demo-web
 ```
 
-La instalación actual verificó `Linger=yes`, seis servicios activos y recuperación
-automática de web después de terminar su proceso: nuevo PID y `/health` HTTP 200.
-No se reinició el túnel durante esta actualización, por lo que se conservó el enlace.
-Consultar el informe de [modelos](PREDICTIVE_INTELLIGENCE.md) para resultados.
+The current installation verified `Linger=yes`, six active services and automatic
+web recovery after terminating its process: a new PID and `/health` HTTP 200.
+The tunnel was not restarted during that update, preserving its link. See the
+[model report](PREDICTIVE_INTELLIGENCE.md) for results.
 
-
-El asistente y la clasificación de titulares usan ahora **Zhipu / BigModel** en esta
-instalación. La interfaz identifica proveedor y modelo y explica qué se envía.
-Los modelos numéricos y la ingesta siguen siendo procesos independientes de la IA.
-Ver [validación de proveedores IA](AI_PROVIDERS.md).
+The assistant and headline classification now use **Zhipu / BigModel** in this
+installation. The interface identifies the provider and model and explains the
+submitted data. Numerical models and ingestion remain independent of AI. See
+[AI provider validation](AI_PROVIDERS.md).

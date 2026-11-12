@@ -1,49 +1,49 @@
 <div align="center">
   <img src="static/mark.svg" width="56" height="56" alt="Explainable Market">
   <h1>Explainable Market</h1>
-  <p>Datos de mercado con fuente. Contexto comprensible. Predicciones con incertidumbre.</p>
-  <p><strong>Español · English · 简体中文</strong></p>
-  <p><a href="#ejecución-local">Inicio rápido</a> · <a href="#funcionalidad-y-estado">Funcionalidad</a> · <a href="docs/ARCHITECTURE_AUDIT.md">Arquitectura</a> · <a href="CONTRIBUTING.md">Contribuir</a> · <a href="SECURITY.md">Seguridad</a></p>
+  <p>Sourced market data. Understandable context. Forecasts with uncertainty.</p>
+  <p><strong>English · Spanish · Simplified Chinese</strong></p>
+  <p><a href="#local-setup">Quick start</a> · <a href="#features-and-status">Features</a> · <a href="docs/ARCHITECTURE_AUDIT.md">Architecture</a> · <a href="docs/demo-day/README.md">Presentations</a> · <a href="CONTRIBUTING.md">Contributing</a> · <a href="SECURITY.md">Security</a></p>
 </div>
 
-Plataforma de código abierto para explorar precios, noticias y conceptos financieros.
-Conserva Flask, Jinja, JavaScript nativo y gráficas SVG generadas en el servidor:
-sin servicios de IA obligatorios ni un frontend que dependa de un CDN.
+An open-source platform for exploring prices, news and financial concepts.
+It preserves Flask, Jinja, native JavaScript and server-generated SVG charts,
+with optional AI services and a frontend that does not depend on a CDN.
 
-**Solo información y educación.** No conecta cuentas de brokerage, no ejecuta
-órdenes y no promete rentabilidad. Las estimaciones pueden fallar; una coincidencia
-temporal o una contribución del modelo no demuestra causalidad.
+**Information and education only.** The platform does not connect brokerage
+accounts, execute orders or promise returns. Estimates can fail; a coincidence
+in timing or a model contribution does not establish causation.
 
-## Funcionalidad y estado
+## Features and status
 
-| Área | Implementado | Límites actuales |
+| Area | Implemented | Current limits |
 | --- | --- | --- |
-| Acciones estadounidenses | Cierres diarios Yahoo/Nasdaq, noticias RSS y CSV | No son cotizaciones en vivo; 12 instrumentos iniciales |
-| Criptomonedas | Binance público: trades, ticker, velas y backfill | BTCUSDT y ETHUSDT; cotizan en USDT, no USD |
-| Forex y oro | Twelve Data REST opcional: EUR/USD, USD/JPY y XAU/USD | Cuotas y licencia; visualización externa deshabilitada por defecto |
-| Predicciones | Persistencia, ridge y XGBoost CPU opcional; evaluación cronológica | Al menos 120 cierres; sin validación independiente ni precisión garantizada |
-| Asistente y sentimiento | BigModel o DeepSeek opcional, contexto acotado y JSON validado | Requieren credencial válida; guía educativa local cuando falta la clave |
-| Experiencia de usuario | Registro, sesiones, watchlists persistentes, biblioteca y tres idiomas | Sin recuperación de contraseña ni verificación de correo |
+| US stocks | Yahoo/Nasdaq daily closes, RSS news and CSV export | Historical prices, not live quotes; 12 initial instruments |
+| Cryptocurrencies | Public Binance trades, ticker, candles and backfill | BTCUSDT and ETHUSDT; quoted in USDT, not USD |
+| Forex and gold | Optional Twelve Data REST: EUR/USD, USD/JPY and XAU/USD | Quotas and licensing; external display disabled by default |
+| Forecasting | Persistence, ridge and optional CPU XGBoost; chronological evaluation | At least 120 closes; no independent validation or guaranteed accuracy |
+| Assistant and sentiment | Optional BigModel or DeepSeek, bounded context and validated JSON | Valid credentials required; local educational guidance when no key is configured |
+| User experience | Registration, sessions, persistent watchlists, library and three languages | No password recovery or email verification |
 
-Índices SPX/FTSE permanecen no disponibles con el acceso probado. Alpaca, FRED,
-streaming forex y WebSocket hacia el navegador están pendientes. La web consulta
-el estado persistido cada cinco segundos; el streaming Binance ocurre en un worker.
-No se generan precios sintéticos para completar mercados sin datos.
+SPX/FTSE indices remain unavailable with the access tested. Alpaca, FRED, forex
+streaming and browser WebSocket delivery are pending. The web interface polls
+persisted state every five seconds; Binance streaming runs in a separate worker.
+No synthetic prices are generated to fill markets without data.
 
-### Cómo leer las gráficas
+### Reading the charts
 
-- **Verde / rojo / gris:** cada precio observado sube, baja o no cambia respecto al anterior.
-- **Amarillo discontinuo:** siguiente cierre estimado, tanto si sube como si baja.
-- **Sombreado amarillo:** intervalo empírico nominal del 80%; no garantiza cobertura futura.
+- **Green / red / gray:** each observed price rises, falls or stays unchanged relative to the previous observation.
+- **Dashed yellow:** the estimated next close, whether it rises or falls.
+- **Yellow shading:** a nominal 80% empirical interval; future coverage is not guaranteed.
 
-En `/intelligence?symbol=BTCUSDT` se muestran hasta 30 cierres hasta el corte del
-modelo y su predicción. Se comprueban fuente, corte y precio de referencia antes
-de unirlos. El ancho del horizonte futuro es ilustrativo, sin inventar una sesión.
-La fuente, las fechas UTC y las limitaciones permanecen visibles.
+`/intelligence?symbol=BTCUSDT` shows up to 30 closes through the model's data
+cutoff and its forecast. Source, cutoff and reference price are checked before
+joining them. The future horizon's width is illustrative and does not invent a
+trading session. Source attribution, UTC dates and limitations remain visible.
 
-## Ejecución local
+## Local setup
 
-Requiere Python 3.11 o superior. Validación local actual: Python 3.12.
+Requires Python 3.11 or newer. Current local validation uses Python 3.12.
 
 ```bash
 git clone https://github.com/deepdevjose/explainable-market.git
@@ -53,84 +53,96 @@ python3 -m venv .venv
 ./run.sh
 ```
 
-Abre **http://127.0.0.1:5050**. Waitress ejecuta la aplicación sin depurador.
-El lanzador admite `.venv/` y el entorno histórico `venv/`. Una instalación nueva
-arranca sin credenciales; los mercados externos pueden tardar o no estar disponibles.
+Open **http://127.0.0.1:5050**. Waitress serves the application without a debugger.
+The launcher supports `.venv/` and the legacy `venv/` environment. A fresh
+installation starts without credentials; external markets may be slow or unavailable.
 
-Para conservar sesiones entre arranques, configura una `SECRET_KEY` privada y
-estable. Sin ella, desarrollo utiliza una clave efímera. Producción la exige.
+Set a private, stable `SECRET_KEY` to retain sessions across restarts. Development
+uses an ephemeral key when none is configured. Production requires a stable key.
 
-### Configuración privada
+### Private configuration
 
-[.env.example](.env.example) documenta variables **sin credenciales**. La aplicación
-lee el entorno del proceso; no carga automáticamente `.env` ni archivos heredados.
-Usa tu gestor de secretos o la configuración privada de un servicio. Nunca pegues
-valores reales en el ejemplo, commits, incidencias, capturas o comandos compartidos.
+[.env.example](.env.example) documents variables **without credentials**. The
+application reads the process environment; it does not automatically load `.env`
+or legacy files. Use a secret manager or private service configuration. Never put
+real values in examples, commits, issues, screenshots or shared commands.
 
-| Variable | Uso |
+| Variable | Purpose |
 | --- | --- |
-| `SECRET_KEY` | Secreto de sesión estable; al menos 32 caracteres en producción |
-| `APP_ENV`, `COOKIE_SECURE`, `TRUSTED_PROXY` | Producción, HTTPS y proxy de confianza exacto |
-| `DATABASE_PATH` | SQLite; predeterminado `data/market-live.db` |
-| `AI_PROVIDER` | `deepseek` (compatibilidad predeterminada) o `bigmodel` |
-| `DEEPSEEK_API_KEY`, `DEEPSEEK_MODEL` | Asistente DeepSeek opcional |
-| `BIGMODEL_API_KEY`, `BIGMODEL_MODEL` | Asistente BigModel; modelo predeterminado `glm-5.3-flash` |
-| `TWELVE_DATA_API_KEY` | Proveedor de mercado opcional, independiente de la IA |
-| `TWELVE_DATA_PUBLIC_DISPLAY` | `0` por defecto; cambiar solo tras confirmar derechos externos |
+| `SECRET_KEY` | Stable session secret; at least 32 characters in production |
+| `APP_ENV`, `COOKIE_SECURE`, `TRUSTED_PROXY` | Production mode, HTTPS and an exact trusted proxy |
+| `DATABASE_PATH` | SQLite path; defaults to `data/market-live.db` |
+| `AI_PROVIDER` | `deepseek` (compatibility default) or `bigmodel` |
+| `DEEPSEEK_API_KEY`, `DEEPSEEK_MODEL` | Optional DeepSeek assistant |
+| `BIGMODEL_API_KEY`, `BIGMODEL_MODEL` | BigModel assistant; default model `glm-5.3-flash` |
+| `TWELVE_DATA_API_KEY` | Optional market provider, independent of AI |
+| `TWELVE_DATA_PUBLIC_DISPLAY` | Defaults to `0`; change only after confirming external display rights |
 
-Las claves permanecen en el servidor. El usuario ve qué proveedor de IA recibe su
-consulta y contexto. Sin clave seleccionada se ofrece una guía local identificada
-como no generativa; un fallo de un proveedor configurado produce un error, sin
-cambiar silenciosamente a otro proveedor. [Configuración y validación de IA](docs/AI_PROVIDERS.md).
+Keys stay on the server. Users can see which AI provider receives their question
+and context. Without a selected key, the app provides clearly identified local,
+non-generative guidance. A configured provider's failure produces an error rather
+than silently switching providers. See [AI configuration and validation](docs/AI_PROVIDERS.md).
 
-### Colectores y modelos
+### Collectors and models
 
-Ejecuta cada proceso en una terminal independiente, compartiendo `DATABASE_PATH`:
+Run each process in a separate terminal with the same `DATABASE_PATH`:
 
 ```bash
-# Acciones y noticias; una sola ejecución si omites --loop.
+# Stocks and news; omit --loop for a single run.
 .venv/bin/python collector.py --loop --interval 900
-# Streaming cripto y backfill de velas cerradas.
+# Crypto streaming and closed-candle backfill.
 .venv/bin/python -m market_explained.ingestion.workers
-# Opcional: consulta Twelve Data con cuotas persistentes.
+# Optional: Twelve Data polling with persistent quota accounting.
 .venv/bin/python -m market_explained.ingestion.twelve_worker
-# Opcional: entrenamiento fuera del servidor web.
+# Optional: training outside the web server.
 .venv/bin/python -m pip install -r requirements-ml.txt
 .venv/bin/python -m market_explained.intelligence.worker
 ```
 
-Los dos últimos workers admiten `--once`. La ingesta Binance no necesita clave.
-Los modelos usan divisiones cronológicas y evaluación walk-forward; no entrenan
-con velas abiertas ni mezclan feeds. [Protocolo, resultados y límites](docs/PREDICTIVE_INTELLIGENCE.md).
+The last two workers support `--once`. Binance ingestion does not need a key.
+Models use chronological splits and walk-forward evaluation; they do not train
+on open candles or mix feeds. See [methods, results and limits](docs/PREDICTIVE_INTELLIGENCE.md).
 
-## Datos, persistencia y API
+## Data, persistence and API
 
-SQLite utiliza WAL, claves foráneas y transacciones. Las migraciones son aditivas,
-versionadas y precedidas de una copia privada. Conservan cuentas, watchlists,
-mensajes e historial por proveedor. [Backup y recuperación](docs/DATA_OPERATIONS.md).
+SQLite uses WAL, foreign keys and transactions. Migrations are additive,
+versioned and preceded by a private backup. They preserve accounts, watchlists,
+messages and source-specific history. See [backup and recovery](docs/DATA_OPERATIONS.md).
 
-Los eventos normalizados conservan procedencia, precios decimales y timestamps UTC.
-Los estados distinguen **LIVE, DELAYED, HISTORICAL, STALE, DEMO y UNAVAILABLE**.
-LIVE requiere evento y recepción recientes y colector conectado. Detener el worker
-conserva el último dato y lo vuelve desactualizado; no lo convierte en un dato nuevo.
+Normalized market events retain provenance, decimal prices and UTC timestamps.
+Statuses distinguish **LIVE, DELAYED, HISTORICAL, STALE, DEMO and UNAVAILABLE**.
+LIVE requires recent events and receipts and a connected collector. Stopping
+the worker preserves the last observation and makes it stale; it does not turn
+that observation into new data.
 
-| Página | Contenido |
+| Page | Content |
 | --- | --- |
-| `/app`, `/watchlist`, `/symbol/AAPL` | Panorama, lista personal y detalle de acciones |
-| `/markets`, `/market/BTCUSDT` | Explorador e instrumentos con proveedor y frescura |
-| `/intelligence` | Predicción, gráfica, evaluación y contribuciones |
-| `/news`, `/learn`, `/sources` | Noticias, educación y estado de fuentes |
+| `/app`, `/watchlist`, `/symbol/AAPL` | Overview, personal watchlist and stock details |
+| `/markets`, `/market/BTCUSDT` | Explorer and instruments with provider attribution and freshness |
+| `/intelligence` | Forecast, chart, evaluation and contributions |
+| `/news`, `/learn`, `/sources` | News, education and source status |
 
-Las rutas existentes se conservan. La API de lectura v1 incluye `/markets`,
+Existing routes remain supported. The v1 read API includes `/markets`,
 `/instruments`, `/market/<symbol>`, `/market/<symbol>/history`, `/analysis/<symbol>`,
-`/predictions/<symbol>`, `/providers/status` y `/system/health` bajo `/api/v1`.
-Las listas paginan con `limit` (1–200) y `offset`. Los errores usan
-`{"error":{"code":"…","message":"…"}}`; hay límites persistentes por IP.
-Los pronósticos devuelven 503 si faltan datos/entrenamiento y 403 si la visualización
-está restringida. `/health` verifica la base; `ai_configured` solo indica configuración,
-no valida saldo ni disponibilidad externa.
+`/predictions/<symbol>`, `/providers/status` and `/system/health` under `/api/v1`.
+Lists paginate with `limit` (1–200) and `offset`. Errors use
+`{"error":{"code":"…","message":"…"}}`; persistent per-IP limits apply.
+Forecasts return 503 when data or training is missing and 403 when display is
+restricted. `/health` checks the database; `ai_configured` indicates configuration
+only, not account balance or external availability.
 
-## Desarrollo y comprobaciones
+### The data translation layer
+
+Source-specific adapters receive JSON through APIs and WebSockets, and news
+through RSS/XML. They map supported inputs to consistent records with validation,
+source attribution and timestamps. News and market events use separate contracts.
+The sentiment workflow sends headline IDs and text as JSON to the configured AI
+provider and filters invalid response entries before storage. This makes the
+integration more predictable; it does not establish an improvement in model accuracy.
+CSV price export and JSON read APIs are implemented. Generic CSV/Excel imports
+and dedicated BI connectors are extension opportunities, not active integrations.
+
+## Development and checks
 
 ```bash
 .venv/bin/python -m pip install -r requirements-dev.txt -r requirements-ml.txt
@@ -141,47 +153,48 @@ no valida saldo ni disponibilidad externa.
 .venv/bin/pip-audit -r requirements.txt -r requirements-ml.txt
 node --check static/app.js
 .venv/bin/python scripts/check_repository_hygiene.py
-# Después de seleccionar archivos con git add, revisar el contenido exacto del commit:
+# After selecting files with git add, inspect the exact proposed commit:
 .venv/bin/python scripts/check_repository_hygiene.py --staged
 ```
 
-Las pruebas usan bases temporales, fixtures y WebSockets locales sin solicitudes
-externas. GitHub Actions configura pruebas, lint, tipos, auditoría de dependencias
-y build amd64/ARM64. La evidencia externa y visual se documenta por separado;
-una configuración de CI o despliegue no demuestra que haya sido ejecutada.
+Tests use temporary databases, fixtures and local WebSockets without external
+requests. GitHub Actions configures tests, lint, type checks, dependency auditing
+and amd64/ARM64 builds. External and visual evidence is documented separately;
+a CI or deployment configuration does not prove that it has run successfully.
 
-## Arquitectura y operación
+## Architecture and operation
 
 ```text
-app.py                  Entrada Flask/WSGI compatible
-market_explained/       API, mercados, proveedores, ingesta, inteligencia y almacenamiento
-collector.py / ai.py    Adquisición histórica e integración educativa compatibles
-config.py / db.py       Configuración explícita y operaciones SQLite
-charts.py               Gráficas SVG sin CDN
-templates/ / static/    Jinja, diseño existente, JavaScript y fuentes locales
-tests/                  Pruebas aisladas y fixtures con procedencia
-docs/                   Auditoría, protocolos y evidencia de validación
-infrastructure/         Docker Compose y preparación de despliegue
+app.py                  Compatible Flask/WSGI entry point
+market_explained/       API, markets, providers, ingestion, intelligence and storage
+collector.py / ai.py    Compatible historical acquisition and educational integration
+config.py / db.py       Explicit configuration and SQLite operations
+charts.py               SVG charts without a CDN
+templates/ / static/    Jinja, existing design, JavaScript and local fonts
+tests/                  Isolated tests and fixtures with provenance
+docs/                   Audit, protocols, validation evidence and presentations
+infrastructure/         Docker Compose and deployment preparation
 ```
 
-- [Auditoría de arquitectura](docs/ARCHITECTURE_AUDIT.md) y [primera entrega](docs/IMPLEMENTATION_REPORT.md).
-- [Demo supervisada desde Linux](docs/LAPTOP_DEMO.md): servicios al arrancar y túnel temporal. Requiere equipo encendido y conectado; no es alojamiento independiente.
-- [Despliegue y Docker](infrastructure/deployment/README.md): preparación opcional, no un despliegue cloud certificado. GitHub Pages no ejecuta el backend Flask ni sus workers.
-- [Revisión antes de publicar](docs/RELEASE_CHECKLIST.md): alcance de las comprobaciones y exposición histórica.
+- [Architecture audit](docs/ARCHITECTURE_AUDIT.md) and [initial implementation report](docs/IMPLEMENTATION_REPORT.md).
+- [Supervised Linux laptop demo](docs/LAPTOP_DEMO.md): startup services and temporary tunnel. Requires an awake, connected computer; it is not independent hosting.
+- [Deployment and Docker](infrastructure/deployment/README.md): optional preparation, not a certified cloud deployment. GitHub Pages cannot run Flask or its workers.
+- [Release review](docs/RELEASE_CHECKLIST.md): check scope and historical exposure.
+- [Demo Day presentations and speeches](docs/demo-day/README.md): separate commercial and technical English pitches, with speaker notes.
 
-## Seguridad y licencias
+## Security and licenses
 
-**Hubo una exposición histórica de material sensible.** Se limpiaron las ramas
-publicadas y se conservó la aplicación actual. Esto no revoca claves ni elimina
-copias anteriores, forks o cachés de GitHub. Consulta [SECURITY.md](SECURITY.md) y
-[el informe de limpieza](docs/HISTORY_CLEANUP.md) antes de reutilizar credenciales
-o cambios de clones antiguos.
+**Sensitive material was exposed historically.** The published branches were
+sanitized while preserving the current application. This does not revoke keys
+or remove earlier copies, forks or GitHub caches. Read [SECURITY.md](SECURITY.md)
+and [the cleanup report](docs/HISTORY_CLEANUP.md) before reusing credentials
+or changes from old clones.
 
-El código propio usa [MIT](LICENSE); IBM Plex conserva su [OFL](static/fonts/OFL.txt).
-Noticias y datos externos mantienen sus derechos originales: acceso gratuito o
-público no equivale a autorización de redistribución. `/sources` identifica las
-condiciones de los proveedores. Twelve Data se oculta externamente por defecto.
+Original code uses [MIT](LICENSE); IBM Plex retains its [OFL](static/fonts/OFL.txt).
+External news and data retain their original rights: free or public access does
+not grant redistribution permission. `/sources` identifies provider conditions.
+Twelve Data is hidden externally by default.
 
-Lee la [guía de contribución](CONTRIBUTING.md), el [código de conducta](CODE_OF_CONDUCT.md)
-y la [política de seguridad](SECURITY.md). Conservamos el diseño existente y las
-funciones educativas mediante cambios incrementales.
+Read the [contribution guide](CONTRIBUTING.md), [code of conduct](CODE_OF_CONDUCT.md)
+and [security policy](SECURITY.md). We preserve the existing design and
+educational features through incremental changes.

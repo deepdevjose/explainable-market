@@ -1,183 +1,181 @@
-# Mercados y pronósticos — implementación y evidencia
+# Markets and forecasts — implementation and evidence
 
-Actualización verificada el 12 de noviembre de 2026. Se amplió la aplicación
-existente; no se sustituyeron Flask, Jinja, SQLite, CSS, SVG ni autenticación.
+Update verified on 12 November 2026. The existing application was extended;
+Flask, Jinja, SQLite, CSS, SVG and authentication were not replaced.
 
-## Implementado
+## Implemented
 
-- Adaptador independiente Twelve Data por REST: históricos diarios y quotes con
-  timestamps del proveedor, precios Decimal y procedencia explícita. Se consultan
-  EUR/USD, USD/JPY, XAU/USD y dos índices registrados por separado. No se mezclan
-  fuentes ni se identifica USDT como USD.
-- Worker de polling independiente, cuotas persistentes de 6/min y 600/24 h,
-  checkpoints, deduplicación, cierre conservador UTC, estados por instrumento y
-  recuperación. Los rechazos permanentes se reintentan después de 24 horas;
-  red/cuota después de 60 s. Las cuotas locales no conocen uso externo de la clave.
-- Quotes consultados cada 900 s, etiquetados DELAYED con retraso contractual no
-  verificado. Se vuelven STALE si el evento o la recepción tienen más de 1800 s.
-  No se anuncia streaming de Twelve Data ni un estado LIVE para ese adaptador.
-- Persistencia, autorregresión ridge y XGBoost CPU para retorno del próximo cierre
-  observado. Entrenamiento separado de Flask, mínimo 120 cierres, revisión cada
-  30 minutos y hash del conjunto para evitar entrenamientos repetidos.
-- SMA20, EMA20, RSI14 con medias simples, MACD sin señal, bandas de Bollinger20,
-  último log-retorno y volatilidad diaria de log-retornos20. No se anualiza con
-  un calendario uniforme entre mercados.
-- Página `/intelligence`, APIs `/api/v1/predictions/<symbol>` y
-  `/api/v1/analysis/<symbol>`, comparación de modelos, incertidumbre, fechas,
-  calidad, indicadores y explicación de contribuciones en es/en/zh-Hans.
-- Seis servicios systemd supervisados, habilitados, con `Linger=yes`: web, Binance,
-  diario, Twelve Data, modelos y túnel. La aplicación arranca al encender la laptop
-  y no depende de mantener VS Code abierto. La suspensión/apagado corta el servicio.
+- Independent Twelve Data REST adapter: daily history and quotes with provider
+  timestamps, Decimal prices and explicit provenance. It queries EUR/USD,
+  USD/JPY, XAU/USD and two separately registered indices. Sources are not mixed
+  and USDT is not identified as USD.
+- Independent polling worker, persistent quotas of 6/min and 600/24 h,
+  checkpoints, deduplication, conservative UTC closure, per-instrument status
+  and recovery. Permanent rejections retry after 24 hours; network/quota failures
+  after 60 seconds. Local accounting cannot track external use of the same key.
+- Quotes polled every 900 seconds and labeled DELAYED, with contractual delay
+  unverified. They become STALE when event or receipt age exceeds 1800 seconds.
+  This adapter is not advertised as streaming or LIVE.
+- Persistence, ridge autoregression and CPU XGBoost for the next observed close's
+  return. Training is separate from Flask, requires at least 120 closes, checks
+  every 30 minutes and uses a dataset hash to avoid duplicate training.
+- SMA20, EMA20, RSI14 using simple averages, MACD without signal line,
+  Bollinger20 bands, latest log return and 20-period daily log-return volatility.
+  Volatility is not annualized with one calendar across all markets.
+- `/intelligence`, `/api/v1/predictions/<symbol>` and `/api/v1/analysis/<symbol>`:
+  model comparison, uncertainty, dates, quality, indicators and contribution
+  explanations in es/en/zh-Hans.
+- Six supervised, enabled systemd services with `Linger=yes`: web, Binance,
+  daily collection, Twelve Data, models and tunnel. The app starts at laptop boot
+  without VS Code remaining open. Suspension or shutdown interrupts service.
 
-## Archivos principales
+## Main files
 
-| Área | Nuevos y modificados |
+| Area | Added or modified |
 | --- | --- |
-| Fuentes y polling | [Adaptador](../market_explained/providers/twelve_data.py), [worker](../market_explained/ingestion/twelve_worker.py), registro de capacidades y [persistencia](../market_explained/storage/repository.py) |
-| Modelos | [Forecasting](../market_explained/intelligence/forecasting.py), [series/registro](../market_explained/intelligence/data.py), [worker](../market_explained/intelligence/worker.py), [dependencias opcionales](../requirements-ml.txt) |
-| API y acceso | [Rutas](../market_explained/api/routes.py), [autorización de visualización](../market_explained/security/display.py) |
-| UI | [Página predictiva](../templates/intelligence.html), navegación/detalle/explorador existentes, catálogos de idiomas y CSS existente |
-| SQLite | [Migración 002](../market_explained/storage/migrations/002_twelve_data.sql), [003](../market_explained/storage/migrations/003_verified_index.sql) |
-| Operación y validación | [Servicios](../scripts/demo_services.py), [CI](../.github/workflows/ci.yml), [nuevos tests](../tests/test_twelve_forecasting.py), [fixtures](../tests/fixtures/README.md), actualizaciones de tests de contratos/migración |
+| Sources and polling | [Adapter](../market_explained/providers/twelve_data.py), [worker](../market_explained/ingestion/twelve_worker.py), capability registry and [persistence](../market_explained/storage/repository.py) |
+| Models | [Forecasting](../market_explained/intelligence/forecasting.py), [series/registry](../market_explained/intelligence/data.py), [worker](../market_explained/intelligence/worker.py), [optional dependencies](../requirements-ml.txt) |
+| API and access | [Routes](../market_explained/api/routes.py), [display authorization](../market_explained/security/display.py) |
+| UI | [Forecast page](../templates/intelligence.html), existing navigation/details/explorer, language catalogs and existing CSS |
+| SQLite | [Migration 002](../market_explained/storage/migrations/002_twelve_data.sql), [003](../market_explained/storage/migrations/003_verified_index.sql) |
+| Operation and validation | [Services](../scripts/demo_services.py), [CI](../.github/workflows/ci.yml), [new tests](../tests/test_twelve_forecasting.py), [fixtures](../tests/fixtures/README.md), contract/migration test updates |
 
-No se modificó `tests/test_app.py`. El cambio previo del usuario en `.env.example`
-se dejó intacto y fuera de estos commits.
+`tests/test_app.py` was not changed. The user's earlier `.env.example` edit was
+left intact and outside the implementation commits described here.
 
-## Metodología y límites
+## Methodology and limitations
 
-Se usan únicamente cierres completos de una fuente específica por instrumento.
-Los stocks conservan la atribución histórica de su proveedor actual y una fecha de
-sesión con cutoff UTC conservador, que no es la hora exacta de cierre de bolsa.
-Los candles conservan su ventana y recepción. Revisiones del proveedor se guardan
-como observaciones diferentes; la serie de entrenamiento usa la revisión más reciente.
-El conjunto no es un archivo histórico point-in-time de lo conocido en cada fecha.
-No se han resuelto los ajustes corporativos, sesgo de supervivencia ni regímenes.
+Only complete closes from one specific source per instrument are used. Stocks
+retain their current provider's historical attribution and a session date with a
+conservative UTC cutoff, not the exact exchange close time. Candles retain their
+window and receipt time. Provider revisions are stored as separate observations;
+training uses the latest revision. This dataset is not a point-in-time archive
+of information known on each date. Corporate adjustments, survivorship bias and
+regime changes remain unresolved.
 
-Para cada fila solo se calculan características con precios conocidos hasta su
-corte: dos retornos rezagados, medias de retornos de 5/20 sesiones, volatilidad20 y
-distancia a SMA20. El objetivo es el retorno simple del próximo cierre observado,
-no un precio garantizado ni necesariamente un plazo exacto de 24 horas. El precio
-estimado se deriva del precio de referencia con aritmética Decimal; los modelos
-usan arrays float para entrenamiento numérico.
+Each row's features use only prices known through its cutoff: two lagged returns,
+5/20-session mean returns, volatility20 and distance from SMA20. The target is the
+next observed close's simple return, not a guaranteed price or necessarily an
+exact 24-hour horizon. Estimated price is derived from the reference price using
+Decimal arithmetic; models use float arrays for numerical training.
 
-Se distribuyen cronológicamente aproximadamente 60% entrenamiento, 20% calibración
-y 20% prueba. Calibración y prueba usan reentrenamiento con ventanas crecientes,
-utilizando solo objetivos disponibles antes de cada origen. La selección usa MAE
-de calibración, nunca el segmento de prueba. Después de evaluar, se ajusta el modelo
-seleccionado a todos los objetivos conocidos y se predice desde el último cierre.
-No hay optimización usando el resultado de la prueba.
+Data is split chronologically into approximately 60% training, 20% calibration
+and 20% testing. Calibration and testing use expanding-window retraining with
+only targets available before each origin. Selection uses calibration MAE, never
+the test segment. After evaluation, the selected model fits all known targets
+and predicts from the latest close. Test results do not drive optimization.
 
-El intervalo empírico nominal 80% usa un cuantil finito de residuos absolutos de
-calibración del modelo seleccionado. **No garantiza cobertura futura**: las series
-son dependientes y cambian de régimen. La cobertura real de la prueba se muestra
-junto al nivel nominal. Los modelos no tienen validación independiente.
+The nominal 80% empirical interval uses a finite-sample quantile of absolute
+calibration residuals from the selected model. **Future coverage is not guaranteed**:
+series are dependent and change regimes. Actual test coverage is shown alongside
+the nominal level. Models have no independent validation.
 
-XGBoost usa 40 árboles, profundidad 2, eta 0.05, regularización y semilla fija,
-sin GPU. Sus contribuciones se obtienen con TreeSHAP integrado (`pred_contribs`);
-ridge informa contribuciones de características estandarizadas. Describen el
-cálculo del modelo y no prueban causas económicas. Persistencia estima retorno cero.
-La documentación de librerías y artefacto JSON del modelo seleccionado se guardan
-en el registro privado de modelos; la API no entrega el artefacto del booster.
+XGBoost uses 40 trees, depth 2, eta 0.05, regularization and a fixed seed, without
+a GPU. Contributions use built-in TreeSHAP (`pred_contribs`); ridge reports
+standardized feature contributions. They describe model calculations and do not
+establish economic causes. Persistence estimates zero return. Library metadata
+and the selected model's JSON artifact are stored in the private model registry;
+the API does not expose the booster artifact.
 
-No hay órdenes, brokers ni promesas de retorno. DeepSeek sigue siendo opcional y
-no interviene en ingesta, entrenamiento, selección, intervalos o explicación numérica.
+No orders, brokers or promised returns. DeepSeek remains optional and does not
+participate in ingestion, training, selection, intervals or numerical explanations.
 
-## Evidencia real de esta instalación
+## Real evidence from this installation
 
-- Twelve Data: **1095 velas cerradas y 3 quotes**, distribuidas entre EUR/USD,
-  USD/JPY y XAU/USD, normalizadas y persistidas. No se sembraron fixtures de pruebas.
-- SPX devolvió HTTP 404. Se consultó el catálogo oficial `/indices`, que confirmó
-  FTSE con moneda GBP y venue LSE; su consulta también devolvió HTTP 404. Ambos
-  permanecen UNAVAILABLE, sin sustituirlos por un ETF ni por precios sintéticos.
-  El código HTTP no demuestra por sí solo si la causa es plan, cobertura o símbolo.
-- **17 pronósticos persistidos**: 12 acciones, 2 pares cripto, 2 pares forex y oro.
-  Selección por calibración: 13 persistencia y 4 XGBoost. Ridge se entrenó y evaluó
-  como candidato; no fue elegido. Persistencia es una referencia legítima y visible.
-- Ejemplo MSFT: MAE posterior de persistencia 0.01684, ridge 0.01852 y XGBoost
-  0.01795; cobertura observada del intervalo seleccionado **50%** en 22 observaciones.
-  NVDA: cobertura **36.36%** en 22 observaciones. Esto **no acredita precisión
-  predictiva**: los modelos seleccionados pueden empeorar frente al baseline fuera
-  de calibración. La interfaz muestra los resultados sin cambiar el modelo usando
-  esa prueba ni esconder la cobertura baja.
-- Filas existentes antes/después de migrar y generar modelos: 1 cuenta, 2 entradas
-  de watchlist, 2 mensajes y 1544 precios diarios, conservados. Se ejecutó la prueba
-  de migración con cuentas, listas, mensajes, noticias y precios de un esquema antiguo.
-- Seis servicios activos y habilitados; `Linger=yes`. Terminación controlada del
-  proceso web: systemd creó un PID nuevo y `/health` volvió a HTTP 200. No se hizo
-  un reinicio físico del equipo ni una aceptación continua de 24 h.
-- HTTPS público: `/api/v1/predictions/MSFT` devolvió 200 con XGBoost real;
-  `/api/v1/market/EURUSD` devolvió UNAVAILABLE y `observation=null` por la restricción
-  de visualización externa. Los endpoints de historia/análisis/predicción de ese
-  proveedor responden 403 para visitantes externos.
+- Twelve Data: **1,095 closed candles and 3 quotes** across EUR/USD, USD/JPY and
+  XAU/USD, normalized and persisted. Test fixtures were not seeded.
+- SPX returned HTTP 404. The official `/indices` catalog confirmed FTSE with GBP
+  currency and LSE venue; its request also returned HTTP 404. Both remain
+  UNAVAILABLE without ETF substitution or synthetic prices. The HTTP code alone
+  cannot establish whether the cause is plan, coverage or symbol.
+- **17 persisted forecasts**: 12 stocks, 2 crypto pairs, 2 forex pairs and gold.
+  Calibration selected persistence for 13 and XGBoost for 4. Ridge trained and
+  was evaluated as a candidate but was not selected. Persistence is a legitimate,
+  visible baseline.
+- MSFT example: later test MAE was 0.01684 for persistence, 0.01852 for ridge and
+  0.01795 for XGBoost; observed coverage of the selected interval was **50%** over
+  22 observations. NVDA coverage was **36.36%** over 22 observations. This **does
+  not establish predictive accuracy**: selected models can underperform the
+  baseline outside calibration. The UI shows results without using that test
+  to change the selected model or conceal low coverage.
+- Existing rows before/after migration and model generation were preserved:
+  1 account, 2 watchlist entries, 2 messages and 1,544 daily prices. Migration
+  tests also covered accounts, watchlists, messages, news and prices in an older schema.
+- Six services active and enabled; `Linger=yes`. Controlled web termination led
+  systemd to create a new PID and `/health` returned HTTP 200. No physical reboot
+  or continuous 24-hour acceptance test was performed.
+- Public HTTPS: `/api/v1/predictions/MSFT` returned 200 with real XGBoost output;
+  `/api/v1/market/EURUSD` returned UNAVAILABLE and `observation=null` due to external
+  display restrictions. This provider's history/analysis/prediction endpoints
+  return 403 for external visitors.
 
-Las cantidades son la captura de validación, no métricas continuas. Binance sigue
-recibiendo eventos y la base puede crecer después de este informe.
+Counts are a validation snapshot, not continuous metrics. Binance continues to
+receive events and the database can grow after this report.
 
-## Validación ejecutada
+## Validation executed
 
-- Lanzador documentado `./run.sh` ejecutado en un puerto y SQLite temporales: `/health` HTTP 200.
-- **63 pruebas unittest, OK**, incluyendo los 19 tests originales sin cambios,
-  migración/preservación, contratos anteriores y diez nuevas pruebas offline.
-- Los nuevos tests comprueban el fixture real de Twelve Data, rechazo de velas del
-  día abierto, timestamps/Decimal, deduplicación, revisiones, cuotas, reintentos,
-  credenciales ausentes, errores sin secretos, límites de visualización pública,
-  features causales, walk-forward y persistencia/lectura de pronósticos.
-- XGBoost CPU instalado y ejecutado en esta laptop Linux amd64/Python 3.12. Los tests
-  ML se omiten explícitamente cuando no están instaladas sus dependencias; un job CI
-  separado las instala. CI remoto y la ejecución ML en ARM64 no se han verificado.
-- Ruff y mypy (22 archivos seleccionados) sin errores. Bandit sin hallazgos medios
-  o altos; `pip-audit` del runtime y dependencias ML sin vulnerabilidades conocidas.
-- Chromium por HTTPS: página predictiva en español e inglés de escritorio y chino
-  móvil (390 px), tablas desplazables, precios redondeados para presentación,
-  sin desbordamiento horizontal de página y sin mensajes de consola.
+- Documented `./run.sh` launcher ran on a temporary port/database: `/health` HTTP 200.
+- **63 unittest tests passed**, including the original 19 unchanged, migration/
+  preservation, earlier contracts and ten new offline tests.
+- New tests cover real Twelve Data fixtures, rejection of current open-day candles,
+  timestamps/Decimal, deduplication, revisions, quotas, retries, absent credentials,
+  safe errors, public display restrictions, causal features, walk-forward evaluation
+  and forecast persistence/reading.
+- CPU XGBoost installed and executed on this Linux amd64/Python 3.12 laptop. ML
+  tests explicitly skip when dependencies are absent; a separate CI job installs
+  them. Remote CI and ARM64 ML execution have not been verified.
+- Ruff and mypy (22 selected files) passed. Bandit had no medium/high findings;
+  runtime/ML `pip-audit` found no known vulnerabilities.
+- Chromium over HTTPS: desktop prediction page in Spanish/English and Chinese
+  mobile at 390 px, scrollable tables, presentation-rounded prices, no overall
+  horizontal page overflow and no console messages.
 
-Los fixtures reales se guardan solo para pruebas offline. Las series generadas por
-el test de modelos se crean en memoria para comprobar causalidad y persistencia;
-no se cargan en los workers o la base de producción.
+Real fixtures are retained only for offline tests. Model-test series are generated
+in memory to verify causal features and persistence; they are not loaded into
+workers or the production database.
 
-## Migraciones y seguridad
+## Migrations and security
 
-`002_twelve_data.sql` añade instrumentos/provider_symbols, estados por instrumento
-con reintentos e índice de predicciones. `003_verified_index.sql` añade FTSE conforme
-al catálogo oficial. Se conserva SPX y no se borra ningún histórico. Cada ejecución
-con migraciones pendientes crea backup SQLite privado 0600 antes de la transacción.
-Restauración y almacenamiento: [DATA_OPERATIONS.md](DATA_OPERATIONS.md).
+`002_twelve_data.sql` adds instruments/provider_symbols, per-instrument retry
+status and a prediction index. `003_verified_index.sql` adds FTSE from the official
+catalog. SPX and all history remain. Each run with pending migrations creates a
+private mode-0600 SQLite backup before the transaction. See
+[DATA_OPERATIONS.md](DATA_OPERATIONS.md) for restoration and storage.
 
-No se escribieron credenciales en Git. La nueva clave está únicamente en el entorno
-privado del servicio, modo 0600; errores y logs usan códigos controlados. Puesto que
-fue compartida en conversación, se recomienda rotarla y sustituirla privadamente.
-Las exposiciones anteriores continúan documentadas en [SECURITY.md](../SECURITY.md).
+No credentials were committed by this implementation. The new key exists only
+in the private mode-0600 service environment; errors/logs use controlled codes.
+Because the key was shared in conversation, rotation and private replacement are
+recommended. Earlier exposure remains documented in [SECURITY.md](../SECURITY.md).
 
-`TWELVE_DATA_PUBLIC_DISPLAY=0` por defecto. La clave no demuestra un derecho de
-redistribución: el acceso público a precios, históricos y derivados de Twelve Data
-se bloquea hasta confirmar autorización. El acceso interno directo por loopback,
-sin cabeceras de proxy, permite inspección. Los datos no se envían en el contexto
-público del asistente. Otros proveedores conservan sus propias condiciones.
+`TWELVE_DATA_PUBLIC_DISPLAY` defaults to `0`. A key does not prove redistribution
+rights: public Twelve Data prices, history and derivatives remain blocked until
+authorization is confirmed. Direct internal loopback access without proxy headers
+allows inspection. The data is excluded from public assistant context. Other
+providers retain their own conditions.
 
-## Ejecución y siguiente paso
+## Running and next steps
 
-[README](../README.md) contiene los comandos locales y
-[LAPTOP_DEMO.md](LAPTOP_DEMO.md) los servicios y la configuración privada.
-El servidor completo conserva SQLite y workers; Cloudflare Workers requeriría
-migrar persistencia y ejecución. Cloudflare Tunnel publica el servidor de la laptop,
-no lo convierte en alojamiento cloud. El enlace Quick Tunnel puede cambiar.
+The [README](../README.md) gives local commands and [LAPTOP_DEMO.md](LAPTOP_DEMO.md)
+describes services/private configuration. The complete server retains SQLite
+and workers; Cloudflare Workers would require persistence and execution migration.
+Cloudflare Tunnel publishes the laptop server rather than hosting it in the cloud.
+Quick Tunnel links can change.
 
-Siguiente fase: confirmar derechos de visualización y cobertura/plan de índices,
-validar cuotas durante 24 h, establecer URL estable si se dispone de dominio,
-mejorar archivos point-in-time/calendarios/ajustes y evaluar fuera de muestra con
-más datos. ATR, señal MACD, volumen/correlaciones entre mercados, modelos neuronales,
-Alpaca/FRED, WebSocket al navegador y despliegue externo permanente siguen pendientes.
-No se ha demostrado una ventaja predictiva; ampliar modelos debe depender de esa
-validación, no de añadir complejidad.
+Next: confirm display rights and index coverage/plan, validate quotas for 24 hours,
+establish a stable URL if a domain is available, improve point-in-time archives,
+calendars/adjustments and evaluate more out-of-sample data. ATR, MACD signal,
+volume/cross-market correlations, neural models, Alpaca/FRED, browser WebSockets
+and permanent external deployment remain pending. No predictive edge has been
+established; additional model complexity should depend on validation.
 
-## Referencias primarias
+## Primary references
 
-- [SDK oficial Twelve Data](https://github.com/twelvedata/twelvedata-python).
-  El adaptador implementa directamente el contrato REST sin requerir el SDK.
+- [Official Twelve Data SDK](https://github.com/twelvedata/twelvedata-python).
+  The adapter implements the REST contract directly without requiring the SDK.
 - [Time series](https://twelvedata.com/docs/market-data/time-series),
-  [cuotas](https://support.twelvedata.com/en/articles/5615854-credits),
-  [planes](https://twelvedata.com/pricing),
-  [uso y redistribución](https://support.twelvedata.com/en/articles/5332349-commercial-and-personal-usage),
-  [atribución](https://support.twelvedata.com/en/articles/12647398-attribution-guidelines-for-using-twelve-data).
-- [Python en Cloudflare Workers](https://developers.cloudflare.com/workers/languages/python/).
-- [XGBoost CPU](https://xgboost.readthedocs.io/en/stable/install.html).
+  [quotas](https://support.twelvedata.com/en/articles/5615854-credits),
+  [plans](https://twelvedata.com/pricing),
+  [usage and redistribution](https://support.twelvedata.com/en/articles/5332349-commercial-and-personal-usage),
+  [attribution](https://support.twelvedata.com/en/articles/12647398-attribution-guidelines-for-using-twelve-data).
+- [Python on Cloudflare Workers](https://developers.cloudflare.com/workers/languages/python/).
+- [CPU XGBoost](https://xgboost.readthedocs.io/en/stable/install.html).

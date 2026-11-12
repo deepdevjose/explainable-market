@@ -1,183 +1,186 @@
-# Informe de implementación — 6 de noviembre de 2026
+# Implementation report — 6 November 2026
 
-## 1. Auditoría
+> Historical Phase A/B report. Later work and evidence are recorded in
+> [PREDICTIVE_INTELLIGENCE.md](PREDICTIVE_INTELLIGENCE.md),
+> [AI_PROVIDERS.md](AI_PROVIDERS.md) and [HISTORY_CLEANUP.md](HISTORY_CLEANUP.md).
 
-Se inspeccionó el historial completo disponible (repositorio no shallow, dos commits
-originales), todos los módulos Python, todos los templates, CSS, JavaScript, pruebas
-y documentos de operación antes de modificar código. Las 19 pruebas originales
-pasaron como línea base. [ARCHITECTURE_AUDIT.md](ARCHITECTURE_AUDIT.md) distingue
-capacidades verificadas, problemas, riesgos y trabajo diferido.
+## 1. Audit
 
-Hallazgos principales: carga implícita de credenciales, secretos/bases/bytecode
-versionados, borrado de series al cambiar proveedor, identidad basada solo en ticker,
-precios REAL y ausencia de migraciones, backups, workers de streaming o CI.
+The complete available history (a non-shallow repository with two original
+commits), every Python module, template, CSS file, browser script, test and
+operating document was inspected before code changes. All 19 original tests
+passed as a baseline. [ARCHITECTURE_AUDIT.md](ARCHITECTURE_AUDIT.md) separates
+verified capabilities, weaknesses, risks and deferred work.
 
-## 2. Arquitectura implementada
+Main findings: implicit credential loading, tracked secrets/databases/bytecode,
+series deletion when changing provider, ticker-only identity, REAL prices and
+no migrations, backups, streaming workers or CI.
 
-Monolito modular incremental. `market_explained/application.py` contiene la aplicación
-Flask existente; `app.py` conserva las importaciones y entrada ejecutable/WSGI.
-Los nuevos módulos separan APIs v1, contratos/instrumentos, proveedores, worker y
-almacenamiento. La recogida diaria existente mantiene su compatibilidad y sus
-funciones públicas, ahora con adaptadores independientes Yahoo/Nasdaq. No se
-reemplazaron framework, frontend, autenticación ni motor de gráficas.
+## 2. Implemented architecture
 
-## 3. Archivos nuevos y modificados
+An incremental modular monolith. `market_explained/application.py` contains the
+existing Flask implementation; `app.py` preserves imports and executable/WSGI
+entry points. New modules separate v1 APIs, contracts/instruments, providers,
+worker and storage. Existing daily collection preserves compatibility and public
+functions, now with independent Yahoo/Nasdaq adapters. Framework, frontend,
+authentication and chart engine were not replaced.
 
-- Nuevos: `market_explained/{api,markets,providers,ingestion,storage}/`, migración SQL,
-  templates `markets.html`, `market.html`, `sources.html`, fixtures de documentación
-  y capturas reales REST/WebSocket, pruebas de configuración/migración/ingesta.
-- Nuevos: `.env.example`, `.gitignore`, `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`,
-  `CODE_OF_CONDUCT.md`, plantillas de issues/PR, workflow CI, configuración Ruff/mypy,
-  dependencias de desarrollo, verificador de higiene, Docker/Compose y documentación
-  de arquitectura, datos y despliegue.
-- Modificados: `app.py`, `config.py`, `db.py`, `collector.py`, `ai.py`, `charts.py`,
-  requirements/run.sh, README, navegación/base, panorama, metodología, CSS y JS.
-- Retirados exclusivamente del índice Git: archivo de credenciales, secreto local,
-  ambas bases y bytecode. Las copias locales se conservan. El historial no se reescribió.
+## 3. New and modified files
 
-## 4. Funciones existentes preservadas
+- Added `market_explained/{api,markets,providers,ingestion,storage}/`, a SQL migration,
+  `markets.html`, `market.html`, `sources.html`, documented fixtures and real
+  REST/WebSocket captures, and configuration/migration/ingestion tests.
+- Added `.env.example`, `.gitignore`, `LICENSE`, `CONTRIBUTING.md`, `SECURITY.md`,
+  `CODE_OF_CONDUCT.md`, issue/PR templates, CI workflow, Ruff/mypy configuration,
+  development dependencies, hygiene checker, Docker/Compose and architecture,
+  data and deployment documentation.
+- Modified `app.py`, `config.py`, `db.py`, `collector.py`, `ai.py`, `charts.py`,
+  requirements/run.sh, README, navigation/base, overview, methodology, CSS and JS.
+- Removed only from the Git index: credential file, local secret, both databases
+  and bytecode. Local copies were retained. History was not rewritten in this phase.
 
-Landing, panorama, registro/login/logout, cuentas con hash, listas privadas,
-noticias/RSS/filtros/sentimiento, ventanas de reacción, biblioteca, asistente
-DeepSeek opcional, historial separado, borrado de chat y CSV. Se conservan rutas y
-formatos anteriores, Jinja, SVG, IBM Plex local, tokens de color/espaciado,
-temas claro/oscuro, breakpoints y controles de teclado. Las 19 pruebas originales
-no fueron modificadas. La revisión visual final sigue pendiente; conservación de
-CSS y renderizado HTTP no equivalen a aceptación visual.
+## 4. Existing features preserved
 
-## 5. Nueva funcionalidad implementada
+Landing, overview, registration/login/logout, hashed accounts, private watchlists,
+news/RSS/filters/sentiment, reaction windows, library, optional DeepSeek assistant,
+isolated history, chat deletion and CSV. Earlier routes and formats, Jinja, SVG,
+local IBM Plex, color/spacing tokens, light/dark themes, breakpoints and keyboard
+controls remain. The 19 original tests were unchanged. Final visual review was
+still pending: preserving CSS and HTTP rendering does not constitute visual acceptance.
 
-Registro explícito de BTCUSDT y ETHUSDT de Binance Spot, sin confundir USDT con USD.
-Eventos canónicos validados con Decimal, UTC, origen, secuencia, precios, bid/ask,
-volumen, OHLCV y estado de cierre. Historial inmutable, deduplicación, control de
-orden, estado por fuente/tipo, checkpoints atómicos y registros de calidad.
+## 5. New functionality
 
-Worker asyncio independiente: stream público de trades/ticker/velas de un minuto,
-backfill de hasta 365 velas diarias cerradas, ping/pong, timeout, rotación antes de
-24 horas, reconexión con jitter/backoff, resuscripción, colas acotadas, aislamiento
-entre tareas REST/stream/proveedores y apagado con drenaje.
+Explicit Binance Spot BTCUSDT and ETHUSDT registry, without confusing USDT and USD.
+Canonical events validated with Decimal, UTC, provenance, sequence, prices,
+bid/ask, volume, OHLCV and closed state. Immutable history, deduplication, ordering,
+source/type-specific state, atomic checkpoints and quality records.
 
-Páginas integradas `/markets`, `/market/<symbol>`, `/sources`; filtros/búsqueda,
-procedencia y fechas. La página consulta la API cada cinco segundos, sin abrir
-conexiones del navegador al proveedor. Estados actuales se derivan de frescura y
-conexión, sin promover datos históricos a LIVE. Nuevas APIs v1 paginadas y limitadas
-con contrato de error. Registry de capacidades y enlaces de condiciones por fuente.
+Independent asyncio worker: public trades/ticker/one-minute candle stream,
+backfill of up to 365 closed daily candles, ping/pong, timeouts, rotation before
+24 hours, jitter/backoff reconnects, resubscription, bounded queues, isolation
+between REST/stream/provider tasks and shutdown with draining.
 
-## 6. Pruebas ejecutadas y resultados
+Integrated `/markets`, `/market/<symbol>` and `/sources` pages with filters/search,
+provenance and dates. The interface polls the API every five seconds without
+browser connections to the provider. Status derives from freshness and connection;
+historical values are never promoted to LIVE. New paginated, rate-limited v1 APIs
+have an error contract. A capability registry links each source's conditions.
 
-- `venv/bin/python -m unittest discover -s tests -q`: **46/46 pasan** en Python 3.14.
-  Incluye las 19 originales, migración/restauración de backup, conservación de
-  cuentas/listas/mensajes/noticias/precios, procedencia tras cambiar proveedor,
-  contratos/precisión/validación, deduplicación/orden/checkpoints, datos históricos
-  e incompletos, estados, APIs, cuotas, reconexión/resuscripción sobre WebSocket
-  local, aislamiento de fallos REST/proveedor, drenaje y fallo de almacenamiento.
-- Pruebas automatizadas sin API externa: fixtures fijas y capturas reales con fecha
-  y fuente; servidor WebSocket exclusivamente localhost. Ningún fixture se importa
-  a la base activa ni aparenta ser un feed en vivo.
-- `venv/bin/ruff check .`: pasa.
-- `venv/bin/mypy`: pasa en los **14 archivos** del subsistema nuevo seleccionado;
-  no se afirma tipado completo del código Flask original.
+## 6. Tests executed and results
+
+- `venv/bin/python -m unittest discover -s tests -q`: **46/46 passed** on Python 3.14.
+  Covers the original 19, migration/backup restoration, account/watchlist/message/
+  news/price preservation, source provenance after provider changes, precision and
+  validation, deduplication/order/checkpoints, historical/incomplete data, statuses,
+  APIs, quotas, reconnect/resubscription on a local WebSocket, REST/provider failure
+  isolation, queue draining and storage failure.
+- Automated tests use no external API: fixed fixtures and dated, attributed real
+  captures; the WebSocket server runs only on localhost. No fixture enters the
+  active database or pretends to be a live feed.
+- `venv/bin/ruff check .`: passed.
+- `venv/bin/mypy`: passed for **14 selected files** in the new subsystem; this does
+  not claim complete typing of the original Flask code.
 - `venv/bin/bandit -q -r market_explained ai.py charts.py collector.py config.py db.py -ll`:
-  sin hallazgos de severidad media/alta. Las aperturas HTTPS fijas tienen supresiones
-  específicas justificadas; XML externo se procesa con defusedxml.
-- `venv/bin/pip-audit -r requirements.txt`: sin vulnerabilidades conocidas al ejecutar.
-- `node --check static/app.js` y `compileall` de módulos: pasan.
-- Higiene del índice Git: sin bases, credenciales locales, bytecode ni literales
-  de clave detectados por el verificador limitado. Esto no certifica el historial.
-- Inicio real **`PORT=5058 ./run.sh`**, Waitress, con la base activa: HTTP 200 en
-  landing, app, news, learn, login, register, symbol/AAPL, markets, market/BTCUSDT,
-  sources, health, CSV y APIs comprobadas (16 comprobaciones HTTP).
-- AAPL: 127 cierres, fuente Nasdaq, último cierre 2026-11-05 y sin price_error al
-  consultar el runtime tras la actualización. Se conservó el contrato diario existente.
-- Navegador: `The browser access host is unavailable`; no se produjeron capturas ni
-  se verificó visualmente contraste, móvil o interacción real de teclado.
-- Docker no está instalado en este entorno: Compose/build/ARM64 no se ejecutaron.
-  El workflow se preparó, pero no se afirma que GitHub Actions haya corrido.
+  no medium/high-severity findings. Fixed HTTPS calls have specific justified
+  suppressions; external XML uses defusedxml.
+- `venv/bin/pip-audit -r requirements.txt`: no known vulnerabilities at execution.
+- `node --check static/app.js` and module `compileall`: passed.
+- Git-index hygiene: no databases, local credentials, bytecode or key literals
+  detected by the limited checker. This does not certify history.
+- Actual startup **`PORT=5058 ./run.sh`**, Waitress with the active database:
+  HTTP 200 for landing, app, news, learn, login, register, symbol/AAPL, markets,
+  market/BTCUSDT, sources, health, CSV and checked APIs (16 HTTP checks).
+- AAPL: 127 closes, Nasdaq source, latest close 2026-11-05 and no price_error when
+  querying the runtime after refresh. Existing daily contracts remained intact.
+- Browser: `The browser access host is unavailable`; no screenshots or visual
+  verification of contrast, mobile behavior or real keyboard interaction.
+- Docker was not installed: Compose/build/ARM64 were not run. The workflow was
+  prepared without claiming that GitHub Actions ran.
 
-## 7. Migración de datos
+## 7. Data migration
 
-`001_market_foundation.sql` es aditiva y transaccional, con backup online SQLite
-0600 antes de aplicar cambios y versión registrada. Mantiene tablas originales.
-Archiva cierres anteriores por proveedor y nuevas revisiones antes de actualizar la
-proyección de compatibilidad. Al cambiar proveedor no se borra el archivo histórico.
-No recupera datos ya borrados por versiones antiguas ni precisión perdida por REAL.
-Los timestamps de cierre diario bursátil desconocidos no se inventan.
+`001_market_foundation.sql` is additive and transactional, preceded by a mode-0600
+SQLite online backup and a recorded version. Original tables remain. Old closes
+are archived by provider, along with incoming revisions, before the compatibility
+projection is updated. Provider changes do not delete the source archive. It
+cannot recover data deleted by earlier versions or precision lost in REAL values.
+Unknown stock-close timestamps are not invented.
 
-Las pruebas ejercitan una base con cuenta, lista, conversación, noticia y precios
-antes de migrar, ejecutan init dos veces, comparan filas y verifican integridad de
-la copia restaurable. El archivo antiguo market.db permanece intacto y no se importa.
-Procedimiento y límites en [DATA_OPERATIONS.md](DATA_OPERATIONS.md).
+Tests create an account, watchlist, conversation, news item and prices before
+migration, initialize twice, compare rows and verify the restorable backup's
+integrity. The old market.db remains intact and is not imported. See
+[DATA_OPERATIONS.md](DATA_OPERATIONS.md) for procedure and limits.
 
-## 8. Estado de proveedores y evidencia externa
+## 8. Provider status and external evidence
 
-**Binance implementado y conexión real verificada.** Los primeros intentos contra
-stream.binance.com y data-stream.binance.vision expiraron durante handshake;
-api.binance.com devolvió `Network is unreachable`. El endpoint oficial de datos
-REST data-api.binance.vision respondió. Una prueba posterior contra
-`wss://data-stream.binance.vision:443` conectó correctamente.
+**Binance implemented with a real connection verified.** Initial attempts against
+stream.binance.com and data-stream.binance.vision timed out during handshake;
+api.binance.com returned `Network is unreachable`. The official REST data endpoint
+data-api.binance.vision responded. A later attempt connected successfully to
+`wss://data-stream.binance.vision:443`.
 
-En una base temporal, una ejecución de 25 segundos persistió **1.734 eventos de
-stream y 730 velas históricas** para los dos pares. En la base activa, una ejecución
-posterior de 50 segundos persistió **2.432 eventos de stream** (2.294 trades,
-92 ticker y 46 actualizaciones de vela) y **730 velas diarias cerradas**. Hubo
-apagado ordenado, cero reconexiones en esa ejecución e integridad SQLite `ok`.
-Los contadores son evidencia puntual, no cifras permanentes ni garantía de caudal.
+A 25-second run persisted **1,734 stream events and 730 historical candles** for
+the two pairs in a temporary database. A later 50-second active-database run
+persisted **2,432 stream events** (2,294 trades, 92 ticker and 46 candle updates)
+and **730 closed daily candles**. It shut down gracefully, with zero reconnects
+in that run and SQLite integrity `ok`. Counts are point-in-time evidence, not
+permanent figures or guaranteed throughput.
 
-La API respondió LIVE para ambos pares durante la conexión con timestamps UTC y
-provider=binance; después de detener el worker respondió STALE conservando el dato.
-Se capturaron frames reales de los tres tipos y una respuesta REST como fixtures.
-Los valores históricos siguen siendo HISTORICAL. Las verificaciones locales HTTP
-y conteos completos quedan en artifacts/ ignorado; nunca se publica una base.
+The API returned LIVE for both pairs during connection, with UTC timestamps and
+provider=binance; after the worker stopped it returned STALE while preserving
+the observation. Real frames of all three types and a REST response were captured
+as fixtures. Historical values remain HISTORICAL. Complete local HTTP checks and
+counts are in ignored artifacts/; databases are never published.
 
-**Yahoo/Nasdaq:** adquisición diaria preservada, con Nasdaq comprobado en runtime.
-**Twelve Data/Alpaca/FRED:** metadatos de capacidad/licencia y estado planificado;
-no adaptadores operativos ni solicitud de credenciales. Forex, índices y materias
-primas muestran ausencia de datos. SPY sigue siendo un ETF, no un feed de índices.
+**Yahoo/Nasdaq:** daily acquisition preserved; Nasdaq verified in the runtime.
+**Twelve Data/Alpaca/FRED at this stage:** capability/license metadata and planned
+status, not operational adapters or credential requests. Forex, indices and
+commodities showed absent data. SPY remained an ETF, not an index feed.
 
-## 9. Límites conocidos
+## 9. Known limits at this stage
 
-No se hizo una prueba continua de 24 horas: la rotación se verificó con simulación
-local. No hay reparación completa de trades/minutos perdidos, persistencia de colas
-tras kill abrupto, retención automática, benchmark de carga sostenida o varios
-workers coordinados. Los checkpoints y gaps son persistentes; el backfill diario
-se reconsulta idempotentemente. Ejecutar un worker por DB y vigilar crecimiento.
+No continuous 24-hour run: rotation was checked with local simulation. No complete
+missed-trade/minute repair, durable queue after abrupt kill, automatic retention,
+sustained-load benchmark or coordinated multiple workers. Checkpoints and gaps
+persist; daily backfill is re-requested idempotently. Run one worker per database
+and monitor growth.
 
-No hay WS público `/api/v1/stream`; la interfaz usa polling. `/api/v1/analysis` y
-`predictions` con símbolo responden 501, sin datos de modelo fabricados. No hay
-ML/SHAP ni indicadores de fase D. La reorganización de auth/usuarios/assistant
-continúa incrementalmente: sus funciones permanecen en el módulo Flask preservado.
-DeepSeek requiere credencial nueva y no se probó conversación real en esta entrega.
-Falta revisión visual, instalación de contenedores y aceptación cloud/ARM64.
+No public `/api/v1/stream` WebSocket; the interface polls. At this stage the symbol
+analysis and prediction APIs returned 501 rather than fabricated model data.
+There were no Phase D ML/SHAP models or indicators. Auth/user/assistant separation
+remained incremental, with functions in the preserved Flask module. DeepSeek
+needed a new key and no live conversation was tested in this delivery. Visual,
+container, cloud and ARM64 acceptance remained pending.
 
-## 10. Seguridad y licencias
+## 10. Security and licenses
 
-Se confirmó exposición histórica de credencial DeepSeek, secreto de sesión y bases
-con registros antiguos. **Deben revocarse/rotarse los secretos y revisarse los datos
-expuestos. No se rotaron credenciales del proveedor desde este trabajo.** Eliminar
-archivos del índice no elimina el historial. No se reprodujeron valores ni se hizo
-force push/rewrite. Se corrigió la documentación anterior que afirmaba un ignore
-inexistente. Se eliminó la carga de archivos locales y se exige entorno explícito.
+Historical exposure of a DeepSeek credential, session secret and old account
+records in databases was confirmed. **Revoke/rotate secrets and review exposed
+data. Provider credentials were not rotated by this work.** Untracking files does
+not erase history. No values were reproduced and no force push or rewrite occurred
+in this phase. Earlier incorrect ignore documentation was corrected. Local-file
+loading was removed; explicit environment configuration is required.
 
-Se mantienen CSRF, hash de contraseña, redirecciones locales, CSP y cookies seguras;
-se añaden validación de proxy explícito, claves requeridas en producción, permisos
-privados de SQLite y parsing XML protegido. CI/higiene son controles limitados, no
-una certificación de seguridad. MIT cubre código propio; OFL y derechos de datos,
-noticias/materiales ajenos conservan sus condiciones. No se ejecutan operaciones.
+CSRF, password hashing, local redirects, CSP and secure cookies remain. Exact
+proxy validation, required production keys, private SQLite permissions and secure
+XML parsing were added. CI/hygiene checks are limited controls, not certification.
+MIT covers original code; OFL and third-party data/news/material rights retain
+their terms. No financial trades are executed.
 
-## 11. Comandos locales
+## 11. Local commands
 
 ```bash
 python3 -m venv venv
 venv/bin/python -m pip install -r requirements.txt
 export SECRET_KEY="$(python3 -c 'import secrets; print(secrets.token_hex(32))')"
 ./run.sh
-# Otra terminal, mismo DATABASE_PATH o mismo directorio por defecto:
+# Another terminal, same DATABASE_PATH or default directory:
 venv/bin/python -m market_explained.ingestion.workers
 ```
 
-Abrir http://127.0.0.1:5050/markets. No hay cuenta cloud obligatoria. Para sesiones
-persistentes conservar SECRET_KEY en un gestor/servicio privado. No repetir su
-rotación en cada arranque. `DEEPSEEK_API_KEY` es opcional, exportada solo al backend.
+Open http://127.0.0.1:5050/markets. No cloud account is required. For persistent
+sessions, retain SECRET_KEY in a private manager/service instead of regenerating
+it on each startup. `DEEPSEEK_API_KEY` is optional and exported only to the backend.
 
 ```bash
 venv/bin/python -m pip install -r requirements-dev.txt
@@ -187,15 +190,15 @@ venv/bin/mypy
 node --check static/app.js
 ```
 
-## 12. Próxima fase y control de cambios
+## 12. Next phase and change control identified then
 
-Completar aceptación visual y una campaña prolongada de streaming/rotación,
-medir SQLite/disk y añadir reparación de gaps antes de ampliar pares. Luego fase C:
-Twelve Data opcional con cuotas/licencias, Alpaca con IEX/SIP separados e integración
-macroeconómica FRED. Solo después abordar indicadores y evaluación cronológica de
-fase D, comenzando por baseline de persistencia y sin publicidad de precisión.
+Complete visual acceptance and extended streaming/rotation testing, measure
+SQLite/disk behavior and add gap repair before expanding pairs. Then Phase C:
+optional Twelve Data with quotas/licenses, Alpaca with separate IEX/SIP and FRED
+macroeconomic integration. Follow with Phase D indicators and chronological
+evaluation, starting with persistence without accuracy claims.
 
-Cambios en `feat/multi-market-data-foundation`, commits lógicos de refactor,
-ingesta/UI y preparación de operación/gobernanza. No se fusionó main, no se hizo
-push ni se crearon recursos cloud. Docker, workflow y guía OCI son preparación,
-no despliegue verificado.
+Changes were on `feat/multi-market-data-foundation`, with logical refactor,
+ingestion/UI and operation/governance commits. At this historical delivery main
+had not been merged, no push occurred and no cloud resources were created.
+Docker, workflow and OCI instructions were preparation, not verified deployment.

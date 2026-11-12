@@ -1,56 +1,54 @@
-# Limpieza de historial — 12 de noviembre de 2026
+# History cleanup — 12 November 2026
 
-## Alcance
+## Scope
 
-Repositorio: `deepdevjose/explainable-market`. Ramas publicadas: `main` y
-`feat/multi-market-data-foundation`. La autorización expresa del propietario
-permite sustituir su historia; los identificadores de commits anteriores cambian.
-El checkout independiente de `ning-111/explainable_market` pertenece a otro remoto
-y no se modifica ni se publica desde esta operación.
+Repository: `deepdevjose/explainable-market`. Published branches: `main` and
+`feat/multi-market-data-foundation`. The owner's explicit authorization allowed
+replacement of their history; earlier commit identifiers changed. The separate
+`ning-111/explainable_market` checkout belongs to another remote and was neither
+modified nor published by this operation.
 
-Se utilizó `git-filter-repo` con eliminación de datos sensibles en una copia privada:
+`git-filter-repo` was used with sensitive-data removal in a private copy:
 
-- Eliminación histórica de `env (1).txt`, `data/`, bytecode Python, el PDF académico
-  con credenciales antiguas y la captura de referencia heredada.
-- Redacción de los valores secretos históricos conocidos que persistían en texto
-  y mensajes, incluyendo el ejemplo de configuración. No se incluyen sus valores.
-- Conservación de los cambios funcionales y de la aplicación actual; un solo commit
-  de preparación pública agrupa la documentación y los controles nuevos.
-- Copia de recuperación privada, con directorio 0700 y archivos de respaldo 0600,
-  fuera del repositorio. No debe compartirse, sincronizarse públicamente ni subirse.
+- Historical removal of `env (1).txt`, `data/`, Python bytecode, the academic PDF
+  containing old credentials and the legacy reference screenshot.
+- Redaction of known historical secret values remaining in text and messages,
+  including the configuration example. Their values are not included here.
+- Preservation of functional changes and the current application; one public
+  preparation commit groups the new documentation and checks.
+- A private recovery copy outside the repository, in a mode-0700 directory with
+  mode-0600 backup files. Do not share, publicly synchronize or upload it.
 
-## Evidencia
+## Evidence
 
-Antes de actualizar la documentación final, se examinaron 215 versiones de archivos
-de las dos ramas saneadas: sin rutas privadas, patrones de credenciales reconocidos
-ni coincidencias con los secretos históricos y de servicio conocidos. El árbol
-actual resultó idéntico al del commit de preparación antes de modificar estos
-informes. Los únicos cambios posteriores describen el proceso de limpieza.
+Before the final documentation update, 215 file versions from the two sanitized
+branches were examined: no private paths, recognized credential patterns or
+matches against known historical and service secrets were found. The current
+tree matched the preparation commit before these reports were changed. Subsequent
+changes only described the cleanup process.
 
-En un checkout separado de la versión saneada pasaron las 79 pruebas, Ruff, mypy
-(23 archivos seleccionados) y el control del índice. Las bases y configuración
-privada de la demo permanecen en su ubicación original. El saneamiento no supone
-rotación de credenciales ni un despliegue nuevo.
+All 79 tests, Ruff, mypy (23 selected files) and the index check passed in a
+separate checkout of the sanitized version. Demo databases and private
+configuration remained in their original locations. Cleanup does not constitute
+credential rotation or a new deployment.
 
-## Colaboradores y límites
+## Collaborators and limitations
 
-Volver a clonar el repositorio limpio es la opción más sencilla para colaboradores.
-No fusionar ramas antiguas: pueden reintroducir el historial sensible. Preservar
-antes cualquier trabajo local y aplicar solo los cambios revisados sobre la versión
-nueva. No hacer push de la copia de recuperación ni de otro clon antiguo.
+Cloning the clean repository again is the simplest option for collaborators.
+Do not merge old branches: they can reintroduce sensitive history. Preserve local
+work first and apply only reviewed changes to the new version. Do not push the
+recovery copy or another old clone.
 
-Cambiar referencias no garantiza la eliminación de cachés, forks o clones externos.
-La revisión previa no encontró referencias remotas de pull requests, pero eso no
-certifica que GitHub haya purgado todos los objetos antiguos. La comprobación
-posterior al push confirmó HTTP 200 y la presencia de un valor sensible conocido
-en una URL raw del historial anterior. No se guarda ni reproduce su contenido.
-Por tanto, la eliminación de esa copia pública sigue pendiente: el propietario debe
-solicitar a GitHub Support la purga según [el procedimiento oficial](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository).
-El soporte puede exigir que el riesgo no sea mitigable únicamente revocando claves.
-No se ha enviado una solicitud de soporte ni se han revocado claves de terceros.
-Se preparó un borrador privado para soporte, fuera del repositorio. La limpieza de
-las ramas no debe presentarse como eliminación completa de la exposición.
+Changing references cannot guarantee removal of caches, forks or external clones.
+The earlier review found no remote pull-request references, but that does not
+certify that GitHub purged every old object. A post-push check confirmed HTTP 200
+and a known sensitive value at an old-history raw URL. Its contents are neither
+saved nor reproduced here. Removal of that public copy remains pending: the owner
+must request a purge from GitHub Support using [the official procedure](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository).
+Support may require that revocation alone cannot mitigate the risk. No support
+request was sent and no third-party keys were revoked. A private support draft
+was prepared outside the repository. Branch cleanup must not be presented as
+complete elimination of the exposure.
 
-Las credenciales expuestas deben revocarse aunque ya no estén en las ramas.
-Ver [SECURITY.md](../SECURITY.md). No se afirma que una búsqueda dirigida equivalga
-a una auditoría de seguridad completa.
+Exposed credentials must be revoked even when absent from the branches. See
+[SECURITY.md](../SECURITY.md). A targeted search is not a comprehensive security audit.
