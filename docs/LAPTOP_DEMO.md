@@ -122,3 +122,52 @@ The assistant and headline classification now use **Zhipu / BigModel** in this
 installation. The interface identifies the provider and model and explains the
 submitted data. Numerical models and ingestion remain independent of AI. See
 [AI provider validation](AI_PROVIDERS.md).
+
+## Fedora 45: operation independent of VS Code
+
+The six processes are systemd **user services**, enabled under `default.target`.
+`loginctl enable-linger` keeps the user service manager running after logout and
+starts it at boot. Closing VS Code or a terminal does not stop these services.
+The installer uses `Restart=always` with a five-second delay, including recovery
+from a clean process exit. An explicit `systemctl stop` still stops a service.
+
+On 12 November 2026, all six services were verified active/enabled with
+`Linger=yes`. The web process was deliberately terminated with SIGTERM; systemd
+started a new PID automatically and local `/health` returned HTTP 200. Public
+HTTPS `/health` and the landing page also returned HTTP 200 after recreating a
+broken Quick Tunnel. No physical reboot or suspend/resume test was performed.
+
+```bash
+# Check service state, boot configuration and logout persistence.
+.venv/bin/python scripts/demo_services.py status
+systemctl --user is-enabled market-explained-demo-web market-explained-demo-tunnel
+loginctl show-user "$USER" -p Linger
+# Get the current temporary URL; older shared URLs can stop working.
+.venv/bin/python scripts/demo_services.py url
+# Inspect the tunnel connection without exposing private configuration.
+journalctl --user -u market-explained-demo-tunnel -n 40 --no-pager
+curl --fail http://127.0.0.1:5050/health
+```
+
+Cloudflare error 1033 means the requested hostname has no healthy tunnel
+connection available to Cloudflare. It does not establish that Flask stopped or
+that closing VS Code caused the outage. During this check, a tunnel reported a
+registered connection but its public URL still returned 1033; recreating it
+restored public access.
+
+If local health works but the public tunnel remains broken, restart **only** the
+tunnel, then read and verify its new URL before sharing it:
+
+```bash
+systemctl --user restart market-explained-demo-tunnel
+.venv/bin/python scripts/demo_services.py url
+# URL creation is asynchronous: repeat the previous command after startup.
+```
+
+A Quick Tunnel hostname changes when a new tunnel is created. A daemon does not
+make that hostname permanent. Stable public naming requires a separately
+configured named tunnel/hostname. The laptop must remain awake, powered and
+connected; these services do not disable suspend or provide service while powered off.
+
+References: [Cloudflare error 1033](https://developers.cloudflare.com/support/troubleshooting/http-status-codes/cloudflare-1xxx-errors/error-1033/)
+and [Quick Tunnel limitations](https://developers.cloudflare.com/tunnel/get-started/quick-tunnels/).

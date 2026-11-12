@@ -57,7 +57,7 @@ WorkingDirectory={str(ROOT).replace(chr(37), chr(37)*2)}
 EnvironmentFile={str(env).replace(chr(37), chr(37)*2)}
 Environment=PYTHONUNBUFFERED=1
 ExecStart={' '.join(quote(arg) for arg in command)}
-Restart=on-failure
+Restart=always
 RestartSec=5
 TimeoutStopSec=45
 UMask=0077
